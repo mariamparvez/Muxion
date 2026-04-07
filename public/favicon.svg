@@ -1,0 +1,28 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="32" height="32" rx="6" fill="white"/>
+  
+  <!-- Border -->
+  <rect x="1" y="1" width="30" height="30" rx="5" stroke="#155DFC" stroke-width="2"/>
+  
+  <!-- MUXION text icon -->
+  <g transform="translate(5, 6)" stroke="#155DFC" stroke-width="1.8" stroke-linecap="round">
+    <!-- M -->
+    <path d="M0 11V5L2.5 7.5L5 2V11" stroke-linejoin="round"/>
+    
+    <!-- U -->
+    <path d="M7 0V8C7 9.5 8 10.5 9.5 10.5C11 10.5 12 9.5 12 8V4.5"/>
+    
+    <!-- X -->
+    <path d="M13.5 4L17.5 10.5M17.5 0L13.5 10.5"/>
+    
+    <!-- I -->
+    <path d="M1.5 12V19"/>
+    
+    <!-- O -->
+    <ellipse cx="5.5" cy="16" rx="2.5" ry="3.5"/>
+    
+    <!-- N -->
+    <path d="M9 19V13L14.5 19V10.5" stroke-linejoin="round"/>
+  </g>
+</svg>

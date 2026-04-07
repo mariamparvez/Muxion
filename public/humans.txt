@@ -1,0 +1,33 @@
+# MUXION - The humans behind the platform
+
+/* TEAM */
+Founder & Lead Instructor: Mariam Parvez
+Email: designwithmariam@gmail.com
+Location: India & Pakistan
+
+Instructors (School Courses): Farzana Shaheen & Syed Yaseen
+Contact: +91 8807557977
+
+/* SITE */
+Last update: 2024/01/15
+Standards: HTML5, CSS3, JavaScript, React, TypeScript
+Components: React Router, Motion, Tailwind CSS
+Software: Figma, VS Code
+SEO: Optimized for India & Pakistan markets
+
+/* COURSES */
+UI/UX Mastery - ₹599
+Figma Complete Course - ₹349
+Adobe Photoshop - ₹299
+Adobe Illustrator - ₹299
+Maths (Classes 9-12) - ₹4,999/month
+Physics (Classes 9-12) - ₹4,999/month
+Chemistry (Classes 9-12) - ₹9,999/month
+
+/* KEYWORDS */
+MUXION, MUX, UI UX design course, design training India, design training Pakistan, 
+Figma course online, Adobe courses, online learning platform, affordable design courses,
+CBSE courses, state board courses, Mariam Parvez
+
+/* THANKS */
+To all our students who trust MUXION for their learning journey!

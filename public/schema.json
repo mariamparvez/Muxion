@@ -1,0 +1,82 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "EducationalOrganization",
+      "@id": "https://muxion.in/#organization",
+      "name": "MUXION",
+      "alternateName": ["MUX", "Muxion Design", "Muxion Learning"],
+      "url": "https://muxion.in",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://muxion.in/logo.png",
+        "width": 500,
+        "height": 500
+      },
+      "description": "India and Pakistan's premier online learning platform for UI/UX Design, Graphic Design, Figma, Adobe Creative Suite, and Academic courses for classes 9-12. Affordable courses with lifetime access starting at ₹299.",
+      "email": "designwithmariam@gmail.com",
+      "telephone": "+91-8807557977",
+      "foundingDate": "2024",
+      "founder": {
+        "@type": "Person",
+        "name": "Mariam Parvez",
+        "jobTitle": "Lead Instructor & Founder",
+        "description": "Expert UI/UX Designer and Educator with 7.6+ years of experience"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": ["IN", "PK"],
+        "addressRegion": "India & Pakistan"
+      },
+      "areaServed": [
+        {
+          "@type": "Country",
+          "name": "India"
+        },
+        {
+          "@type": "Country",
+          "name": "Pakistan"
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/muxion",
+        "https://www.facebook.com/muxion",
+        "https://www.linkedin.com/company/muxion",
+        "https://twitter.com/muxion",
+        "https://www.youtube.com/muxion"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://muxion.in/#website",
+      "url": "https://muxion.in",
+      "name": "MUXION",
+      "publisher": {
+        "@id": "https://muxion.in/#organization"
+      },
+      "inLanguage": ["en-IN", "en-PK", "hi-IN", "ur-PK"],
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://muxion.in/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://muxion.in/#webpage",
+      "url": "https://muxion.in",
+      "name": "MUXION - Master UI/UX Design Course | Best Design Training in India & Pakistan",
+      "description": "Learn UI/UX Design, Figma, Adobe Photoshop & Illustrator with MUXION. India & Pakistan's top-rated design courses by Mariam Parvez. Affordable pricing starting ₹299.",
+      "isPartOf": {
+        "@id": "https://muxion.in/#website"
+      },
+      "about": {
+        "@id": "https://muxion.in/#organization"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://muxion.in/og-image.jpg"
+      }
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+# MUXION - Best UI/UX Design Course Platform in India & Pakistan
+# https://muxion.in
+
+User-agent: *
+Allow: /
+Allow: /course/*
+Allow: /login
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/*
+
+# Sitemap location
+Sitemap: https://muxion.in/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Specific rules for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# Block bad bots
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /

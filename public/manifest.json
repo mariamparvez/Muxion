@@ -1,0 +1,37 @@
+{
+  "name": "MUXION - Best UI/UX Design Course Platform",
+  "short_name": "MUXION",
+  "description": "Master UI/UX Design, Figma, Adobe Creative Suite with India & Pakistan's top online learning platform. Affordable courses starting ₹299 with lifetime access.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0f1e",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "design", "learning"],
+  "lang": "en-IN",
+  "dir": "ltr",
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "UI/UX Course",
+      "url": "/course/uiux",
+      "description": "Master UI/UX Design - ₹599"
+    },
+    {
+      "name": "Figma Course",
+      "url": "/course/figma",
+      "description": "Learn Figma - ₹349"
+    }
+  ],
+  "screenshots": [],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
