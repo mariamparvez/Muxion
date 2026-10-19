@@ -1,0 +1,10 @@
+node_modules/
+public/
+.vercel/
+work/
+.env
+.env.*
+!.env.example
+*.log
+orders.json
+private/

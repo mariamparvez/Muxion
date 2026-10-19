@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Shyam Sundar",
+    "import": "Shyam.webp",
+    "source": "make_binary_files_707f93b26152d6d3a65ad1b8e7fcf19ba775bc9a.webp",
+    "file": "shyam-sundar.webp"
+  },
+  {
+    "name": "Manoj Kumar",
+    "import": "Manoj-1.jpg",
+    "source": "make_binary_files_1015908ea8bd5c3f8e0662f071bc71125795d7a4.jpg",
+    "file": "manoj-kumar.jpg"
+  },
+  {
+    "name": "Hamilton",
+    "import": "dp-1.jpg",
+    "source": "make_binary_files_3e0732befcb3a9a58cfb483d474aac3938c36983.jpg",
+    "file": "hamilton-original-placeholder.jpg"
+  },
+  {
+    "name": "Vinodhini",
+    "import": "Vinodhini-1.jpg",
+    "source": "make_binary_files_39ddbabb326872f9801f978e2f526b5f19bb07c4.jpg",
+    "file": "vinodhini.jpg"
+  },
+  {
+    "name": "Disha Kapur",
+    "import": "Disha-1.jpg",
+    "source": "make_binary_files_c36a1a4faf91b7365b04df6f3a9bed203a782d09.jpg",
+    "file": "disha-kapur.jpg"
+  },
+  {
+    "name": "Syed Yaseen",
+    "source": "make_binary_files_05c66b20cef09d17f2f9433456fed30dffc72aea.png",
+    "file": "syed-yaseen.png"
+  },
+  {
+    "name": "Farzana Shaheen",
+    "source": "make_binary_files_bbb8047adace36c1ed3c8c18de7baa003424df13.png",
+    "file": "farzana-shaheen.png"
+  }
+]

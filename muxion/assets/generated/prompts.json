@@ -1,0 +1,72 @@
+[
+  {
+    "name": "academy",
+    "file": "academy.webp",
+    "original": "originals/academy.png",
+    "prompt": "Use case: stylized-concept. Asset type: MUXION design academy website hero background, landscape 3:2. Create an editorial still life about learning UI/UX design: floating translucent interface panels, a sculptural wireframe sphere, carefully arranged typography tiles with no actual letters, pencil and small tactile paper components. Dark midnight navy background, powder blue, ivory and subtle graphite. High-end art direction, realistic materials, soft studio side light, lots of breathing space, attractive but restrained. Objects concentrated on right half, left quiet. NO words, NO logos, NO watermark. This must be a unique composition, not a photo of people at a laptop.",
+    "tool": "Built-in image_gen"
+  },
+  {
+    "name": "self-paced",
+    "file": "self-paced.webp",
+    "original": "originals/self-paced.png",
+    "prompt": "Use case: photorealistic-natural. Asset type: landscape course learning card image for MUXION. Overhead editorial photo of one thoughtfully arranged designer's study desk: open sketchbook with pencil wireframes, a stylus, laptop corner showing abstract UI component rectangles (no text), headphones resting on navy linen. No people, no text or brand logos. Soft daylight, realistic paper grain, muted slate blue and warm ivory palette, calm premium design school aesthetic, asymmetric composition with room for overlay. Landscape 3:2.",
+    "tool": "Built-in image_gen"
+  },
+  {
+    "name": "workshop",
+    "file": "workshop.webp",
+    "original": "originals/workshop.png",
+    "prompt": "Use case: photorealistic-natural. Asset type: MUXION live workshop course card image, landscape 3:2. An intimate creative workshop in a contemporary studio, four diverse young adult learners collaboratively arranging paper wireframes and sticky notes at a shared table, candid side angle emphasizing hands and design process, a whiteboard with simple unlabeled diagrams softly blurred behind. Realistic human anatomy. Muted lavender, charcoal and soft natural light, sophisticated editorial photography. No identifiable real people, no text, no logos, no watermarks. Different from a solitary desk scene.",
+    "tool": "Built-in image_gen"
+  },
+  {
+    "name": "mentorship",
+    "file": "mentorship.webp",
+    "original": "originals/mentorship.png",
+    "prompt": "Use case: photorealistic-natural. Asset type: MUXION personal mentorship website card, landscape 3:2. Candid editorial close-up of a one-to-one design mentoring conversation: a woman mentor and an adult learner discussing a paper prototype across a small round table, mentor pointing gently at a sketch, only partial faces in profile, expressive hands, warm human connection. Contemporary quiet studio with textured walls, muted sage, warm ivory and charcoal palette, soft window light, beautiful realistic photography, shallow depth of field. Distinct from a group workshop and a laptop study desk. No text, logos, watermarks. Fictional people, do not portray as actual MUXION tutors.",
+    "tool": "Built-in image_gen"
+  },
+  {
+    "name": "momentum",
+    "file": "momentum.webp",
+    "original": "originals/momentum.png",
+    "prompt": "Use case: photorealistic-natural. Asset type: focus and rest website banner, landscape 3:2. A quiet contemplative still life by a window: a simple analog timer with unlabeled face, a ceramic tea cup, open notebook, pencil and a small leafy plant casting soft afternoon shadows. Design-focused intentional study ritual, no person, not another laptop scene. Muted cool slate navy, pale sage and warm ivory, premium natural editorial photography, spacious composition, no words, no logos, no watermark.",
+    "tool": "Built-in image_gen"
+  },
+  {
+    "name": "build",
+    "file": "build.webp",
+    "original": "originals/build.png",
+    "prompt": "Use case: stylized-concept. Asset type: bespoke software development studio website image, landscape 3:2. Beautiful high-end product-design still life: architectural arrangement of a slim laptop, a smartphone and modular translucent interface components, connected by delicate physical metal rails suggesting an idea becoming a working product. No actual readable UI. Charcoal backdrop with warm muted butter-yellow light, stone, brushed metal and glass materials, soft shadows, sophisticated editorial 3D rendering, not neon, not futuristic cliches, no text, logos or watermarks. Concentrate composition center-right, clear silhouettes.",
+    "tool": "Built-in image_gen"
+  },
+  {
+    "name": "maths",
+    "file": "maths.webp",
+    "original": "originals/maths.png",
+    "prompt": "Use case: scientific-educational. Asset type: MUXION maths tuition subject card, landscape 3:2. Beautiful close-up editorial still life of mathematical exploration: a sculptural wooden geometric solid, brass compass and ruler, graph paper with a hand-drawn smooth parabola and a triangle, no readable equations or labels. Tactile paper, natural side light, muted forest sage and warm cream, dark elegant background, intellectually inviting rather than childish. Premium realistic photography, no people, no text, no logos, no watermark. Distinct from physics and chemistry imagery.",
+    "tool": "Built-in image_gen"
+  },
+  {
+    "name": "physics",
+    "file": "physics.webp",
+    "original": "originals/physics.png",
+    "prompt": "Use case: scientific-educational. Asset type: MUXION physics tuition subject card, landscape 3:2. Artistic but physically plausible laboratory still life: a triangular glass prism splitting a thin white beam into a restrained spectrum on a dark surface, simple pendulum apparatus blurred behind, emphasizing light and motion. High-end macro editorial photograph, slate teal and muted sage atmosphere, subtle realistic refraction, beautifully lit glass, no people, no written formulas, no text, no brand logos, no watermark. No glowing fantasy atoms.",
+    "tool": "Built-in image_gen"
+  },
+  {
+    "name": "chemistry",
+    "file": "chemistry.webp",
+    "original": "originals/chemistry.png",
+    "prompt": "Use case: scientific-educational. Asset type: MUXION chemistry tuition subject card, landscape 3:2. A beautiful real chemistry bench still life: two borosilicate conical flasks and a small test tube rack, pale sage and amber liquids, clean safety-conscious laboratory, glass catching soft side light, a simple ball-and-stick molecular model softly blurred at one edge. Premium editorial photograph, realistic materials, charcoal and muted moss palette, gentle amber accents. No smoke, no explosive reactions, no people, no labels, no text, no logos or watermarks.",
+    "tool": "Built-in image_gen"
+  },
+  {
+    "name": "school",
+    "file": "school.webp",
+    "original": "originals/school.png",
+    "prompt": "Use case: photorealistic-natural. Asset type: background for MUXION school tutoring grades 9–12, landscape 3:2. A serene contemporary study room with a wide empty whiteboard carrying only simple unlabeled geometric diagrams, neatly arranged desks, exercise books, a globe and afternoon window light. No people and no fictional portraits. Premium natural editorial photography, muted sage greens, warm wood and soft ivory, calm inviting academic setting. Composition with large quiet areas so it can sit behind real tutor cutouts. No text, no logos, no watermark.",
+    "tool": "Built-in image_gen"
+  }
+]

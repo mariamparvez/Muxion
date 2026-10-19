@@ -1,0 +1,49 @@
+/* One authoritative state system for all button variants. */
+:root,body[data-theme=academy]{--button-bg:#255aa9;--button-fg:#ffffff;--button-hover:#194985;--button-pressed:#113763;--button-outline:#b8d6ff}
+body[data-theme=learning]{--button-bg:#91c4ab;--button-fg:#081a10;--button-hover:#b3dfca;--button-pressed:#78b496;--button-outline:#c9f3df}
+body[data-theme=build]{--button-bg:#e5ce64;--button-fg:#192010;--button-hover:#f4e29b;--button-pressed:#cbb349;--button-outline:#fff2b7}
+.build-teaser{--button-bg:#202b1c;--button-fg:#fff4bf;--button-hover:#35442a;--button-pressed:#12200e;--button-outline:#202b1c}
+body .btn{background-color:var(--button-bg)!important;background-image:none!important;color:var(--button-fg)!important;border-color:transparent!important}
+body .btn:hover{background-color:var(--button-hover)!important;color:var(--button-fg)!important}
+body .btn:active{background-color:var(--button-pressed)!important;color:var(--button-fg)!important;transform:translateY(0)}
+body .btn.secondary{background-color:#111d30!important;color:#eef4ff!important;border-color:#71829d!important}
+body .btn.secondary:hover{background-color:#253a56!important;color:#fff!important;border-color:#a4bddf!important}
+body .btn.secondary:active{background-color:#314b6c!important;color:#fff!important}
+body .btn.light{background-color:#edf3fc!important;color:#10213a!important;border-color:#edf3fc!important}
+body .btn.light:hover{background-color:#fff!important;color:#10213a!important}
+body .btn.light:active{background-color:#c7d8ef!important;color:#10213a!important}
+body .btn.yellow{background-color:#e5ce64!important;color:#192010!important;border-color:#e5ce64!important}
+body .btn.yellow:hover{background-color:#f4e29b!important;color:#192010!important}
+body .btn.yellow:active{background-color:#cbb349!important;color:#192010!important}
+body .btn.danger{background-color:#652b40!important;color:#ffe6ed!important;border-color:#ac6880!important}
+body .btn.danger:hover{background-color:#81374f!important;color:#fff!important}
+body .btn.danger:active{background-color:#4c1e2f!important;color:#fff!important}
+body .btn.chip{background-color:#111d30!important;color:#d4dfef!important;border-color:#62738e!important}
+body .btn.chip:hover{background-color:#253b57!important;color:#fff!important;border-color:#a4bddf!important}
+body .btn.chip:active{background-color:#314b6c!important;color:#fff!important}
+body .btn.chip.active{background-color:#e6eef9!important;color:#13233c!important;border-color:#e6eef9!important}
+body .btn.chip.active:hover{background-color:#cdddf3!important;color:#10213a!important;border-color:#cdddf3!important}
+body .btn.chip.active:active{background-color:#b7cde9!important;color:#10213a!important}
+body .btn.tab{background-color:transparent!important;color:#c6d4e8!important;border-color:transparent!important}
+body .btn.tab:hover{background-color:#192d47!important;color:#fff!important}
+body .btn.tab:active{background-color:#294362!important;color:#fff!important}
+body .btn.tab.active{background-color:transparent!important;color:#c3ddff!important;border-bottom-color:#a8cfff!important}
+body .btn.tab.active:hover{background-color:#192d47!important;color:#fff!important;border-bottom-color:#c3ddff!important}
+body .btn:disabled,body .btn:disabled:hover,body .btn:disabled:active{background-color:#23324a!important;color:#d0dced!important;border-color:#6a7c98!important;opacity:1;cursor:not-allowed;transform:none;box-shadow:none}
+body .btn:focus-visible,body .icon-btn:focus-visible,body .carousel-play:focus-visible{outline:3px solid var(--button-outline);outline-offset:4px;box-shadow:0 0 0 2px #0a0f1e}
+body .btn svg{color:inherit!important}
+.icon-btn,.carousel-play{background:#101d30;color:#eef4ff;border-color:#71829d;transition:background-color .18s,border-color .18s}
+.icon-btn:hover,.carousel-play:hover{background:#253a56;color:#fff;border-color:#a4bddf}
+.icon-btn:active,.carousel-play:active{background:#314b6c;color:#fff}
+.close-dialog{color:#e4ecf8}.close-dialog:hover{color:#fff;background:#253a56;border-radius:6px}
+.slot:hover{background:#253a56;color:#fff;border-color:#a4bddf}.slot.active{background:#e6eef9;color:#13233c;border-color:#e6eef9}
+/* Non-CTA interactive controls use the same readable state language. */
+.player-lesson:hover{background:#20364f;color:#fff}
+.player-lesson.active,.player-lesson.active:hover{background:#29466a;color:#eef6ff}
+.player-lesson.done:hover{color:#c8f4df}
+.player-lesson:focus-visible,.slot:focus-visible,.close-dialog:focus-visible{outline:3px solid var(--button-outline);outline-offset:3px}
+button[aria-disabled=true],a[aria-disabled=true]{cursor:not-allowed}
+@media(prefers-reduced-motion:reduce){.btn,.icon-btn,.carousel-play,.slot,.player-lesson{transition:none;transform:none!important}}
+
+/* Learning tuition enquiries: direct WhatsApp and telephone actions. */
+.learning-contact-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.learning-contact-actions.stacked{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}.subject-card{display:flex;flex-direction:column}.subject-card .learning-contact-actions{margin-top:auto}.learning-contact-actions .btn{min-height:46px}@media(max-width:480px){.learning-contact-actions{display:grid;grid-template-columns:minmax(0,1fr)}.learning-contact-actions .btn{width:100%}}
