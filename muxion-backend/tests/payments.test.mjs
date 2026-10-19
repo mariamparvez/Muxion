@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {createHmac} from 'node:crypto';
 import {mkdtemp, rm, readFile} from 'node:fs/promises';
 import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 import {Payments, PaymentStore, validSignature} from '../payments.mjs';
 import {createMuxionServer} from '../server.mjs';
 
@@ -51,7 +52,7 @@ test('live keys are refused and signature parser rejects missing/oversized input
   assert.equal(validSignature('order_fixture','pay_fixture',null,secret),false);assert.equal(validSignature('order_fixture','pay_fixture','a'.repeat(10000),secret),false);
 });
 test('private JSON ledger survives restart and failed mutation is not committed',async()=>{
-  const dir=await mkdtemp(path.resolve('tests/.ledger-'));try{const file=path.join(dir,'orders.json');const store=new PaymentStore(file);await store.load();await store.update(records=>records.one={status:'created'});const restored=new PaymentStore(file);await restored.load();assert.equal(restored.records.one.status,'created');await assert.rejects(()=>restored.update(records=>{records.one.status='paid';throw Error('abort')}));assert.equal(JSON.parse(await readFile(file,'utf8')).one.status,'created')}finally{await rm(dir,{recursive:true,force:true})}
+  const dir=await mkdtemp(path.join(path.dirname(fileURLToPath(import.meta.url)),'.ledger-'));try{const file=path.join(dir,'orders.json');const store=new PaymentStore(file);await store.load();await store.update(records=>records.one={status:'created'});const restored=new PaymentStore(file);await restored.load();assert.equal(restored.records.one.status,'created');await assert.rejects(()=>restored.update(records=>{records.one.status='paid';throw Error('abort')}));assert.equal(JSON.parse(await readFile(file,'utf8')).one.status,'created')}finally{await rm(dir,{recursive:true,force:true})}
 });
 test('HTTP API blocks cross-origin POST, private files and malformed requests',async()=>{
   const {payments}=fixture();const server=createMuxionServer({payments});await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const origin='http://127.0.0.1:'+server.address().port;
