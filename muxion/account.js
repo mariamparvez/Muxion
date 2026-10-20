@@ -6,7 +6,7 @@ async function sdk(){
   return sdkPromise;
 }
 export async function initializeAccounts(onChange){const api=await sdk();return new Promise(resolve=>{let initial=true;api.onAuthStateChanged(auth,async user=>{currentUser=user;try{await onChange(user);}finally{if(initial){initial=false;resolve();}}});});}
-export async function signInGoogle(){const api=await sdk();return api.signInWithPopup(auth,new api.GoogleAuthProvider());}
+export async function signInGoogle(){if(currentUser)return {user:currentUser};const api=await sdk();return api.signInWithPopup(auth,new api.GoogleAuthProvider());}
 export async function signInEmail(email,password){const api=await sdk();return api.signInWithEmailAndPassword(auth,email,password);}
 export async function createAccount(name,email,password){const api=await sdk();const result=await api.createUserWithEmailAndPassword(auth,email,password);await api.updateProfile(result.user,{displayName:name.trim().slice(0,100)});await api.sendEmailVerification(result.user);return result;}
 export async function sendVerification(){const api=await sdk();if(!auth.currentUser)throw Error('Sign in first.');await auth.currentUser.reload();await api.sendEmailVerification(auth.currentUser);}
