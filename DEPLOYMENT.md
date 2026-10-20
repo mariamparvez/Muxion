@@ -20,8 +20,8 @@ The owner Orders screen has Finish payment setup to register signed Razorpay eve
 
 ## Validation and release status
 
-Run node --test muxion-backend/tests/hosted-payments.test.mjs muxion-backend/tests/platform.test.mjs and node scripts/build.mjs. Seventeen payment/access tests currently pass locally. These checks do not prove live Firebase credentials or Razorpay webhooks are configured.
+Run node --test muxion-backend/tests/hosted-payments.test.mjs muxion-backend/tests/platform.test.mjs muxion-backend/tests/payment-setup.test.mjs and node scripts/build.mjs. Twenty payment/access and webhook-setup tests currently pass locally. These checks do not prove live Firebase credentials or Razorpay webhooks are configured.
 
-The new automatic fulfilment implementation is local and awaits the Firebase server credential and deployment. The previous live preview used manual enrolment. After configuration and deployment, test owner pricing, a separate learner account, payment cancellation, signed verification and webhook delivery. A human must complete any actual live charge.
+The automatic fulfilment implementation is deployed to production. Firebase Admin credentials are configured as Vercel secrets; Firestore reads, verified owner Google login, and an admin course save have been exercised successfully. The saved mastery course price remains ₹299. Razorpay webhook configuration is still being diagnosed and no live charge has been performed. After configuration and deployment, test owner pricing, a separate learner account, payment cancellation, signed verification and webhook delivery. A human must complete any actual live charge.
 
 Learning progress, certificates and other legacy demonstration features are outside this payment integration and must not be represented as server-backed without further work.
