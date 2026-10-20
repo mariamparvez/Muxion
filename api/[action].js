@@ -9,7 +9,7 @@ export function createHandler(payments,platform=null) {
     res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');
     try {
       const action=req.query?.action||new URL(req.url,'https://muxion.invalid').pathname.split('/').pop();
-      const allowed=new Set(['https://muxion-git-preview-mariamparvezs-projects.vercel.app','https://project-4jpr6.vercel.app',...(process.env.PAYMENT_ALLOWED_ORIGINS||'').split(',').filter(Boolean)]);
+      const allowed=new Set(['https://muxion.in','https://www.muxion.in','https://muxion-git-preview-mariamparvezs-projects.vercel.app','https://project-4jpr6.vercel.app',...(process.env.PAYMENT_ALLOWED_ORIGINS||'').split(',').filter(Boolean)]);
       if(process.env.VERCEL_URL)allowed.add('https://'+process.env.VERCEL_URL);
       if(process.env.VERCEL_PROJECT_PRODUCTION_URL)allowed.add('https://'+process.env.VERCEL_PROJECT_PRODUCTION_URL);
       if(req.method==='POST'&&!allowed.has(req.headers.origin))throw new PaymentError(403,'A same-origin checkout request is required.');
