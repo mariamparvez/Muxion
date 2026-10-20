@@ -19,13 +19,14 @@ function loadCheckout() {
   });
   return checkoutScript;
 }
+export async function paymentConfiguration() { return api('/api/payment-config'); }
 export async function latestPaymentReceipt() {
   const result = await api('/api/payment-receipt');
   return result.receipt;
 }
 export async function startRazorpayCheckout({items, amount}) {
   const config = await api('/api/payment-config');
-  if (!config.enabled) throw new Error('Test payments are not configured on the backend yet.');
+  if (!config.enabled) throw new Error('Payments are not configured on the backend yet.');
   await loadCheckout();
   const request = JSON.stringify(items);
   if (!pendingRequests.has(request)) pendingRequests.set(request, crypto.randomUUID());
@@ -36,7 +37,7 @@ export async function startRazorpayCheckout({items, amount}) {
     const finish = (callback, value) => { if (!settled) { settled = true; callback(value); } };
     const instance = new window.Razorpay({
       key: order.key_id, order_id: order.order_id, amount: order.amount, currency: order.currency,
-      name: 'MUXION Academy', description: 'Test checkout · ' + order.items.map(i => i.title).join(', '),
+      name: 'MUXION Academy', description: (order.mode === 'test' ? 'Test checkout · ' : '') + order.items.map(i => i.title).join(', '),
       theme: {color: '#255aa9'},
       handler: async payment => {
         verifying = true;
