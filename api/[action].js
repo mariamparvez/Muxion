@@ -52,5 +52,5 @@ export function createHandler(payments,platform=null) {
   };
 }
 let handler;
-export default async function paymentApi(req,res){try{if(!handler){const platform=await configuredPlatform();handler=createHandler(configuredHostedPayments(platform),platform);}return handler(req,res);}catch{return res.status(503).json({error:'Account services are temporarily unavailable. No payment has been started.'});}}
+export default async function paymentApi(req,res){try{if(!handler){const platform=await configuredPlatform();handler=createHandler(configuredHostedPayments(platform),platform);}return handler(req,res);}catch(error){console.error('account_service_init_failed',{name:error?.name,code:error?.code||error?.errorInfo?.code||'unknown'});return res.status(503).json({error:'Account services are temporarily unavailable. No payment has been started.'});}}
 export const config={maxDuration:30};
