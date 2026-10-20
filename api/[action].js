@@ -48,7 +48,7 @@ export function createHandler(payments,platform=null) {
         await platform.content(actor,'course:'+body.id);const course=(await platform.catalog()).find(o=>o.kind==='course'&&o.id===body.id);return res.status(200).json({correct:Number(body.answer)===course?.quiz?.answer});
       }
       throw new PaymentError(404,'API route not found.');
-    }catch(error){return res.status(error instanceof PaymentError?error.status:500).json({error:error instanceof PaymentError?error.message:'Checkout could not complete. Please contact hello@muxion.in.'});}
+    }catch(error){if(!(error instanceof PaymentError))console.error('account_request_failed',{name:error?.name,code:error?.code,detail:error instanceof TypeError?error.message:undefined});return res.status(error instanceof PaymentError?error.status:500).json({error:error instanceof PaymentError?error.message:'Checkout could not complete. Please contact hello@muxion.in.'});}
   };
 }
 let handler;
