@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {createHmac} from 'node:crypto';
 import {HostedPayments} from '../hosted-payments.mjs';
 import {createHandler} from '../../api/[action].js';
+import {PaymentError} from '../payments.mjs';
 
 const secret='hosted-test-fixture-only';
 const sid='a'.repeat(64),key='hosted-checkout-key-12345';
@@ -42,10 +43,10 @@ test('tampering with provider order notes is rejected',async()=>{
   const f=fixture();await f.service.create(body,sid,key);f.orders.get('order_fixture').notes.items='[["course:mastery",100]]';await assert.rejects(()=>f.service.verify(f.verify,sid),e=>e.status===400);
 });
 test('API sets secure HttpOnly cookies and blocks cross-origin or unbound requests',async()=>{
-  const f=fixture(),handler=createHandler(f.service);
+  const f=fixture(),handler=createHandler(f.service,{identity:async authorization=>{if(authorization!=='Bearer fixture-token')throw new PaymentError(401,'Sign in.');return {uid:'learner-a',emailVerified:true,role:'learner'};}});
   async function call(action,method='GET',options={}){const req={query:{action},url:'/api/'+action,method,headers:{...options.headers},body:options.body};const res={headers:{},setHeader(k,v){this.headers[k]=v;},status(v){this.code=v;return this;},json(v){this.body=v;return this;}};await handler(req,res);return res;}
   const config=await call('payment-config');assert.equal(config.code,200);assert.equal(config.body.mode,'live');assert.match(config.headers['Set-Cookie'],/HttpOnly; Secure; SameSite=Strict/);assert.equal(JSON.stringify(config.body).includes(secret),false);
   assert.equal((await call('create-order','POST',{headers:{origin:'https://evil.example'},body})).code,403);
   assert.equal((await call('create-order','POST',{headers:{origin:'https://muxion-git-preview-mariamparvezs-projects.vercel.app'},body})).code,401);
-  const cookie=config.headers['Set-Cookie'].split(';')[0];const order=await call('create-order','POST',{headers:{origin:'https://muxion-git-preview-mariamparvezs-projects.vercel.app',cookie,'content-type':'application/json','idempotency-key':key},body});assert.equal(order.code,200);assert.equal(order.body.amount,29900);
+  const cookie=config.headers['Set-Cookie'].split(';')[0];const order=await call('create-order','POST',{headers:{origin:'https://muxion-git-preview-mariamparvezs-projects.vercel.app',authorization:'Bearer fixture-token',cookie,'content-type':'application/json','idempotency-key':key},body});assert.equal(order.code,200);assert.equal(order.body.amount,29900);
 });

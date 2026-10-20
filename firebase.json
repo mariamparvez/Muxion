@@ -1,0 +1,4 @@
+{
+  "firestore": { "rules": "firestore.rules", "indexes": "firestore.indexes.json" },
+  "auth": { "providers": { "emailPassword": true, "anonymous": false, "googleSignIn": { "oAuthBrandDisplayName": "MUXION", "supportEmail": "designwithmariam@gmail.com", "authorizedRedirectUris": ["https://muxionuniverse.firebaseapp.com/__/auth/handler", "https://muxion-git-preview-mariamparvezs-projects.vercel.app", "https://project-4jpr6.vercel.app", "http://localhost"] } } }
+}

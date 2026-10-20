@@ -1,7 +1,8 @@
+import {authorizationHeaders,currentUser} from './account.js';
 let checkoutScript;
 const pendingRequests = new Map();
 async function api(path, options = {}) {
-  const response = await fetch(path, {credentials: 'same-origin', signal: AbortSignal.timeout(20000), ...options});
+  const response = await fetch(path, {credentials: 'same-origin', signal: AbortSignal.timeout(20000), ...options, headers:{...await authorizationHeaders(),...options.headers}});
   const result = await response.json().catch(() => ({error: 'The server returned an unexpected response.'}));
   if (!response.ok) throw new Error(result.error || result.message || 'Payment request failed.');
   return result;
@@ -25,6 +26,7 @@ export async function latestPaymentReceipt() {
   return result.receipt;
 }
 export async function startRazorpayCheckout({items, amount}) {
+  if(!currentUser)throw new Error('Sign in before purchasing.');
   const config = await api('/api/payment-config');
   if (!config.enabled) throw new Error('Payments are not configured on the backend yet.');
   await loadCheckout();

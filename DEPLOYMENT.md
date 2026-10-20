@@ -1,15 +1,27 @@
 # MUXION deployment
 
-The current MUXION frontend is in `muxion/`. The existing repository's original Figma code is preserved separately in its original paths.
+Vercel installs backend dependencies with npm ci --prefix muxion-backend, runs npm run build, and publishes public/. The build strips private lesson content, quiz answers and demo account purchases from the public seed.
 
-Vercel builds with `npm run build` and publishes only the allowlisted frontend and assets in `public/`. The hash-based routes work without an SPA rewrite.
+## Server configuration
 
-The preview retains demo learner/admin state in the browser. Firebase authentication, course pricing synchronization and enrolment are not connected yet.
+Set these as sensitive Vercel environment variables in Preview and Production:
+- RAZORPAY_KEY_ID
+- RAZORPAY_KEY_SECRET
+- FIREBASE_SERVICE_ACCOUNT_JSON (Firebase project muxionuniverse)
+- RAZORPAY_WEBHOOK_SECRET (at least 32 random characters)
 
-The local Razorpay test implementation is preserved in `muxion-backend/`. Install its dependencies with `npm ci --prefix muxion-backend`, configure backend-only test credentials using `MUXION_ENV_FILE`, then run `npm start`. Never commit credentials or order receipts.
+Never commit any of these credentials. Firebase uses Standard Firestore in asia-south1 (Mumbai), Google/email authentication, and server-only Firestore access. No Firebase Functions, Storage or billing upgrade is required by this implementation.
 
-Hosted payments use Razorpay's persistent order/payment records instead of a local JSON ledger. Set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET as sensitive Vercel environment variables. Never expose the secret to frontend code. The hosted handler supports test and live keys; the local ledger implementation remains test-only.
+The verified owner Google email is designwithmariam@gmail.com. Client-supplied role fields never confer administrator privileges. Admin course/workshop prices are stored in Firestore, and checkout reads the canonical server price before creating an order. Checkout requires a verified Firebase email.
 
-Order prices come from the server catalogue. Signed HttpOnly cookies bind a checkout session to server-created order notes. Verification checks HMAC, order ownership, the persisted price snapshot, captured status and refunds. Receipt reloads recheck Razorpay, including payments completed after a browser interruption. Support can also locate payment records in the merchant dashboard.
+Captured payments and course/workshop access are committed atomically and are isolated by Firebase UID. Orders, payment history, per-order enrolment grants and audit records are stored server-side. Refunds revoke the refunded order's grant; other valid purchases remain active. Any refund, including a partial refund, revokes that order's access. This version does not initiate refunds.
 
-Firebase learner identity, automatic enrolment, cross-device purchase history and admin price synchronization remain pending. The checkout explicitly discloses that course access must be arranged through hello@muxion.in. No local demo role or enrolment is treated as proof of payment. Clearing the session cookie requires contacting support to recover a receipt.
+The owner Orders screen has Finish payment setup to register signed Razorpay events at https://project-4jpr6.vercel.app/api/razorpay-webhook. Confirm configuration succeeds and the production endpoint is publicly reachable before relying on background notifications.
+
+## Validation and release status
+
+Run node --test muxion-backend/tests/hosted-payments.test.mjs muxion-backend/tests/platform.test.mjs and node scripts/build.mjs. Seventeen payment/access tests currently pass locally. These checks do not prove live Firebase credentials or Razorpay webhooks are configured.
+
+The new automatic fulfilment implementation is local and awaits the Firebase server credential and deployment. The previous live preview used manual enrolment. After configuration and deployment, test owner pricing, a separate learner account, payment cancellation, signed verification and webhook delivery. A human must complete any actual live charge.
+
+Learning progress, certificates and other legacy demonstration features are outside this payment integration and must not be represented as server-backed without further work.
