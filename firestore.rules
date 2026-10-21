@@ -8,6 +8,11 @@ rules_version = '2';
 // enrolments/{uid}/items/{kind:id}: per-order grants, active status and owner.
 // paymentEvents/{eventHash}: idempotent webhook processing records.
 // audit/{id}: server-generated administrator activity records.
+// profiles/{uid}/learning/{courseId}: private progress, notes and submissions.
+// certificates: server-issued completion and revocation records.
+// discussionPosts, discussionThrottle: course messages and posting limits.
+// mentorshipOffers, mentorshipBookings, mentorshipSlots, mentorshipCounters:
+// validated offers, private requests, transactional slot locks and request limits.
 // All access goes through the Vercel backend, which verifies Firebase identity,
 // role/ownership, validates fields and uses atomic Firestore transactions.
 service cloud.firestore {
