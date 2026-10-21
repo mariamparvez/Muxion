@@ -84,7 +84,8 @@ export function createMuxionServer({payments = null} = {}) {
         return json(res, 405, {error: 'This API route or method is not supported.'});
       }
       if (!['GET', 'HEAD'].includes(req.method)) throw new PaymentError(405, 'Method not allowed.');
-      const name = decodeURIComponent(url.pathname === '/' ? '/index.html' : url.pathname);
+      const appRoute = /^\/(?:academy|build|learning|courses|course|workshops|workshop|mentorship|about|contact|login|signup|forgot-password|reset-password|checkout|verify|privacy|terms|refunds|page-map|learner|admin)(?:\/[^.]*)?\/?$/.test(url.pathname);
+      const name = decodeURIComponent(url.pathname === '/' || appRoute ? '/index.html' : url.pathname);
       if (name.includes('\\') || name.split('/').some(part => part.startsWith('.'))) throw new PaymentError(404, 'Not found.');
       const file = path.resolve(publicRoot, '.' + name);
       const type = contentTypes[path.extname(file)];
