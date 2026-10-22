@@ -42,3 +42,5 @@ body[data-theme=learning]{--blue:#91c4ab;--action:#91c4ab}
 @media(min-width:801px){.universe-hero{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}.universe-copy{min-width:0}.universe-copy h1{font-size:clamp(52px,6.7vw,92px)}}
 
 .universe-art{grid-template-columns:minmax(0,1fr);justify-content:stretch}
+
+.universe-copy .hero-ctas{display:flex;flex-direction:row;align-items:center;flex-wrap:nowrap;gap:10px}.universe-copy .hero-ctas .btn{min-height:48px;justify-content:center;white-space:nowrap;padding:13px 17px;font-size:12px}@media(max-width:560px){.universe-copy .hero-ctas{gap:8px;width:100%}.universe-copy .hero-ctas .btn{padding:12px 10px;font-size:10px;gap:7px;min-width:0}.universe-copy .hero-ctas .btn svg{width:17px;height:17px;flex-basis:17px}}

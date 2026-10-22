@@ -47,3 +47,5 @@ button[aria-disabled=true],a[aria-disabled=true]{cursor:not-allowed}
 
 /* Learning tuition enquiries: direct WhatsApp and telephone actions. */
 .learning-contact-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.learning-contact-actions.stacked{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}.subject-card{display:flex;flex-direction:column}.subject-card .learning-contact-actions{margin-top:auto}.learning-contact-actions .btn{min-height:46px}@media(max-width:480px){.learning-contact-actions{display:grid;grid-template-columns:minmax(0,1fr)}.learning-contact-actions .btn{width:100%}}
+
+body .empty .btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:48px;padding:13px 20px;width:auto}body .empty .btn svg,body .btn svg{width:20px;height:20px;flex:0 0 20px;margin:0;vertical-align:middle}.shell-header .btn{white-space:nowrap}
