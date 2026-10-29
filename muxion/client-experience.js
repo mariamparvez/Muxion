@@ -1,4 +1,4 @@
-const clients = ["Macy’s", "Bloomingdale’s", 'BMW', 'BT Telecom', 'News Corp', 'Momentum', 'AAPC Codify'];
+const clients = ["Macy’s", "Bloomingdale’s", 'BMW', 'British Telecom', 'News Corp', 'Momentum', 'AAPC Codify'];
 const fields = [
   ['wallet', 'Fintech', 'Making complex financial journeys feel clear.'],
   ['globe', 'Ecommerce', 'Shopping experiences across mobile and desktop.'],
