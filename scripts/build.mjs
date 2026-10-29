@@ -3,6 +3,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {seed,portraits,topics,testimonials,workTestimonials,outcomes} from '../muxion/data.js';
 import {publicOffer} from '../muxion-backend/platform.mjs';
+import {socialPortfolioPage,portfolioSEO,portfolioStructuredData} from '../muxion/social-portfolio.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const source = path.join(root, 'muxion');
@@ -14,4 +15,20 @@ for (const name of ['client-experience.js', 'experience.js', 'loading.js', 'load
 const publicSeed={...structuredClone(seed),profile:{name:'Learner',email:'',phone:'',bio:'',timezone:'Asia/Kolkata',image:''},courses:seed.courses.filter(c=>c.status==='Published').map(c=>publicOffer({kind:'course',...c})),workshops:seed.workshops.filter(w=>w.status==='Published').map(w=>publicOffer({kind:'workshop',...w})),enrolled:[],transactions:[],users:[],completed:[],certificates:[],quizPassed:[],submissions:{},bookings:[],comments:[],notes:{},submissions:{}};
 await fs.writeFile(path.join(output,'data.js'),Object.entries({seed:publicSeed,portraits,topics,testimonials,workTestimonials,outcomes}).map(([name,value])=>`export const ${name}=${JSON.stringify(value)};`).join('\n'));
 await fs.cp(path.join(source, 'assets'), path.join(output, 'assets'), {recursive: true});
+// Publish real portfolio text and metadata in HTML for crawlers and link previews.
+const escapeHTML=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let portfolioHTML=await fs.readFile(path.join(source,'index.html'),'utf8');
+portfolioHTML=portfolioHTML.replace(/<title>.*?<\/title>/,`<title>${escapeHTML(portfolioSEO.title)}</title>`)
+ .replace(/<meta name="description" content="[^"]*">/,`<meta name="description" content="${escapeHTML(portfolioSEO.description)}">`)
+ .replace(/<link rel="canonical" href="[^"]*">/,`<link rel="canonical" href="${portfolioSEO.url}">`)
+ .replace(/<meta property="og:title" content="[^"]*">/,`<meta property="og:title" content="${escapeHTML(portfolioSEO.title)}">`)
+ .replace(/<meta property="og:description" content="[^"]*">/,`<meta property="og:description" content="${escapeHTML(portfolioSEO.description)}">`)
+ .replace('</head>',`<meta property="og:url" content="${portfolioSEO.url}"><meta property="og:image" content="https://www.muxion.in/assets/social/heal-bridge-medical-travel.png"><script type="application/ld+json">${JSON.stringify(portfolioStructuredData()).replace(/</g,'\\u003c')}</script></head>`)
+ .replace('<div id="app"></div>',`<div id="app"><main id="main">${socialPortfolioPage()}</main></div>`)
+ .replace('<noscript><style>.boot-loader{display:none}</style>Please enable JavaScript to open MUXION.</noscript>','<noscript><style>.boot-loader{display:none}.social-scroll-gallery{height:auto!important}.social-gallery-stage{position:relative;top:auto;height:auto;max-height:none;overflow:visible;display:block}.social-work-track,.social-work-cycle{width:100%;display:block;transform:none!important}.social-work-cycle[aria-hidden="true"]{display:none}.social-project{width:100%;margin-block:36px;box-sizing:border-box}.social-project-image{cursor:default}</style></noscript>');
+await fs.mkdir(path.join(output,'social-work'),{recursive:true});
+await fs.writeFile(path.join(output,'social-work','index.html'),portfolioHTML);
+const publicPaths=['/','/learn','/academy','/about','/contact','/courses','/workshops','/mentorship','/social-work','/privacy','/terms','/refunds'];
+await fs.writeFile(path.join(output,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${publicPaths.map(route=>`<url><loc>https://www.muxion.in${route}</loc></url>`).join('')}</urlset>`);
+await fs.writeFile(path.join(output,'robots.txt'),'User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /learner\nDisallow: /api/\nDisallow: /checkout\nSitemap: https://www.muxion.in/sitemap.xml\n');
 console.log('Built MUXION preview. Private backend files are excluded.');
