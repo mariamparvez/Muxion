@@ -21,6 +21,10 @@
   ],
   "rewrites": [
     {
+      "source": "/social-work",
+      "destination": "/social-work/index.html"
+    },
+    {
       "source": "/((?!api(?:/|$)|assets(?:/|$))[^.]*)",
       "destination": "/index.html"
     }
