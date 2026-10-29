@@ -1,0 +1,42 @@
+html,body{overflow-x:clip}
+.build-page{overflow-x:clip}
+.build-scroll-story{position:relative;z-index:31;margin:0 calc(50% - 50vw);background:#090e19;color:#eef2fa;overflow:clip}
+.build-scroll-track{height:500svh;position:relative}
+.build-scroll-sticky{position:sticky;top:0;height:100svh;min-height:560px;overflow:hidden;isolation:isolate;background:#030507}
+.build-scroll-sticky:before,.build-scroll-sticky:after{content:"";position:absolute;pointer-events:none;border:1px solid #e5ce641c;border-radius:50%;width:72vmin;aspect-ratio:1;left:50%;top:50%;transform:translate(-50%,-50%);z-index:-1}
+.build-scroll-sticky:after{width:94vmin;border-color:#91c4ab12}
+.build-scroll-bottom{position:absolute;z-index:10;left:clamp(20px,5vw,76px);right:clamp(20px,5vw,76px);display:flex;align-items:center;justify-content:space-between;gap:24px;color:#b5c3d5;font-size:9px;letter-spacing:.15em;text-transform:uppercase}
+.build-scroll-bottom{bottom:clamp(20px,4vh,42px);font-size:9px}
+.build-scroll-progress{height:1px;background:#415066;flex:1;max-width:180px;overflow:hidden}
+.build-scroll-progress i{display:block;width:100%;height:100%;background:#e5ce64;transform:scaleX(0);transform-origin:left center;will-change:transform}
+.build-scroll-stage{position:absolute;inset:0;overflow:hidden;perspective:1800px;perspective-origin:50% 50%;transform-style:preserve-3d;--scroll-position:0;--final-zoom:0;--scroll-progress:0}
+.build-scroll-frame{display:block;position:absolute;left:50%;top:50%;width:min(55vw,1080px);height:min(27.5vw,540px);aspect-ratio:2/1;margin:0;padding:0;background:#f7f7f6;color:#111923;border:1px solid #e5ce6450;border-radius:14px;box-shadow:0 34px 100px #000c;overflow:hidden;text-decoration:none;transform:none;transform-origin:center;will-change:transform,opacity;backface-visibility:hidden;transition:box-shadow .25s ease}
+.build-scroll-frame:focus-visible{outline:3px solid #91c4ab;outline-offset:5px}
+.build-scroll-frame img{display:block;width:100%;height:100%;object-fit:contain;background:#f7f7f6}
+.build-impact{position:absolute;inset:0;z-index:6;display:grid;place-items:center;padding:clamp(38px,7vh,88px) clamp(22px,7vw,110px);color:#f4f5f7;visibility:hidden;pointer-events:none;isolation:isolate}
+.build-impact-backdrop{position:absolute;inset:0;background:#030507}
+.build-impact-inner{position:relative;z-index:1;width:min(100%,1480px);margin:auto;opacity:0;visibility:hidden}
+.build-impact .eyebrow{color:#91c4ab}
+.build-impact h2{font-size:clamp(40px,7vw,96px);line-height:.98;letter-spacing:-.065em;margin:20px 0 clamp(54px,10vh,110px);max-width:9ch}
+.build-impact-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid #303743;border-bottom:1px solid #303743}
+.build-impact-metrics article{min-height:250px;padding:clamp(28px,5vw,72px) clamp(18px,3vw,44px);border-right:1px solid #303743;display:flex;flex-direction:column;justify-content:space-between;gap:30px}
+.build-impact-metrics article:first-child{padding-left:0}
+.build-impact-metrics article:last-child{border-right:0;padding-right:0}
+.build-impact-metrics strong{font-size:clamp(64px,10vw,148px);font-weight:600;line-height:.8;letter-spacing:-.085em;font-variant-numeric:tabular-nums;color:#e5ce64;white-space:nowrap}
+.build-impact-metrics strong .build-impact-plus{font-size:.62em;color:inherit;vertical-align:baseline;letter-spacing:-.06em;margin-left:.035em}
+.build-impact-metrics p{margin:0;color:#c3cbd6;font-size:clamp(14px,1.6vw,20px);letter-spacing:-.02em}
+.build-impact-terms{margin:12px 0 0;color:#8c96a3;font-size:9px;letter-spacing:.035em;text-align:right}
+.build-scroll-track.is-static{height:auto}
+.build-scroll-track.is-static .build-scroll-sticky{position:relative;height:auto;min-height:0;padding:86px 22px 64px;overflow:visible}
+.build-scroll-track.is-static .build-scroll-stage{position:relative;inset:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;overflow:visible}
+.build-scroll-track.is-static .build-scroll-frame{position:relative;left:auto;top:auto;width:100%;height:auto;aspect-ratio:1.9;margin:0;transform:none;visibility:visible}
+.build-scroll-track.is-static .build-impact{position:relative;inset:auto;min-height:0;height:auto;margin-top:24px;padding:64px 36px;background:#030507;visibility:visible;opacity:1}
+.build-scroll-track.is-static .build-impact-backdrop{opacity:1!important}
+.build-scroll-track.is-static .build-impact-inner{opacity:1!important;visibility:visible!important}
+.build-scroll-track.is-static .build-scroll-frame img{height:100%}
+.build-scroll-track.is-static .build-scroll-frame:last-child{grid-column:1/-1;width:calc(50% - 10px)}
+.build-scroll-track.is-static .build-scroll-top,.build-scroll-track.is-static .build-scroll-bottom{position:relative;inset:auto;margin:0 0 28px}
+.build-scroll-track.is-static .build-scroll-bottom{margin:28px 0 0}
+@media(max-width:760px){.build-scroll-track{height:500svh}.build-scroll-sticky{height:100svh;min-height:520px}.build-scroll-frame{width:min(84vw,600px);height:auto;aspect-ratio:2/1;border-radius:10px}.build-scroll-bottom{left:16px;right:16px;font-size:7px;gap:8px}.build-scroll-bottom>span:last-child{display:none}.build-scroll-progress{max-width:64px}.build-impact{padding:28px 22px}.build-impact h2{font-size:clamp(42px,12vw,68px);margin-bottom:34px}.build-impact-metrics{grid-template-columns:1fr}.build-impact-metrics article,.build-impact-metrics article:first-child,.build-impact-metrics article:last-child{min-height:0;padding:22px 0;display:grid;grid-template-columns:1fr auto;align-items:end;gap:10px;border-right:0;border-bottom:1px solid #303743}.build-impact-metrics article:last-child{border-bottom:0}.build-impact-metrics strong{font-size:clamp(52px,14vw,86px);grid-row:span 2}.build-impact-metrics p{max-width:130px;text-align:right;font-size:13px}.build-scroll-track.is-static .build-scroll-sticky{height:auto;padding:76px 18px 48px}.build-scroll-track.is-static .build-scroll-stage{grid-template-columns:1fr}.build-scroll-track.is-static .build-scroll-frame,.build-scroll-track.is-static .build-scroll-frame:last-child{grid-column:auto;width:100%;aspect-ratio:1.45}.build-scroll-track.is-static .build-impact{padding:38px 22px}}
+@media(max-height:620px) and (min-width:761px){.build-scroll-sticky{min-height:100svh}.build-scroll-frame{height:min(72svh,27.5vw)}.build-impact-metrics article{min-height:190px}}
+@media(prefers-reduced-motion:reduce){.build-scroll-frame,.build-scroll-progress i{will-change:auto}}

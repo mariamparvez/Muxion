@@ -28,7 +28,11 @@ export async function latestPaymentReceipt() {
 export async function startRazorpayCheckout({items, amount}) {
   if(!currentUser)throw new Error('Sign in before purchasing.');
   const config = await api('/api/payment-config');
-  if (!config.enabled) throw new Error('Payments are not configured on the backend yet.');
+  if (!config.enabled) {
+    const reason = config.reason || (!config.enrolmentReady ? 'database_not_configured' : 'razorpay_not_configured');
+    if (reason === 'database_not_configured') throw new Error('Course enrolment is temporarily unavailable because the learner database is not connected. No payment was started.');
+    throw new Error('Online payments are temporarily unavailable because Razorpay is not configured on the server. No payment was started. Please contact hello@muxion.in.');
+  }
   await loadCheckout();
   const request = JSON.stringify(items);
   if (!pendingRequests.has(request)) pendingRequests.set(request, crypto.randomUUID());

@@ -18,12 +18,13 @@ export function createHandler(payments,platform=null) {
       if(action==='catalogue'&&req.method==='GET'){const offers=platform?await platform.catalog():seedOffers();return res.status(200).json({offers:offers.filter(o=>o.status==='Published').map(publicOffer)});}
       if(action==='mentorship-offers'&&req.method==='GET')return res.status(200).json({offers:learning?await learning.offers():[]});
       if(action==='certificate-verify'&&req.method==='GET'){if(!learning)throw new PaymentError(503,'Verification is temporarily unavailable.');return res.status(200).json({certificate:await learning.certificate(req.query?.id||'')});}
-      if(!payments)throw new PaymentError(503,'Payment credentials are not configured on the server.');
       if(action==='payment-config'&&req.method==='GET'){
+        if(!payments)return res.status(200).json({enabled:false,paymentsConfigured:false,enrolmentReady:!!platform,mode:'unavailable',enrolment:platform?'connected':'not-connected',requiresSignIn:true,reason:'razorpay_not_configured'});
         const raw=(req.headers.cookie||'').split(';').map(s=>s.trim()).find(s=>s.startsWith(cookieName+'='))?.slice(cookieName.length+1);let s=payments.untoken(raw);if(!s||!/^[a-f0-9]{64}$/.test(s.sid||''))s={sid:payments.newSession()};
         res.setHeader('Set-Cookie',`${cookieName}=${payments.token(s)}; Path=/api; HttpOnly; Secure; SameSite=Strict; Max-Age=2592000`);
-        return res.status(200).json({enabled:!!platform,mode:payments.mode,key_id:payments.keyId,enrolment:platform?'connected':'not-connected',requiresSignIn:true});
+        return res.status(200).json({enabled:!!platform,paymentsConfigured:true,enrolmentReady:!!platform,mode:payments.mode,key_id:payments.keyId,enrolment:platform?'connected':'not-connected',requiresSignIn:true,reason:platform?null:'database_not_configured'});
       }
+      if(!payments)throw new PaymentError(503,'Payment credentials are not configured on the server.');
       if(!platform)throw new PaymentError(503,'The account database is not configured yet. No payment will be started.');
       const actor=await platform.identity(req.headers.authorization);
       if(action==='account'&&req.method==='GET')return res.status(200).json({...await platform.account(actor),workspace:await learning.snapshot(actor)});
