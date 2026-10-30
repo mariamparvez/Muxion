@@ -31,7 +31,6 @@ export function buildScrollShowcase() {
             <p class="build-impact-terms">Standard terms apply.</p>
           </div>
         </section>
-        <div class="build-scroll-bottom"><span data-build-scroll-hint>Scroll to explore</span><span class="build-scroll-progress"><i data-build-scroll-progress></i></span><span>DESIGN · BUILD · DEPLOY</span></div>
       </div>
     </div>
   </section>`;
@@ -50,8 +49,6 @@ export function enhanceBuildScroll() {
   const impactBackdrop = track.querySelector('[data-build-impact-backdrop]');
   const impactContent = track.querySelector('[data-build-impact-content]');
   const countNodes = [...track.querySelectorAll('[data-count]')];
-  const progressBar = track.querySelector('[data-build-scroll-progress]');
-  const hint = track.querySelector('[data-build-scroll-hint]');
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
   let raf = 0;
   let countStartedAt = 0;
@@ -151,8 +148,6 @@ export function enhanceBuildScroll() {
       countStartedAt = 0;
       countRaf = requestAnimationFrame(countUp);
     }
-    progressBar.style.transform = `scaleX(${progress})`;
-    hint.textContent = progress < 0.02 ? 'Scroll to explore' : progress >= 0.925 ? '' : 'Keep scrolling';
   };
   const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
   const staticMode = () => {
@@ -162,8 +157,6 @@ export function enhanceBuildScroll() {
       countRaf = 0;
       frames.forEach((frame, index) => { frame.style.transform = ''; frame.classList.toggle('is-current', index === 0); frame.setAttribute('aria-hidden', 'false'); frame.tabIndex = 0; frame.style.pointerEvents = 'auto'; });
       frames.forEach(frame => { frame.style.opacity = '1'; });
-      progressBar.style.transform = 'scaleX(1)';
-      hint.textContent = 'Explore the work';
       impactBackdrop.style.opacity = '1';
       impact.style.visibility = 'visible';
       impactContent.style.opacity = '1';
