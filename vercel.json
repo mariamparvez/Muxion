@@ -21,6 +21,14 @@
   ],
   "rewrites": [
     {
+      "source": "/blog",
+      "destination": "/blog/index.html"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/blog/:slug/index.html"
+    },
+    {
       "source": "/social-work",
       "destination": "/social-work/index.html"
     },
@@ -28,5 +36,13 @@
       "source": "/((?!api(?:/|$)|assets(?:/|$))[^.]*)",
       "destination": "/index.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/about",
+      "destination": "/#about-muxion",
+      "permanent": true
+    }
   ]
 }
+
