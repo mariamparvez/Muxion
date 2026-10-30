@@ -237,3 +237,25 @@ body[data-theme=build] .nav.container,body[data-theme=build] .footer>.container{
 .about-intro-copy p{font-size:14px;line-height:1.75;color:#bdc5d0;margin-top:14px}
 .personal-about-page .about-introduction+.about-motherhood.section{border-top:1px solid #ffffff12;padding-top:32px}
 @media(max-width:800px){.about-introduction{grid-template-columns:minmax(0,1fr);gap:20px;padding-bottom:24px}.about-intro-photo{max-width:none}.about-intro-photo img{height:280px;object-position:50% 65%}.about-intro-copy h1{font-size:32px;margin-bottom:14px}.about-intro-copy p{font-size:13px;line-height:1.7;margin-top:12px}.personal-about-page .about-introduction+.about-motherhood.section{padding-top:24px}}
+/* A warm editorial story: arched portrait, botanical detail and readable copy. */
+.personal-about-page{padding:28px 0 0}
+.personal-about-breadcrumb,.personal-about-page .about-introduction{margin-inline:var(--home-gutter)}
+.personal-about-page .about-motherhood.motherhood-editorial.section{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);align-items:center;gap:clamp(28px,4vw,64px);padding:48px var(--home-gutter);margin:0;border:0;border-radius:0;background:#f4f0e6;background-image:radial-gradient(ellipse at 8% 20%,#e5ce6420,transparent 60%);color:#252a25;isolation:isolate}
+.motherhood-editorial .motherhood-visual{position:relative;width:min(100%,470px);min-width:0;padding:12px 18px 0;justify-self:center}
+.personal-about-page .motherhood-editorial .motherhood-photo{position:relative;margin:0;width:100%;height:auto;min-height:0;max-height:none;border:0;border-radius:0;background:transparent;overflow:visible}
+.motherhood-editorial .motherhood-portrait{height:clamp(420px,40vw,560px);overflow:hidden;border-radius:50% 50% 7px 7px / 36% 36% 7px 7px;background:#e5ddc7}
+.personal-about-page .motherhood-editorial .motherhood-photo img{position:static;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;transform:none}
+.motherhood-editorial .motherhood-botanical{position:absolute;z-index:2;left:-12px;top:-22px;width:clamp(130px,15vw,200px);height:auto;overflow:visible;transform:rotate(-10deg);transform-origin:55% 75%;pointer-events:none;transition:transform .8s ease}
+.personal-about-page .motherhood-editorial .motherhood-photo figcaption{position:static;display:flex;justify-content:center;align-items:baseline;gap:7px;padding:14px 0 0;background:none;color:#525849;line-height:1.5}
+.motherhood-editorial .motherhood-photo figcaption>span{display:inline;margin:0;font-size:12px;letter-spacing:0;color:#525849}
+.motherhood-editorial .motherhood-photo figcaption strong{display:inline;font-size:16px;line-height:1.5;font-weight:600;letter-spacing:-.025em;color:#30382b}
+.motherhood-editorial .motherhood-story{max-width:62ch;min-width:0;padding:0}
+.personal-about-page .motherhood-editorial #motherhood-title{font-size:clamp(32px,3.3vw,50px);line-height:1.12;font-weight:600;letter-spacing:-.055em;margin:0 0 22px;color:#202720}
+.personal-about-page .motherhood-editorial #motherhood-title span{color:#80651c;background:linear-gradient(transparent 76%,#e5ce6455 76%,#e5ce6455 94%,transparent 94%)}
+.personal-about-page .motherhood-editorial p{font-size:clamp(14px,1.05vw,15px);line-height:1.8;color:#53574f;margin:17px 0 0}
+.personal-about-page .motherhood-editorial p.motherhood-intro{font-size:clamp(15px,1.15vw,17px);font-weight:500;line-height:1.7;color:#2e372d;margin-top:0}
+@media(hover:hover) and (pointer:fine){.motherhood-editorial:hover .motherhood-botanical{transform:rotate(-5deg)}}
+@media(max-width:850px){.personal-about-page .about-motherhood.motherhood-editorial.section{grid-template-columns:minmax(0,1fr);gap:24px;padding-block:32px}.motherhood-editorial .motherhood-visual{width:min(100%,390px);padding:8px 12px 0}.motherhood-editorial .motherhood-portrait{height:420px}.motherhood-editorial .motherhood-botanical{width:145px;left:-4px;top:-8px}.motherhood-editorial .motherhood-story{max-width:65ch;justify-self:center}.personal-about-page .motherhood-editorial #motherhood-title{font-size:38px;margin-bottom:18px}}
+@media(max-width:600px){.personal-about-page{padding-top:20px}.personal-about-page .about-motherhood.motherhood-editorial.section{padding-block:28px;gap:20px}.motherhood-editorial .motherhood-visual{width:min(100%,340px);padding-inline:10px}.motherhood-editorial .motherhood-portrait{height:360px}.motherhood-editorial .motherhood-botanical{width:120px;left:-3px;top:-7px}.personal-about-page .motherhood-editorial #motherhood-title{font-size:clamp(30px,8.4vw,36px);line-height:1.14;margin-bottom:17px}.personal-about-page .motherhood-editorial p{font-size:13px;line-height:1.75;margin-top:14px}.personal-about-page .motherhood-editorial p.motherhood-intro{font-size:14px;line-height:1.7}.personal-about-page .motherhood-editorial .motherhood-photo figcaption{padding-top:11px}.motherhood-editorial .motherhood-photo figcaption strong{font-size:15px}}
+@media(prefers-reduced-motion:reduce){.motherhood-editorial .motherhood-botanical{transition:none;transform:rotate(-10deg)}}
+
