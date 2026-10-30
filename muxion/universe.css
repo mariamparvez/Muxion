@@ -60,3 +60,7 @@ body[data-theme=build] .live-dot{background:#e5ce64}
 .universe .universe-services{background:#10151e;border:1px solid #ffffff12;border-radius:24px;padding-inline:clamp(24px,4vw,48px);margin-block:40px}.universe .universe-approach{background:#14171a;border-block:1px solid #e5ce6424;padding-inline:clamp(24px,4vw,48px);border-radius:24px;margin-block:40px}.universe .universe-voices{background:#10141b;border:1px solid #ffffff12;border-radius:24px;padding-inline:clamp(20px,3vw,40px);margin-block:40px}
 @media(max-width:700px){.mariam-section{padding:20px;border-radius:22px;margin-block:28px}.universe .social-showcase{padding-inline:12px}.mariam-section .about-motherhood.section{padding:16px}.universe .universe-services,.universe .universe-approach{padding-inline:20px}.universe .universe-voices{padding-inline:12px}}
 
+/* Keep Mariam's personal story in the flow without a nested card. */
+.mariam-section .about-motherhood.section{margin:clamp(40px,6vw,72px) 0 0;padding:clamp(32px,5vw,56px) 0 0;background:transparent;border:0;border-top:1px solid #e5ce6466;border-radius:0;overflow:visible}
+.mariam-section .about-motherhood:after{display:none}
+
