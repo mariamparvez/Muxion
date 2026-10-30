@@ -226,3 +226,14 @@ body[data-theme=build] .nav.container,body[data-theme=build] .footer>.container{
 .personal-about-page #motherhood-title{font-size:clamp(32px,3.6vw,48px);line-height:1.14;letter-spacing:-.045em;margin:0 0 18px;color:#f3f6fc}
 .personal-about-page #motherhood-title span{color:#e5ce64}
 @media(max-width:700px){.personal-about-page{padding-block:20px 28px}.personal-about-breadcrumb{margin-bottom:18px}.personal-about-page #motherhood-title{font-size:32px}}
+
+/* A concise introduction and a previously unused portrait for About. */
+.about-introduction{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:center;gap:32px;padding-bottom:32px}
+.about-intro-photo{margin:0;min-width:0;overflow:hidden;border-radius:10px;max-width:440px}
+.about-intro-photo img{display:block;width:100%;height:330px;object-fit:cover;object-position:50% 70%}
+.about-intro-copy{min-width:0;max-width:74ch}
+.about-intro-copy h1{font-size:clamp(32px,3.6vw,48px);line-height:1.15;letter-spacing:-.045em;margin-bottom:18px}
+.about-intro-copy h1 span{color:#e5ce64}
+.about-intro-copy p{font-size:14px;line-height:1.75;color:#bdc5d0;margin-top:14px}
+.personal-about-page .about-introduction+.about-motherhood.section{border-top:1px solid #ffffff12;padding-top:32px}
+@media(max-width:800px){.about-introduction{grid-template-columns:minmax(0,1fr);gap:20px;padding-bottom:24px}.about-intro-photo{max-width:none}.about-intro-photo img{height:280px;object-position:50% 65%}.about-intro-copy h1{font-size:32px;margin-bottom:14px}.about-intro-copy p{font-size:13px;line-height:1.7;margin-top:12px}.personal-about-page .about-introduction+.about-motherhood.section{padding-top:24px}}
