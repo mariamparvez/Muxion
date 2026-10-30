@@ -47,7 +47,7 @@ let dispose=()=>{};
 export function enhanceSocialPortfolio(){
  dispose();const abort=new AbortController(),signal=abort.signal;const disposers=[];const on=(target,type,fn,options={})=>target?.addEventListener(type,fn,{...options,signal});
  const fan=document.querySelector('.social-fan');let navigationTimer;
- if(fan){const open=()=>fan.classList.add('is-open'),close=()=>fan.classList.remove('is-open');on(fan,'pointerenter',open);on(fan,'focusin',open);on(fan,'pointerdown',open);on(window,'scroll',close,{passive:true});on(fan,'keydown',event=>{if(event.key==='Escape')close()});on(fan,'click',event=>{const card=event.target.closest('[data-design-link]');if(!card||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;event.preventDefault();fan.querySelectorAll('.is-selected').forEach(el=>el.classList.remove('is-selected'));card.classList.add('is-selected');navigationTimer=setTimeout(()=>navigate(card.getAttribute('href')),matchMedia('(prefers-reduced-motion: reduce)').matches?0:280);});}
+ if(fan){const open=()=>fan.classList.add('is-open'),close=()=>fan.classList.remove('is-open');const visibility=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.intersectionRatio>=.5)open();else if(!entry.isIntersecting||entry.intersectionRatio<=.2)close();}},{rootMargin:'-88px 0px -8% 0px',threshold:[0,.2,.5]});visibility.observe(fan);disposers.push(()=>visibility.disconnect());on(fan,'focusin',open);on(fan,'keydown',event=>{if(event.key==='Escape')close()});on(fan,'click',event=>{const card=event.target.closest('[data-design-link]');if(!card||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;event.preventDefault();fan.querySelectorAll('.is-selected').forEach(el=>el.classList.remove('is-selected'));card.classList.add('is-selected');navigationTimer=setTimeout(()=>navigate(card.getAttribute('href')),matchMedia('(prefers-reduced-motion: reduce)').matches?0:280);});}
  const gallery=document.querySelector('.social-scroll-gallery'),track=gallery?.querySelector('.social-work-track');let frame=0;
  if(gallery&&track){const cycle=track.querySelector('.social-work-cycle'),stage=gallery.querySelector('.social-gallery-stage');let travel=0,offset=0,lastY=scrollY,start=0,end=0;const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  const measure=()=>{travel=cycle.getBoundingClientRect().width;start=gallery.getBoundingClientRect().top+scrollY-88;const distance=reduced.matches?0:travel*.7;gallery.style.height=reduced.matches?'auto':`${distance+stage.offsetHeight}px`;end=start+distance;lastY=scrollY;};
@@ -69,3 +69,4 @@ export function enhanceSocialPortfolio(){
  }
  dispose=()=>{abort.abort();clearTimeout(navigationTimer);cancelAnimationFrame(frame);disposers.forEach(fn=>fn());};
 }
+
