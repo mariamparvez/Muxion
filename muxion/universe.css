@@ -52,23 +52,129 @@ body[data-theme=learning]{--blue:#91c4ab;--action:#91c4ab}
 /* Build uses yellow, white and charcoal; service cards keep their own identities. */
 body[data-theme=build] .experience-heading h2 span,body[data-theme=build] .experience-index,body[data-theme=build] .social-project-credit,body[data-theme=build] .universe-principles>div>span{color:#e5ce64}
 body[data-theme=build] .live-dot{background:#e5ce64}
-.universe .social-showcase{background:#10141b;border-color:#e5ce6424;border-radius:24px;padding-inline:clamp(16px,3vw,40px);margin-block:36px}
-.build-page .container>section:first-child:not(.mariam-section){background:#11151b;border:1px solid #ffffff12;border-radius:24px;padding:clamp(24px,4vw,48px);margin-block:36px}
-.mariam-section{background:#171717;border:1px solid #e5ce6433;border-radius:28px;padding:clamp(24px,4vw,48px);margin-block:48px;scroll-margin-top:110px}
-.mariam-section .mariam-profile{padding-top:0}.mariam-section .experience-section{padding-bottom:38px}.mariam-section .about-motherhood.section{background:#101010;border:1px solid #e5ce6429;margin-top:16px;color:#f1f5f9}
-.mariam-section .about-motherhood h2,.mariam-section .about-motherhood p.motherhood-intro{color:#f1f5f9}.mariam-section .about-motherhood h2 span,.mariam-section .motherhood-kicker,.mariam-section .motherhood-signature>span{color:#e5ce64}.mariam-section .about-motherhood p,.mariam-section .motherhood-signature small,.mariam-section .motherhood-number{color:#bec2c8}.mariam-section .motherhood-signature{border-color:#e5ce6433}.mariam-section .about-motherhood .motherhood-photo{background:#181818}
-.universe .universe-services{background:#10151e;border:1px solid #ffffff12;border-radius:24px;padding-inline:clamp(24px,4vw,48px);margin-block:40px}.universe .universe-approach{background:#14171a;border-block:1px solid #e5ce6424;padding-inline:clamp(24px,4vw,48px);border-radius:24px;margin-block:40px}.universe .universe-voices{background:#10141b;border:1px solid #ffffff12;border-radius:24px;padding-inline:clamp(20px,3vw,40px);margin-block:40px}
-@media(max-width:700px){.mariam-section{padding:20px;border-radius:22px;margin-block:28px}.universe .social-showcase{padding-inline:12px}.mariam-section .about-motherhood.section{padding:16px}.universe .universe-services,.universe .universe-approach{padding-inline:20px}.universe .universe-voices{padding-inline:12px}}
-
-/* Keep Mariam's personal story in the flow without a nested card. */
-.mariam-section .about-motherhood.section{margin:clamp(40px,6vw,72px) 0 0;padding:clamp(32px,5vw,56px) 0 0;background:transparent;border:0;border-top:1px solid #e5ce6466;border-radius:0;overflow:visible}
+/* A single page grid: section bands have one gutter and no nested frames. */
+body[data-theme=build],.universe{--home-gutter:clamp(16px,2.5vw,48px)}
+body[data-theme=build] .nav.container,body[data-theme=build] .footer>.container{width:calc(100% - 2 * var(--home-gutter));max-width:none}
+.universe-content{width:100%;margin:0}
+.universe-content>*{min-width:0}
+.universe-content>section{width:100%;max-width:none;padding:36px var(--home-gutter);margin:0;border:0;border-radius:0;box-shadow:none}
+.universe-content .section-head{margin-bottom:22px;gap:20px}
+.universe-content .section-head>*{min-width:0}
+.universe-content h2{font-size:clamp(28px,3.2vw,44px);line-height:1.16;overflow-wrap:break-word}
+.universe-content .eyebrow{margin-bottom:14px}
+.universe-content>.universe-hero{min-height:0;padding-block:42px;gap:28px}
+.universe-content>.build-scroll-story{padding:0;margin:0;background:#030507}
+.universe-content>.social-showcase{background:#0d121b;padding-block:32px}
+.universe-content>.build-offer{background:#10131a}
+.build-offer .grid3{grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.build-offer .format-card{min-width:0;border:0;border-radius:0;box-shadow:none;background:transparent;padding:10px 0;gap:12px;grid-template-rows:auto auto 1fr;transform:none}
+.build-offer .format-card:before,.build-offer .card-glyph{display:none}
+.build-offer .format-card h3{font-size:clamp(21px,2vw,27px);min-height:0;line-height:1.3}
+.build-offer .format-card p{max-width:none;font-size:14px;line-height:1.65}
+.build-offer .format-card>svg{color:#e5ce64;width:25px;height:25px}
+.universe-content>.universe-services{background:#0b1019}
+.universe .universe-service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch;margin:0;padding:0}
+.universe-service.service-build{display:flex;grid-column:auto}
+.universe .universe-service{min-width:0;border:0;border-radius:0;box-shadow:none}
+.universe .service-top{padding:18px 18px 0;font-size:10px}
+.universe .service-illustration{height:150px;min-height:0;max-height:150px;order:0}
+.universe .service-build-art{grid-column:auto;grid-row:auto;flex:none;padding:0 18px}
+.universe .service-build-art>.service-scene{max-height:150px;max-width:250px}
+.universe .universe-service .service-copy{padding:18px;gap:0;grid-column:auto;grid-row:auto;order:0}
+.universe .service-copy h3{font-size:clamp(26px,2.4vw,34px);margin-bottom:12px}
+.universe .service-copy p{font-size:13px;line-height:1.65}
+.universe .service-tags{gap:6px;margin:14px 0 18px}
+.universe .service-tags>span{font-size:10px;padding:4px 7px}
+.universe .service-link{font-size:12px}
+.universe-content>.universe-approach{background:#10141b;gap:36px}
+.universe .universe-approach>div>p{margin:14px 0;font-size:14px;line-height:1.7}
+.universe .universe-principles>div{padding:14px 0;gap:18px;border-bottom:1px solid #ffffff12}
+.universe .universe-principles>div:last-child{border-bottom:0}
+.universe .universe-principles h3{font-size:22px}
+.universe .universe-principles p{margin-top:5px;line-height:1.6}
+.universe-content>.universe-voices{background:#0b1019}
+.universe-content>.universe-cta{background:#171913}
+.universe .universe-final{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);align-items:center;gap:32px;min-height:0;margin:0;padding:0;border:0;border-radius:0;background:transparent;overflow:visible}
+.universe-final h2,.universe-final p{max-width:100%}
+.universe-final h2 span{color:#e5ce64}
+.universe-final p{margin:14px 0}
+.universe-final .hero-ctas{margin:18px 0 0;max-width:none;gap:12px 20px;align-items:center}
+.universe-final-art{width:100%;max-width:420px;justify-self:center}
+.idea-vector{display:block;width:100%;height:auto;overflow:visible}
+.idea-browser,.idea-pen,.idea-cursor{transform-box:fill-box;transform-origin:center;transition:transform .45s ease}
+.idea-route{animation:idea-route 12s linear infinite}
+.idea-curve{stroke-dasharray:180;stroke-dashoffset:0;animation:idea-sketch 5s ease-in-out infinite}
+@keyframes idea-route{to{stroke-dashoffset:-112}}
+@keyframes idea-sketch{0%,100%{stroke-dashoffset:0}50%{stroke-dashoffset:35}}
+@media(hover:hover){.universe-final:hover .idea-pen{transform:translate(-8px,6px) rotate(-5deg)}.universe-final:hover .idea-browser{transform:translateY(-4px)}.universe-final:hover .idea-cursor{transform:translate(8px,-10px)}}
+.universe-content>.mariam-section{background:#141518;scroll-margin-top:88px}
+.mariam-section .mariam-profile.section{padding:0;margin:0;border:0}
+.mariam-section .tutor-banner{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:32px}
+.mariam-section .tutor-banner>div{min-width:0}
+.mariam-section .tutor-banner p{font-size:14px;line-height:1.75;margin:14px 0}
+.mariam-section .build-founder-photo{height:360px;border:0;border-radius:10px}
+.mariam-section .experience-section{padding:26px 0 0;margin:26px 0 0;border:0}
+.mariam-section .experience-heading{gap:32px;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+.mariam-section .experience-heading h2{font-size:clamp(28px,3.1vw,42px)}
+.mariam-section .experience-heading>p,.mariam-section .experience-disciplines p{font-size:14px;line-height:1.7}
+.mariam-section .experience-clients{margin:24px 0;gap:0;border-color:#ffffff12}
+.mariam-section .experience-clients li{padding:16px 12px 16px 0;border-color:#ffffff12}
+.mariam-section .experience-disciplines{gap:32px;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)}
+.mariam-section .experience-disciplines ul{gap:20px}
+.mariam-section .experience-disciplines h3{margin:12px 0;font-size:30px}
+.mariam-section .experience-disciplines li p{font-size:13px}
+.mariam-section .about-motherhood.section{margin:24px 0 0;padding:24px 0 0;gap:32px;border:0;border-top:1px solid #ffffff12;border-radius:0;background:transparent;overflow:visible}
 .mariam-section .about-motherhood:after{display:none}
-
-/* Homepage order and compact mobile rhythm */
-.universe .universe-approach{border-radius:0;padding-inline:0;margin-block:18px;background:transparent}
-.universe .universe-voices{border:0;border-block:1px solid var(--line);border-radius:0;padding-inline:0;margin-block:16px;background:transparent}
-.universe-final{border-radius:18px}
-@media(max-width:700px){.universe .universe-service-grid{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,82vw);grid-template-columns:none;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;gap:12px;padding:0 14px 10px;margin-inline:-14px}.universe .universe-service{scroll-snap-align:start;min-width:0}.universe .universe-approach{padding:22px 0;gap:10px;margin-block:12px}.universe .universe-approach>div>p{margin:10px 0;font-size:13px;line-height:1.5}.universe .universe-principles>div{gap:12px;padding:12px 0}.universe .universe-principles h3{font-size:18px}.universe .universe-principles p{margin-top:4px}.universe .universe-voices{padding:22px 0;margin-block:10px}.universe .universe-voices .section-head{margin-bottom:12px}.universe .universe-final{padding:22px;margin-block:8px}.mariam-section{padding:18px 14px!important;margin-block:16px!important}.mariam-section .experience-section{padding-block:18px!important}.mariam-section .about-motherhood.section{margin-top:16px;padding-top:18px}.mariam-section .tutor-banner{gap:18px}.mariam-section .experience-disciplines{gap:16px}.mariam-section .experience-clients{gap:10px}}
-
-.universe .universe-approach{border-radius:0;padding-inline:0}
-@media(max-width:700px){.universe .universe-service-grid{grid-auto-columns:minmax(260px,82vw)}.universe .universe-approach{padding-inline:0!important}}
+.mariam-section .about-motherhood .motherhood-photo{min-height:380px;max-height:560px;border:0;border-radius:10px;background:#1b1d1e}
+.mariam-section .motherhood-story{padding:0}
+.mariam-section .about-motherhood h2{margin:0 0 16px;color:#f3f6fc;font-size:clamp(30px,3.2vw,43px)}
+.mariam-section .about-motherhood h2 span{color:#e5ce64}
+.mariam-section .about-motherhood p{margin-top:14px;color:#bdc5d0;font-size:14px;line-height:1.75}
+.mariam-section .about-motherhood p.motherhood-intro{font-size:15px;line-height:1.7;color:#f3f6fc;margin-top:0}
+@media(max-width:900px){.universe-content>.universe-hero{gap:18px}.universe .universe-service-grid{gap:12px}.universe .service-top{padding:14px 14px 0;font-size:9px}.universe .universe-service .service-copy{padding:14px}.universe .service-copy h3{font-size:26px}.universe .service-illustration{height:130px;max-height:130px}.universe .service-tags{margin-bottom:14px}.mariam-section .tutor-banner{gap:24px}.mariam-section .experience-heading,.mariam-section .experience-disciplines{gap:22px}}
+@media(max-width:700px){
+ .universe-content>section{padding-block:24px}
+ .universe-content>.universe-hero{padding-block:26px;gap:14px;grid-template-columns:minmax(0,1fr)}
+ .universe .universe-art{min-height:0;margin:0;max-width:100%;padding:0}
+ .universe .hero-scene{max-width:300px}
+ .universe .universe-art-caption{min-height:0;padding-top:10px;font-size:8px}
+ .universe-content .section-head{margin-bottom:16px;gap:12px}
+ .universe-content .section-head h2{font-size:30px}
+ .universe-content .section-head p{font-size:13px;line-height:1.6;max-width:100%}
+ .universe-content .eyebrow{font-size:10px;margin-bottom:12px}
+ .build-offer .grid3{grid-template-columns:minmax(0,1fr);gap:4px}
+ .build-offer .format-card{grid-template-columns:28px minmax(0,1fr);grid-template-rows:auto auto;column-gap:12px;row-gap:6px;padding:14px 0}
+ .build-offer .format-card>svg{grid-row:1/3;width:22px;height:22px;margin-top:3px}
+ .build-offer .format-card h3{font-size:23px;grid-column:2}
+ .build-offer .format-card p{grid-column:2;font-size:13px;line-height:1.65}
+ .universe .universe-service-grid{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:calc(100vw - 2 * var(--home-gutter) - 24px);overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;gap:12px;padding:0 0 8px;max-width:100%}
+ .universe .universe-service{scroll-snap-align:start}
+ .universe .service-top{padding:14px 16px 0}
+ .universe .universe-service .service-copy{padding:16px}
+ .universe .service-copy h3{font-size:28px}
+ .universe .service-illustration{height:130px;min-height:0;max-height:130px}
+ .universe-content>.universe-approach{grid-template-columns:minmax(0,1fr);gap:14px}
+ .universe .universe-principles>div{gap:12px;padding:12px 0}
+ .universe .universe-principles h3{font-size:20px}
+ .universe .universe-approach>div>p{margin:12px 0;font-size:13px}
+ .universe .universe-final{grid-template-columns:minmax(0,1fr);gap:12px}
+ .universe-final .hero-ctas{margin-top:14px}
+ .universe-final-art{max-width:270px}
+ .mariam-section .tutor-banner{grid-template-columns:minmax(0,1fr);gap:18px}
+ .mariam-section .build-founder-photo{height:270px}
+ .mariam-section .tutor-banner p{font-size:13px;margin:12px 0}
+ .mariam-section .experience-section{margin-top:24px;padding-top:0}
+ .mariam-section .experience-heading,.mariam-section .experience-disciplines{grid-template-columns:minmax(0,1fr);gap:16px}
+ .mariam-section .experience-heading h2{font-size:30px}
+ .mariam-section .experience-clients{grid-template-columns:repeat(2,minmax(0,1fr));margin:20px 0}
+ .mariam-section .experience-clients strong{font-size:19px;overflow-wrap:break-word}
+ .mariam-section .experience-clients li{padding-block:12px}
+ .mariam-section .experience-disciplines ul{grid-template-columns:minmax(0,1fr);gap:14px}
+ .mariam-section .experience-disciplines h3{font-size:27px}
+ .mariam-section .about-motherhood.section{grid-template-columns:minmax(0,1fr);gap:18px;margin-top:22px;padding-top:22px}
+ .mariam-section .about-motherhood .motherhood-photo{height:340px;min-height:0;max-height:none;width:100%;max-width:none;justify-self:stretch}
+ .mariam-section .about-motherhood h2{font-size:31px}
+ .mariam-section .about-motherhood p{font-size:13px;line-height:1.7}
+ .mariam-section .about-motherhood p.motherhood-intro{font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){.idea-route,.idea-curve{animation:none}.idea-browser,.idea-pen,.idea-cursor{transition:none;transform:none!important}}
