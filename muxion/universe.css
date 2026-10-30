@@ -64,3 +64,11 @@ body[data-theme=build] .live-dot{background:#e5ce64}
 .mariam-section .about-motherhood.section{margin:clamp(40px,6vw,72px) 0 0;padding:clamp(32px,5vw,56px) 0 0;background:transparent;border:0;border-top:1px solid #e5ce6466;border-radius:0;overflow:visible}
 .mariam-section .about-motherhood:after{display:none}
 
+/* Homepage order and compact mobile rhythm */
+.universe .universe-approach{border-radius:0;padding-inline:0;margin-block:18px;background:transparent}
+.universe .universe-voices{border:0;border-block:1px solid var(--line);border-radius:0;padding-inline:0;margin-block:16px;background:transparent}
+.universe-final{border-radius:18px}
+@media(max-width:700px){.universe .universe-service-grid{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,82vw);grid-template-columns:none;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;gap:12px;padding:0 14px 10px;margin-inline:-14px}.universe .universe-service{scroll-snap-align:start;min-width:0}.universe .universe-approach{padding:22px 0;gap:10px;margin-block:12px}.universe .universe-approach>div>p{margin:10px 0;font-size:13px;line-height:1.5}.universe .universe-principles>div{gap:12px;padding:12px 0}.universe .universe-principles h3{font-size:18px}.universe .universe-principles p{margin-top:4px}.universe .universe-voices{padding:22px 0;margin-block:10px}.universe .universe-voices .section-head{margin-bottom:12px}.universe .universe-final{padding:22px;margin-block:8px}.mariam-section{padding:18px 14px!important;margin-block:16px!important}.mariam-section .experience-section{padding-block:18px!important}.mariam-section .about-motherhood.section{margin-top:16px;padding-top:18px}.mariam-section .tutor-banner{gap:18px}.mariam-section .experience-disciplines{gap:16px}.mariam-section .experience-clients{gap:10px}}
+
+.universe .universe-approach{border-radius:0;padding-inline:0}
+@media(max-width:700px){.universe .universe-service-grid{grid-auto-columns:minmax(260px,82vw)}.universe .universe-approach{padding-inline:0!important}}

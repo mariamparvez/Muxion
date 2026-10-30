@@ -16,7 +16,7 @@ export function enhanceUniverse({link,icon}){
  selectedService='build';root.dataset.service='build';document.body.dataset.theme='build';document.querySelectorAll('.brand-label').forEach(el=>el.textContent='BUILD');
  if(art&&!art.dataset.initialized){art.innerHTML=heroArt('build');art.dataset.initialized='true';}
 }
-export function universeHome({link,btn,icon,buildHeroGraphic,buildScrollShowcase,buildHomeSections,portraits,testimonialSlider,testimonials,workTestimonials,socialPortfolioTeaser}) {
+export function universeHome({link,btn,icon,buildHeroGraphic,buildScrollShowcase,buildHomeSections,buildMariamSection,portraits,testimonialSlider,testimonials,workTestimonials,socialPortfolioTeaser}) {
   return `<div class="universe"><div class="container">
     <section class="universe-hero">
       <div class="universe-copy"><div data-hero-copy>${heroCopy('build',link,icon)}</div></div>
@@ -35,6 +35,6 @@ export function universeHome({link,btn,icon,buildHeroGraphic,buildScrollShowcase
     <section class="section universe-approach"><div><div class="eyebrow">SMALL TEAM. WHOLE PICTURE.</div><h2>Human at heart.<br>Made to move you.</h2><p>Whether we’re building your product or helping you understand something new, the approach stays the same: listen closely, make it clear and turn the next step into something real.</p>${link('/#about-muxion',`Meet the people behind MUXION ${icon('arrow')}`,'text-link')}</div><div class="universe-principles">${[['01','Start with you.','Your goals, your questions and the problem worth solving.'],['02','Make it practical.','Clear direction, useful work and feedback you can act on.'],['03','Move forward, together.','One thoughtful step at a time, with people in your corner.']].map(([n,t,p])=>`<div><span>${n}</span><div><h3>${t}</h3><p>${p}</p></div></div>`).join('')}</div></section>
     <section class="section universe-voices"><div class="section-head"><div><div class="eyebrow">WORKING TOGETHER</div><h2>Good work<br>is remembered.</h2></div><p>Notes from people and teams<br>I’ve had the pleasure to work with.</p></div>${testimonialSlider(workTestimonials)}</section>
     <section class="section"><div class="universe-final"><div class="eyebrow">YOUR NEXT MOVE STARTS WITH A HELLO</div><h2>An idea to build?<br>A skill to grow?</h2><p>Tell us where you want to go. Let’s find your way there.</p><div class="hero-ctas">${link('/contact',`Let’s talk ${icon('arrow')}`,'btn yellow')}<a class="text-link" href="https://wa.me/917708100469" target="_blank" rel="noopener">Or say hello on WhatsApp ${icon('external')}</a></div><span aria-hidden="true">✳</span></div></section>
+    ${buildMariamSection()}
   </div></div>`;
 }
-
