@@ -107,17 +107,17 @@ body[data-theme=build] .nav.container,body[data-theme=build] .footer>.container{
 @keyframes idea-route{to{stroke-dashoffset:-112}}
 @keyframes idea-sketch{0%,100%{stroke-dashoffset:0}50%{stroke-dashoffset:35}}
 @media(hover:hover){.universe-final:hover .idea-pen{transform:translate(-8px,6px) rotate(-5deg)}.universe-final:hover .idea-browser{transform:translateY(-4px)}.universe-final:hover .idea-cursor{transform:translate(8px,-10px)}}
-.universe-content>.mariam-section{background:#141518;scroll-margin-top:88px}
+.universe-content>.mariam-section{background:#141518;scroll-margin-top:88px;padding-top:52px}
 .mariam-section .mariam-profile.section{padding:0;margin:0;border:0}
 .mariam-section .tutor-banner{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:32px}
 .mariam-section .tutor-banner>div{min-width:0}
 .mariam-section .tutor-banner p{font-size:14px;line-height:1.75;margin:14px 0}
 .mariam-section .build-founder-photo{height:360px;border:0;border-radius:10px}
-.mariam-section .experience-section{padding:26px 0 0;margin:26px 0 0;border:0}
+.mariam-section .experience-section{padding:64px 0 0;margin:0;border:0}
 .mariam-section .experience-heading{gap:32px;grid-template-columns:minmax(0,1fr)}
 .mariam-section .experience-heading h2{font-size:clamp(28px,3.1vw,42px)}
 .mariam-section .experience-heading>p,.mariam-section .experience-disciplines p{font-size:14px;line-height:1.7}
-.mariam-section .experience-clients{margin:24px 0;gap:0;border-color:#ffffff12}
+.mariam-section .experience-clients{margin:28px 0 36px;gap:0;border-color:#ffffff12}
 .mariam-section .experience-clients li{padding:16px 12px 16px 0;border-color:#ffffff12}
 .mariam-section .experience-disciplines{gap:32px;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)}
 .mariam-section .experience-disciplines ul{gap:20px}
@@ -163,7 +163,7 @@ body[data-theme=build] .nav.container,body[data-theme=build] .footer>.container{
  .mariam-section .tutor-banner{grid-template-columns:minmax(0,1fr);gap:18px}
  .mariam-section .build-founder-photo{height:270px}
  .mariam-section .tutor-banner p{font-size:13px;margin:12px 0}
- .mariam-section .experience-section{margin-top:24px;padding-top:0}
+ .mariam-section .experience-section{margin-top:0;padding-top:40px}
  .mariam-section .experience-heading,.mariam-section .experience-disciplines{grid-template-columns:minmax(0,1fr);gap:16px}
  .mariam-section .experience-heading h2{font-size:30px}
  .mariam-section .experience-clients{grid-template-columns:repeat(2,minmax(0,1fr));margin:20px 0}
@@ -197,3 +197,23 @@ body[data-theme=build] .nav.container,body[data-theme=build] .footer>.container{
 .learning-page .subject-card .learning-contact-actions svg{width:16px;height:16px}
 @media(max-width:700px){.learning-page>.learning-hero{padding-block:24px;gap:24px}.learning-page>.section{padding-block:20px}.learning-page>.learn-tutors{padding-bottom:16px}.learning-page>.learning-subjects{padding-top:16px}.learning-page .section-head{margin-bottom:16px}}
 @media(max-width:350px){.learning-page .subject-card .learning-contact-actions .btn{font-size:11px}}
+
+/* Review refinements: compact breathing room and readable tuition cards. */
+.universe-services .service-heading-note{max-width:none;margin-top:12px;font-size:14px;line-height:1.6}
+.learning-subjects .grid3{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+.learning-page .subject-card{padding:20px;min-height:0}
+.learning-page .subject-art{height:140px;margin:-20px -20px 14px}
+.learning-page .subject-icon{margin-top:-30px}
+.learning-page .subject-card>h3{margin:12px 0 8px!important}
+.learning-page .subject-card>p.muted{min-height:42px;line-height:1.6}
+.learning-page .subject-pricing{margin:14px 0!important}
+.learning-page .subject-card .learning-contact-actions{margin-top:8px}
+.learning-page .subject-card .learning-contact-actions:has(> :only-child){grid-template-columns:minmax(0,1fr)}
+@media(max-width:1050px){.learning-subjects .grid3{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:calc((100% - 18px)/2);overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding-bottom:8px}.learning-page .subject-card{scroll-snap-align:start;min-width:0}}
+@media(max-width:700px){.universe-content>.mariam-section{padding-top:36px}.mariam-section .experience-clients{margin-bottom:28px}.universe-services .service-heading-note{font-size:13px;margin-top:10px}}
+@media(max-width:600px){.learning-subjects .grid3{grid-auto-columns:calc(100% - 20px);gap:12px}}
+
+/* Scroll-bound portrait and headline movement, without extra scroll height. */
+.mariam-profile.has-parallax .build-founder-photo img{height:calc(100% + 56px);margin-top:-28px;will-change:transform}
+.mariam-profile.has-parallax #about-muxion-title{will-change:transform}
+@media(prefers-reduced-motion:reduce){.mariam-profile.has-parallax .build-founder-photo img{height:100%;margin-top:0;transform:none!important}.mariam-profile #about-muxion-title{transform:none!important;will-change:auto}}
