@@ -230,7 +230,7 @@ body[data-theme=build] .nav.container,body[data-theme=build] .footer>.container{
 /* A concise introduction and a previously unused portrait for About. */
 .about-introduction{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:center;gap:32px;padding-bottom:32px}
 .about-intro-photo{margin:0;min-width:0;overflow:hidden;border-radius:10px;max-width:440px}
-.about-intro-photo img{display:block;width:100%;height:330px;object-fit:cover;object-position:50% 70%}
+.about-intro-photo img{display:block;width:100%;height:330px;object-fit:cover;object-position:50% 70%;transform:scale(1.6);transform-origin:50% 100%}
 .about-intro-copy{min-width:0;max-width:74ch}
 .about-intro-copy h1{font-size:clamp(32px,3.6vw,48px);line-height:1.15;letter-spacing:-.045em;margin-bottom:18px}
 .about-intro-copy h1 span{color:#e5ce64}
