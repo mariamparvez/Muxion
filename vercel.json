@@ -36,13 +36,5 @@
       "source": "/((?!api(?:/|$)|assets(?:/|$))[^.]*)",
       "destination": "/index.html"
     }
-  ],
-  "redirects": [
-    {
-      "source": "/about",
-      "destination": "/#about-muxion",
-      "permanent": true
-    }
   ]
 }
-

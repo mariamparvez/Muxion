@@ -217,3 +217,12 @@ body[data-theme=build] .nav.container,body[data-theme=build] .footer>.container{
 .mariam-profile.has-parallax .build-founder-photo img{height:calc(100% + 56px);margin-top:-28px;will-change:transform}
 .mariam-profile.has-parallax #about-muxion-title{will-change:transform}
 @media(prefers-reduced-motion:reduce){.mariam-profile.has-parallax .build-founder-photo img{height:100%;margin-top:0;transform:none!important}.mariam-profile #about-muxion-title{transform:none!important;will-change:auto}}
+
+/* The personal motherhood story lives only on the standalone About page. */
+.personal-about-page{--home-gutter:clamp(16px,2.5vw,48px);padding:28px var(--home-gutter) 36px;background:#141518}
+.personal-about-breadcrumb{display:flex;align-items:center;gap:12px;margin-bottom:24px;font-size:12px;color:#bdc5d0}
+.personal-about-breadcrumb a{color:#e5ce64}
+.personal-about-page .about-motherhood.section{margin:0;padding:0;border:0}
+.personal-about-page #motherhood-title{font-size:clamp(32px,3.6vw,48px);line-height:1.14;letter-spacing:-.045em;margin:0 0 18px;color:#f3f6fc}
+.personal-about-page #motherhood-title span{color:#e5ce64}
+@media(max-width:700px){.personal-about-page{padding-block:20px 28px}.personal-about-breadcrumb{margin-bottom:18px}.personal-about-page #motherhood-title{font-size:32px}}

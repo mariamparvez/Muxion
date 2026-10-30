@@ -44,8 +44,7 @@ for(const post of [null,...blogPosts]){
  const folder=path.join(output,'blog',...(post?[post.slug]:[]));
  await fs.mkdir(folder,{recursive:true});await fs.writeFile(path.join(folder,'index.html'),blogHTML);
 }
-const publicPaths=['/','/learn','/academy','/contact','/courses','/workshops','/mentorship','/blog',...blogPosts.map(post=>'/blog/'+post.slug),'/social-work','/privacy','/terms','/refunds'];
+const publicPaths=['/','/about','/learn','/academy','/contact','/courses','/workshops','/mentorship','/blog',...blogPosts.map(post=>'/blog/'+post.slug),'/social-work','/privacy','/terms','/refunds'];
 await fs.writeFile(path.join(output,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${publicPaths.map(route=>`<url><loc>https://www.muxion.in${route}</loc></url>`).join('')}</urlset>`);
 await fs.writeFile(path.join(output,'robots.txt'),'User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /learner\nDisallow: /api/\nDisallow: /checkout\nSitemap: https://www.muxion.in/sitemap.xml\n');
 console.log('Built MUXION preview. Private backend files are excluded.');
-
