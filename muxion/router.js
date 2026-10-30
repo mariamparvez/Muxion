@@ -11,13 +11,14 @@ export function navigate(path, {replace=false}={}) {
   if (typeof path!=='string' || !/^\/(?!\/)/.test(path)) return false;
   const target=new URL(path,location.origin);
   if(target.origin!==location.origin)return false;
+  if(target.pathname==='/about'){target.pathname='/';target.hash='#about-muxion';}
   history[replace?'replaceState':'pushState']({},'',target.pathname+target.search+target.hash);
   window.dispatchEvent(new Event('muxion:navigate'));
   if(target.hash){const id=decodeURIComponent(target.hash.slice(1));requestAnimationFrame(()=>document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'}));}
   return true;
 }
 export function installRouter(onRoute) {
-  const migrate=()=>{const hashPath=legacyDestination(location.hash);if(hashPath){history.replaceState({},'',hashPath);return true;}const path=routePath(location.pathname);const canonical=path==='/build'?'/':path==='/learning'?'/learn':null;if(canonical){history.replaceState({},'',canonical+location.search+location.hash);return true;}return false;};
+  const migrate=()=>{const hashPath=legacyDestination(location.hash);if(hashPath){history.replaceState({},'',hashPath);return true;}const path=routePath(location.pathname);if(path==='/about'){history.replaceState({},'','/#about-muxion');return true;}const canonical=path==='/build'?'/':path==='/learning'?'/learn':null;if(canonical){history.replaceState({},'',canonical+location.search+location.hash);return true;}return false;};
   migrate();
   document.addEventListener('click',event=>{
     const a=event.target.closest('a[href]');
@@ -32,3 +33,4 @@ export function installRouter(onRoute) {
   window.addEventListener('muxion:navigate',onRoute);
   window.addEventListener('hashchange',()=>{if(migrate())onRoute();});
 }
+
