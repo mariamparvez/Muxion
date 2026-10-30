@@ -178,3 +178,22 @@ body[data-theme=build] .nav.container,body[data-theme=build] .footer>.container{
  .mariam-section .about-motherhood p.motherhood-intro{font-size:14px}
 }
 @media(prefers-reduced-motion:reduce){.idea-route,.idea-curve{animation:none}.idea-browser,.idea-pen,.idea-cursor{transition:none;transform:none!important}}
+
+/* Keep these short section titles on one line at every viewport. */
+.universe-content .section-head h2.home-inline-title{font-size:clamp(16px,4.5vw,44px);line-height:1.2;white-space:nowrap;max-width:100%}
+.universe-content .section-head:has(.home-inline-title){flex-wrap:wrap}
+
+/* Compact Learn sections and paired WhatsApp / call actions. */
+.learning-page.container{width:calc(100% - 2 * clamp(16px,2.5vw,48px));max-width:none}
+.learning-page>.learning-hero{padding-block:36px}
+.learning-page>.section{padding-block:28px;margin:0}
+.learning-page>.learn-tutors{padding-bottom:20px}
+.learning-page>.learning-subjects{padding-top:20px}
+.learning-page .section-head{margin-bottom:20px}
+.learning-page .section-head h2.learn-inline-title{font-size:clamp(13px,3.8vw,44px);line-height:1.2;white-space:nowrap}
+.learning-page .learning-contact-actions,.learning-page .learning-contact-actions.stacked{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.learning-page .learning-contact-actions .btn{width:100%;min-width:0;padding-inline:10px;white-space:nowrap}
+.learning-page .subject-card .learning-contact-actions .btn{font-size:12px;padding-inline:6px;gap:6px}
+.learning-page .subject-card .learning-contact-actions svg{width:16px;height:16px}
+@media(max-width:700px){.learning-page>.learning-hero{padding-block:24px;gap:24px}.learning-page>.section{padding-block:20px}.learning-page>.learn-tutors{padding-bottom:16px}.learning-page>.learning-subjects{padding-top:16px}.learning-page .section-head{margin-bottom:16px}}
+@media(max-width:350px){.learning-page .subject-card .learning-contact-actions .btn{font-size:11px}}
