@@ -1,15 +1,14 @@
 export const heroServices = {
-  build:{number:'01',name:'Build',theme:'build',eyebrow:'MUXION BUILD / IDEAS INTO POSSIBILITY',heading:'You dream it.<br><span>We build it.</span>',description:'Websites, apps and thoughtful software for ambitious ideas. From the first sketch to a full-stack launch, design and technology move together.',href:'/contact',cta:'Let’s build your idea',caption:'DESIGN + DEVELOPMENT + HUMAN GUIDANCE',note:'A little possibility.<br>A lot of purpose.'}
+  build:{number:'01',name:'Build',theme:'build',heading:'<span class="hero-line hero-dream">You dream it.</span> <span class="hero-line hero-build">We build it.</span>',subheading:'Design-led. Built to work.',description:'Websites, apps and thoughtful software for ambitious ideas. From the first sketch to a full-stack launch, design and technology move together.',href:'/contact',cta:'Let’s build your idea'}
 };
-let selectedService='build';
 export function serviceGraphic(service){
  const frame=(body)=>`<svg class="service-scene" viewBox="0 0 520 420" fill="none" aria-hidden="true"><g stroke="currentColor" opacity=".12"><circle cx="260" cy="210" r="168"/><circle cx="260" cy="210" r="136"/><path d="M52 210h416M260 26v368" stroke-dasharray="3 9"/></g>${body}</svg>`;
  if(service==='learn')return frame(`<g class="scene-float"><rect x="99" y="100" width="322" height="224" rx="20" fill="#142a28" stroke="#749b8b"/><path d="M99 140h322" stroke="#526f68"/><circle cx="120" cy="120" r="4" fill="#91c4ab"/><path d="M146 276h220M165 166v125" stroke="#658c7b"/><path class="scene-draw" d="M165 265c37 0 36-75 74-75s38 57 68 37 25-55 55-56" stroke="#a8dbc0" stroke-width="4" stroke-linecap="round"/><circle cx="239" cy="190" r="7" fill="#a8dbc0"/><path d="M119 350h282" stroke="#91c4ab" stroke-width="8" stroke-linecap="round"/></g><g class="scene-float-delayed"><rect x="348" y="48" width="95" height="85" rx="16" fill="#233d34" stroke="#91c4ab"/><path d="M374 75h43m-22 0v36m-21 0h43" stroke="#b6e5cd" stroke-width="3"/><circle cx="96" cy="269" r="37" fill="#233d34" stroke="#91c4ab"/><path d="m81 269 11 11 20-24" stroke="#b6e5cd" stroke-width="3" stroke-linecap="round"/></g>`);
  if(service==='academy')return frame(`<g class="scene-float"><rect x="90" y="106" width="334" height="221" rx="18" fill="#17263c" stroke="#7896be"/><path d="M90 145h334M145 145v182" stroke="#557296"/><circle cx="111" cy="125" r="4" fill="#a4caff"/><path d="M107 166h20m-20 18h20m-20 18h13" stroke="#6e8db5" stroke-width="4" stroke-linecap="round"/><rect x="170" y="168" width="105" height="131" rx="12" fill="#a4caff" fill-opacity=".18" stroke="#a4caff"/><circle cx="222" cy="207" r="23" fill="#a4caff" fill-opacity=".65"/><path d="M188 250h69m-69 15h48" stroke="#a4caff" stroke-width="4" stroke-linecap="round"/><rect x="292" y="169" width="106" height="60" rx="12" fill="#7896be" fill-opacity=".25"/><path d="M298 250h91m-91 17h70m-70 17h82" stroke="#7896be" stroke-width="5" stroke-linecap="round"/></g><g class="scene-float-delayed"><path d="m351 60 17 43 46 4-35 29 10 44-38-24-38 24 10-44-35-29 46-4z" fill="#253d5a" stroke="#a4caff"/><path d="m392 304 17 53 12-20 24-2z" fill="#bcd8ff"/><circle cx="103" cy="321" r="28" fill="#253d5a" stroke="#a4caff"/></g>`);
  return frame(`<g class="scene-float"><rect x="76" y="98" width="344" height="227" rx="18" fill="#182637" stroke="#a29a6e"/><path d="M76 136h344" stroke="#697477"/><circle cx="98" cy="117" r="4" fill="#e5ce64"/><circle cx="114" cy="117" r="4" fill="#8c9a9b"/><circle cx="130" cy="117" r="4" fill="#8c9a9b"/><rect x="101" y="162" width="117" height="137" rx="10" fill="#e5ce64" fill-opacity=".8"/><path d="m120 253 25-30 22 16 29-45" stroke="#344339" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M242 177h142m-142 20h111m-111 37h139m-139 17h106" stroke="#92a4bb" stroke-width="6" stroke-linecap="round"/><rect x="241" y="274" width="80" height="23" rx="6" fill="#e5ce64"/></g><g class="scene-float-delayed"><rect x="342" y="273" width="119" height="91" rx="16" fill="#1c2d40" stroke="#e5ce64"/><path d="m378 299-18 20 18 20m45-40 18 20-18 20m-16-49-12 58" stroke="#e5ce64" stroke-width="3" stroke-linecap="round"/><path d="M108 47v37M90 65h37m-31-13 26 26m0-26L96 78" stroke="#e5ce64" stroke-width="3"/></g>`);
 }
-function heroCopy(service,link,icon){const s=heroServices[service];return `<div class="eyebrow">${s.eyebrow}</div><h1>${s.heading}</h1><p>${s.description}</p><div class="hero-ctas">${link(s.href,`${s.cta} ${icon('arrow')}`,'btn hero-primary')}${link('/contact','Find your starting point','btn secondary')}</div>`;}
-function heroArt(service){const s=heroServices[service];return `<div class="hero-scene"><img class="build-hero-image" src="/assets/generated/muxion-build-hero.jpg" width="1448" height="1086" fetchpriority="high" decoding="async" alt="A laptop displaying a website design beside a yellow notebook, pencil and paper wireframes on a naturally lit desk"></div><div class="universe-art-caption"><span class="live-dot"></span><span>${s.caption}</span></div>`;}
+function heroCopy(service){return `<h1 class="build-hero-title" id="build-hero-title">${heroServices[service].heading}</h1>`;}
+function heroSide(service,link,icon){const s=heroServices[service];return `<aside class="build-hero-side" aria-label="Build with MUXION"><div class="build-hero-rule" aria-hidden="true"></div><div class="build-hero-side-copy"><h2>${s.subheading}</h2><p>${s.description}</p></div>${link(s.href,`<span>${s.cta}</span><span class="hero-cta-arrow" aria-hidden="true">${icon('arrow')}</span>`,'hero-build-cta')}</aside>`;}
 let cleanupProfileParallax=()=>{};
 function enhanceProfileParallax(root){
  const section=root.querySelector('.mariam-profile'),photo=section?.querySelector('.build-founder-photo img'),title=section?.querySelector('#about-muxion-title');
@@ -22,19 +21,17 @@ function enhanceProfileParallax(root){
  addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule);reduced.addEventListener('change',schedule);
  cleanupProfileParallax=()=>{observer.disconnect();removeEventListener('scroll',schedule);removeEventListener('resize',schedule);reduced.removeEventListener('change',schedule);cancelAnimationFrame(frame);reset();};
 }
-export function enhanceUniverse({link,icon}){
+export function enhanceUniverse(){
  cleanupProfileParallax();cleanupProfileParallax=()=>{};
  const root=document.querySelector('.universe');if(!root)return;
- const copy=root.querySelector('[data-hero-copy]'),art=root.querySelector('#hero-visual');
- selectedService='build';root.dataset.service='build';document.body.dataset.theme='build';document.querySelectorAll('.brand-label').forEach(el=>el.textContent='BUILD');
- if(art&&!art.dataset.initialized){art.innerHTML=heroArt('build');art.dataset.initialized='true';}
+ root.dataset.service='build';document.body.dataset.theme='build';document.querySelectorAll('.brand-label').forEach(el=>el.textContent='BUILD');
  enhanceProfileParallax(root);
 }
 export function universeHome({link,btn,icon,buildHeroGraphic,buildScrollShowcase,buildHomeSections,buildMariamSection,portraits,testimonialSlider,testimonials,workTestimonials,socialPortfolioTeaser}) {
   return `<div class="universe"><div class="universe-content">
-    <section class="universe-hero">
-      <div class="universe-copy"><div data-hero-copy>${heroCopy('build',link,icon)}</div></div>
-      <div class="universe-art" id="hero-visual">${heroArt('build')}</div>
+    <section class="universe-hero build-type-hero" aria-labelledby="build-hero-title">
+      <div class="universe-copy">${heroCopy('build')}</div>
+      ${heroSide('build',link,icon)}
     </section>
     ${buildScrollShowcase()}
     ${socialPortfolioTeaser()}
