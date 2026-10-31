@@ -49,7 +49,7 @@ body[data-theme=learning]{--blue:#91c4ab;--action:#91c4ab}
 .learn-tutors .section-head{margin-bottom:28px}.learn-tutor-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.learn-tutor-card{min-width:0;overflow:hidden;display:grid;grid-template-columns:minmax(140px,.7fr) minmax(0,1.3fr);border:1px solid #314059;border-radius:20px;background:linear-gradient(145deg,#121d2c,#0d1420)}.learn-tutor-portrait{min-height:100%;background:#172334;overflow:hidden}.learn-tutor-portrait img{display:block;width:100%;height:100%;min-height:300px;object-fit:cover;object-position:center 28%}.learn-tutor-copy{padding:clamp(22px,3vw,36px)}.learn-tutor-copy h3{font-size:clamp(22px,2vw,30px);margin:10px 0 14px;letter-spacing:-.04em}.learn-tutor-copy>p{font-size:13px;line-height:1.8;color:#bac7d8;margin:12px 0 0}.learn-tutor-copy>p.learn-tutor-lead{font-size:15px;line-height:1.6;color:#f0f3f7}.learn-tutor-credentials{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}.learn-tutor-credentials span{border:1px solid #526177;border-radius:999px;padding:7px 10px;color:#d3dfeb;font-size:10px;line-height:1.4}
 @media(max-width:900px){.learn-tutor-grid{grid-template-columns:1fr}.learn-tutor-card{grid-template-columns:minmax(150px,.6fr) minmax(0,1.4fr)}}
 @media(max-width:560px){.learn-tutor-card{grid-template-columns:1fr}.learn-tutor-portrait{height:240px}.learn-tutor-portrait img{min-height:0;height:100%;object-position:center 24%}.learn-tutor-copy{padding:24px}}
-/* Build uses yellow, white and charcoal; service cards keep their own identities. */
+/* Build accents stay yellow; each product keeps its own palette on its page. */
 body[data-theme=build] .experience-heading h2 span,body[data-theme=build] .experience-index,body[data-theme=build] .social-project-credit,body[data-theme=build] .universe-principles>div>span{color:#e5ce64}
 body[data-theme=build] .live-dot{background:#e5ce64}
 /* A single page grid: section bands have one gutter and no nested frames. */
@@ -258,4 +258,91 @@ body[data-theme=build] .nav.container,body[data-theme=build] .footer>.container{
 @media(max-width:850px){.personal-about-page .about-motherhood.motherhood-editorial.section{grid-template-columns:minmax(0,1fr);gap:24px;padding-block:32px}.motherhood-editorial .motherhood-visual{width:min(100%,390px);padding:8px 12px 0}.motherhood-editorial .motherhood-portrait{height:420px}.motherhood-editorial .motherhood-botanical{width:145px;left:-4px;top:-8px}.motherhood-editorial .motherhood-story{max-width:65ch;justify-self:center}.personal-about-page .motherhood-editorial #motherhood-title{font-size:38px;margin-bottom:18px}}
 @media(max-width:600px){.personal-about-page{padding-top:20px}.personal-about-page .about-motherhood.motherhood-editorial.section{padding-block:28px;gap:20px}.motherhood-editorial .motherhood-visual{width:min(100%,340px);padding-inline:10px}.motherhood-editorial .motherhood-portrait{height:360px}.motherhood-editorial .motherhood-botanical{width:120px;left:-3px;top:-7px}.personal-about-page .motherhood-editorial #motherhood-title{font-size:clamp(30px,8.4vw,36px);line-height:1.14;margin-bottom:17px}.personal-about-page .motherhood-editorial p{font-size:13px;line-height:1.75;margin-top:14px}.personal-about-page .motherhood-editorial p.motherhood-intro{font-size:14px;line-height:1.7}.personal-about-page .motherhood-editorial .motherhood-photo figcaption{padding-top:11px}.motherhood-editorial .motherhood-photo figcaption strong{font-size:15px}}
 @media(prefers-reduced-motion:reduce){.motherhood-editorial .motherhood-botanical{transition:none;transform:rotate(-10deg)}}
+
+/* Build's complete palette, including shared controls and interactive states. */
+body[data-theme=build]{--bg:#111110;--panel:#22211c;--panel2:#2b281f;--line:#4b4430;--ink:#f5f2e8;--muted:#c8c1ad;--blue:#e5ce64;--green:#d8bd59;--action:#e5ce64;--yellow:#e5ce64;--button-fg:#211d10;background:var(--bg);color:var(--ink);color-scheme:dark}
+body[data-theme=build] .universe{--gold:#e5ce64;--sage:#eadd99;--ice:#cab356}
+body[data-theme=build] .nav-wrap{background:#111110f7;border-color:var(--line)}
+body[data-theme=build] .demo-bar{background:#242219;color:#ded5b6}
+body[data-theme=build] :is(.navlinks,.nav-actions,.footer,.brand-label,.form-note,.breadcrumb){color:var(--muted)}
+body[data-theme=build] .logo .brand-label{color:var(--muted);border-color:var(--line)}
+body[data-theme=build] :is(.navlinks.open,.footer){background:#151511}
+body[data-theme=build] :is(.navlinks a:hover,.navlinks a.active,.footer a:hover){color:var(--yellow)}
+body[data-theme=build] .universe-content>.universe-hero{background:#111110}
+body[data-theme=build] .universe-content>.build-scroll-story{background:#050504;color:var(--ink)}
+body[data-theme=build] :is(.build-scroll-sticky,.build-impact,.build-impact-backdrop){background:#050504}
+body[data-theme=build] .build-scroll-sticky:after{border-color:#e5ce6412}
+body[data-theme=build] .build-scroll-frame{color:#211e13}
+body[data-theme=build] .build-scroll-frame:focus-visible{outline-color:#e5ce64}
+body[data-theme=build] .build-impact-metrics,body[data-theme=build] .build-impact-metrics article{border-color:var(--line)}
+body[data-theme=build] .build-impact-metrics p{color:var(--muted)}
+body[data-theme=build] .build-impact-terms{color:#aaa28c}
+body[data-theme=build] .universe-content>.social-showcase{background:#191813}
+body[data-theme=build] .universe-content>.build-offer{background:#111110}
+body[data-theme=build] .universe-content>.universe-services{background:#1b1a15}
+body[data-theme=build] .universe-content>.universe-approach{background:#131310}
+body[data-theme=build] .universe-content>.universe-voices{background:#1b1a15}
+body[data-theme=build] .universe-content>.mariam-section{background:#121210}
+body[data-theme=build] .universe-content>.universe-cta{background:#242117}
+body[data-theme=build] :is(.universe-copy p,[data-hero-copy]>p,.universe-approach p,.universe-principles p,.service-copy p,.build-offer p,.experience-disciplines p,.mariam-profile p,.about-intro-copy p,.universe-final p,.service-heading-note){color:var(--muted)}
+body[data-theme=build] :is(.universe-art-caption,.universe-orbit-label,.service-tags>span,.testimonial-number,.testimonial-foot,.testimonial-controls>span,.quote-person small){color:var(--muted);border-color:var(--line)}
+body[data-theme=build] .live-dot{box-shadow:0 0 16px #e5ce6433}
+body[data-theme=build] .universe-principles>div:hover{background:#e5ce6408}
+body[data-theme=build] .experience-disciplines{background:#22211b}
+body[data-theme=build] .experience-clients li:hover{background:#e5ce6412}
+body[data-theme=build] .build-founder-photo{background:#252219}
+body[data-theme=build] .personal-about-page{background:#151511}
+body[data-theme=build] .personal-about-breadcrumb{color:var(--muted)}
+body[data-theme=build] .social-portfolio-page{background:var(--bg);color:var(--ink)}
+body[data-theme=build] :is(.social-portfolio-header p,.social-project-copy p,.social-portfolio-end,.social-viewer-caption){color:var(--muted);border-color:var(--line)}
+body[data-theme=build] .social-lightbox{background:#11110fed;color:var(--ink)}
+body[data-theme=build] .social-lightbox button{background:#29261d;color:#f4e8b7;border-color:#9b894e}
+body[data-theme=build] .social-lightbox button:hover{background:#453d24;color:#fff3bc;border-color:#e5ce64}
+body[data-theme=build] .universe-service{--service-accent:#e5ce64;color:var(--ink);background:linear-gradient(135deg,#2b281b,#1c1b15)}
+body[data-theme=build] .service-learn{--service-accent:#eadd99;background:linear-gradient(135deg,#302d21,#201f18)}
+body[data-theme=build] .service-academy{--service-accent:#cab356;background:linear-gradient(135deg,#29261b,#191914)}
+body[data-theme=build] :is(.service-learn-art,.service-academy-art){filter:grayscale(1) sepia(.8) saturate(.65);color:#e5ce64}
+body[data-theme=build] .service-learn-art{background-image:linear-gradient(90deg,#29261bd9,#29261b88),url('/assets/generated/school.webp')}
+body[data-theme=build] .service-academy-art{background-image:linear-gradient(90deg,#29261baa,#29261b88),url('/assets/generated/academy.webp')}
+body[data-theme=build] :is(.service-learn-art>span,.service-academy-art>span){color:#f1dfa0}
+body[data-theme=build] .academy-shape{background:#e5ce6433;border-color:#e5ce6488}
+body[data-theme=build] .academy-shape.shape-two{background:#e5ce6466}
+body[data-theme=build] .academy-shape.shape-three{background:#e5ce6422}
+body[data-theme=build] .testimonial-card{background:#242219;border-color:#5b5032}
+body[data-theme=build] .testimonial-card:hover{background:#302b1d;border-color:#b69d49}
+body[data-theme=build] .testimonial-card:before{border-color:#e5ce641a;box-shadow:0 0 0 25px #e5ce6408}
+body[data-theme=build] .testimonial-card blockquote{color:#eee7d3}
+body[data-theme=build] .quote-symbol{color:#dbc367}
+body[data-theme=build] .quote-person{border-color:var(--line)}
+body[data-theme=build] :is(img.media-pending,.avatar){background:#2c281d}
+body[data-theme=build] .social-fan-card{background:#242219;border-color:#a18e4b66}
+body[data-theme=build] .social-fan-card>span{background:linear-gradient(transparent,#15130dee);color:var(--ink)}
+body[data-theme=build] .btn.secondary{background-color:#29261d!important;color:#f4e8b7!important;border-color:#9b894e!important}
+body[data-theme=build] .btn.secondary:hover{background-color:#453d24!important;color:#fff3bc!important;border-color:#e5ce64!important}
+body[data-theme=build] .btn.secondary:active{background-color:#5a4d28!important;color:#fff3bc!important}
+body[data-theme=build] :is(.icon-btn,.carousel-play){background:#29261d;color:#f4e8b7;border-color:#9b894e}
+body[data-theme=build] :is(.icon-btn,.carousel-play):hover{background:#453d24;color:#fff3bc;border-color:#e5ce64}
+body[data-theme=build] :is(.icon-btn,.carousel-play):active{background:#5a4d28;color:#fff3bc}
+body[data-theme=build] :is(.btn,.icon-btn,.carousel-play):focus-visible{outline-color:#fff2b7;box-shadow:0 0 0 2px #111110}
+body[data-theme=build] .whatsapp{background:#e5ce64;color:#211d10}
+body[data-theme=build] .whatsapp:hover{background:#f4e29b}
+body[data-theme=build] dialog{background:#22211c;border-color:#796b3c;color:var(--ink)}
+body[data-theme=build] dialog::backdrop{background:#080704cc}
+body[data-theme=build] :is(input,textarea,select){background:#151510;border-color:#796b3c;color:var(--ink);accent-color:#e5ce64}
+body[data-theme=build] :is(input,textarea,select):focus{border-color:#e5ce64;outline-color:#e5ce64;box-shadow:0 0 0 3px #e5ce641a}
+body[data-theme=build] :is(input,textarea)::placeholder{color:#aaa28c}
+body[data-theme=build] .close-dialog:hover{background:#453d24;color:#fff3bc}
+body[data-theme=build] .close-dialog{color:var(--muted)}
+body[data-theme=build] #toast{background:#f4e8b7;color:#282111}
+body[data-theme=build] ::selection{background:#e5ce64;color:#211d10}
+
+/* Generated Build imagery replaces the former diagram animations. */
+body[data-theme=build] .universe-art{display:block;padding:0;min-height:0;align-self:center;background:none}
+body[data-theme=build] .universe-art .hero-scene{width:100%;max-width:none;transform:none;transition:none;perspective:none}
+.build-hero-image{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:12px}
+body[data-theme=build] .universe-art-caption{margin-top:14px;min-height:0;padding-top:12px}
+body[data-theme=build] .universe .service-illustration{height:clamp(150px,15vw,220px);max-height:220px}
+body[data-theme=build] .universe .service-build-art{padding:0;min-height:0;transform:none}
+.build-service-image{display:block;width:100%;height:100%;object-fit:cover}
+@media(max-width:700px){body[data-theme=build] .universe-art{max-width:100%;margin:0}body[data-theme=build] .universe .service-illustration{height:170px;max-height:170px}}
 
