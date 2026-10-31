@@ -307,7 +307,7 @@ body[data-theme=build] .universe .service-illustration{overflow:hidden;transform
 body[data-theme=build] .universe .service-illustration:after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,var(--service-wash),var(--service-fade));pointer-events:none}
 body[data-theme=build] :is(.service-learn-art,.service-academy-art){filter:none;color:var(--service-accent);background-position:center;background-size:cover;background-repeat:no-repeat}
 body[data-theme=build] .service-learn-art{background-image:url('/assets/generated/school.webp')}
-body[data-theme=build] .service-academy-art{background-image:url('/assets/generated/academy.webp')}
+body[data-theme=build] .service-academy-art{background-image:none}
 body[data-theme=build] .service-learn-art>span{color:#b4e1cc}
 body[data-theme=build] .service-academy-art>span{color:#e0ecff}
 body[data-theme=build] .service-illustration>:is(span,b,svg,.academy-shape){z-index:2}
@@ -349,6 +349,6 @@ body[data-theme=build] .universe-art .hero-scene{width:100%;max-width:none;trans
 body[data-theme=build] .universe-art-caption{margin-top:14px;min-height:0;padding-top:12px}
 body[data-theme=build] .universe .service-illustration{height:clamp(150px,15vw,220px);max-height:220px}
 body[data-theme=build] .universe .service-build-art{padding:0;min-height:0;transform:none}
-.build-service-image{display:block;width:100%;height:100%;object-fit:cover}
+.build-service-image,.academy-service-image{display:block;width:100%;height:100%;object-fit:cover}
 @media(max-width:700px){body[data-theme=build] .universe-art{max-width:100%;margin:0}body[data-theme=build] .universe .service-illustration{height:170px;max-height:170px}}
 
