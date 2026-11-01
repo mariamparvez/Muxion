@@ -2,7 +2,8 @@ html,body{overflow-x:clip}
 .build-page{overflow-x:clip}
 .build-scroll-story{position:relative;z-index:31;margin:0 calc(50% - 50vw);background:#090e19;color:#eef2fa;overflow:clip}
 .build-scroll-track{height:500svh;position:relative}
-.build-scroll-track.has-entry-parallax .build-scroll-stage{transform:translate3d(0,var(--showcase-entry-y,0px),0) scale(var(--showcase-entry-scale,1));transform-origin:center;will-change:transform}
+.build-scroll-track.has-entry-parallax .build-scroll-stage{transform:translate3d(0,calc(var(--showcase-entry-y,0px) + var(--showcase-depth-y,0px)),0) scale(var(--showcase-entry-scale,1));transform-origin:center;will-change:transform}
+.build-scroll-track.has-entry-parallax .build-impact-inner{transform:translate3d(0,var(--showcase-impact-y,0px),0);will-change:transform}
 .build-scroll-track.has-entry-parallax .build-scroll-sticky:before{transform:translate(-50%,calc(-50% + var(--showcase-halo-y,0px)))}
 .build-scroll-track.has-entry-parallax .build-scroll-sticky:after{transform:translate(-50%,calc(-50% - var(--showcase-halo-y,0px)))}
 .build-scroll-sticky{position:sticky;top:0;height:100svh;min-height:560px;overflow:hidden;isolation:isolate;background:#030507}

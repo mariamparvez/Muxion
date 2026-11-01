@@ -450,3 +450,21 @@ body:is([data-theme=learning],[data-theme=academy]) .feature-band :is(p,.form-no
 body:is([data-theme=learning],[data-theme=academy]) .logo .brand-label{color:var(--muted)!important}
 
 
+
+/* Warm, layered CTA backdrop; content and controls retain a quiet reading surface. */
+body[data-theme=build] .universe-content>.universe-cta{position:relative;isolation:isolate;overflow:clip;background:#1b1a14}
+.universe-cta .cta-atmosphere{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.universe-cta .universe-final{position:relative;z-index:1}
+@media(max-width:700px){.universe-cta .cta-atmosphere{opacity:.65}.universe-cta .universe-final-art{position:relative}}
+/* The learner workspace belongs to Academy: use blue consistently across every view. */
+body[data-theme=academy] .shell[data-workspace=learner]{background:var(--bg);color:var(--ink)}
+.shell[data-workspace=learner] :is(.sidebar,.shell-header){background:var(--bg);border-color:var(--line)}
+.shell[data-workspace=learner] :is(.demo-bar,.notice,.empty,.stat,.stat-icon,.table-wrap,.player-sidebar,.player-notes,.discussion-item){background:var(--panel);border-color:var(--line);color:var(--ink)}
+.shell[data-workspace=learner] :is(.side-label,.shell-header>span,.stat small,.form-note,.momentum-circle small){color:var(--muted)}
+.shell[data-workspace=learner] :is(.trend,.green,.yellow,.stat-icon,.sidebar a.side-link.active,.sidebar a.side-link:hover){color:var(--brand-accent)}
+.shell[data-workspace=learner] :is(.sidebar a.side-link.active,.stat-icon){background:var(--panel2)}
+.shell[data-workspace=learner] .sidebar a.side-link:hover{background:var(--panel)}
+.shell[data-workspace=learner] :is(.progress,.chart i){background:var(--panel2)}
+.shell[data-workspace=learner] :is(.progress i,.chart>div:last-child i){background:var(--brand-accent)}
+.shell[data-workspace=learner] :is(.momentum-circle,.timer-display){color:var(--brand-accent)}
+.shell[data-workspace=learner] :is(.pill.green,.pill.yellow,.pill.red){color:var(--brand-soft);background:var(--brand-wash);border-color:var(--line)}

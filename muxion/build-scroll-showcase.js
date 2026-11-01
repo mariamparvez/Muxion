@@ -44,6 +44,7 @@ export function enhanceBuildScroll() {
   if (!track) return;
 
   const stage = track.querySelector('[data-build-scroll-stage]');
+  const sticky = track.querySelector('.build-scroll-sticky');
   const frames = [...track.querySelectorAll('[data-build-frame]')];
   const impact = track.querySelector('[data-build-impact]');
   const impactBackdrop = track.querySelector('[data-build-impact-backdrop]');
@@ -69,16 +70,19 @@ export function enhanceBuildScroll() {
 
   const update = () => {
     raf = 0;
+    if (reduceMotion.matches) return;
     const rect = track.getBoundingClientRect();
-    // Ease the showcase into view at a different rate from the page; once pinned,
-    // the existing orbit, deck and zoom sequence retains its original coordinates.
+    // Separate foreground, orbital background and exit layers without adding scroll distance.
     const entry = Math.max(0, Math.min(1, rect.top / Math.max(1, innerHeight)));
-    track.style.setProperty('--showcase-entry-y', `${(entry * innerHeight * .22).toFixed(2)}px`);
-    track.style.setProperty('--showcase-entry-scale', (1 - entry * .08).toFixed(4));
-    track.style.setProperty('--showcase-halo-y', `${(-entry * innerHeight * .07).toFixed(2)}px`);
-    const sticky = track.querySelector('.build-scroll-sticky');
+    track.style.setProperty('--showcase-entry-y', `${(entry * Math.min(innerHeight * .34, innerWidth <= 760 ? 160 : 300)).toFixed(2)}px`);
+    track.style.setProperty('--showcase-entry-scale', (1 - entry * .1).toFixed(4));
+    const exit = Math.max(0, Math.min(1, (sticky.clientHeight - rect.bottom) / sticky.clientHeight));
     const travel = Math.max(1, track.offsetHeight - sticky.clientHeight);
     const progress = Math.max(0, Math.min(1, -rect.top / travel));
+    const depth = Math.sin(Math.min(1, progress / .76) * Math.PI);
+    track.style.setProperty('--showcase-depth-y', `${(-depth * (innerWidth <= 760 ? 14 : 34)).toFixed(2)}px`);
+    track.style.setProperty('--showcase-halo-y', `${(-entry * innerHeight * .12 + depth * 56 - exit * 90).toFixed(2)}px`);
+    track.style.setProperty('--showcase-impact-y', `${(exit * sticky.clientHeight * .2).toFixed(2)}px`);
     const position = progress <= 0.1 ? 0 : Math.min(3, ((progress - 0.1) / 0.27) * 3);
     const deckBlend = Math.max(0, Math.min(1, (progress - 0.37) / 0.035));
     const deckReveal = Math.max(0, Math.min(1, (progress - 0.34) / 0.03));
@@ -169,11 +173,7 @@ export function enhanceBuildScroll() {
       impactContent.style.opacity = '1';
       impactContent.style.visibility = 'visible';
       impact.setAttribute('aria-hidden', 'false');
-      countNodes.forEach(node => { node.textContent = node.dataset.from; });
-      if (countNodes.some(node => Number(node.textContent) !== Number(node.dataset.to))) {
-        countStartedAt = 0;
-        countRaf = requestAnimationFrame(countUp);
-      }
+      countNodes.forEach(node => { node.textContent = node.dataset.to; });
       track.classList.remove('is-impact');
     } else update();
   };
@@ -184,7 +184,7 @@ export function enhanceBuildScroll() {
   staticMode();
   cleanup = () => {
     track.classList.remove('has-entry-parallax');
-    ['--showcase-entry-y','--showcase-entry-scale','--showcase-halo-y'].forEach(name=>track.style.removeProperty(name));
+    ['--showcase-entry-y','--showcase-entry-scale','--showcase-halo-y','--showcase-depth-y','--showcase-impact-y'].forEach(name=>track.style.removeProperty(name));
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('resize', onScroll);
     reduceMotion.removeEventListener?.('change', staticMode);
