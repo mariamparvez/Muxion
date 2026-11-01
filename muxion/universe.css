@@ -351,7 +351,7 @@ body[data-theme=build] .universe .service-build-art{padding:0;min-height:0;trans
 /* A typographic Build hero: oversized Black weight and one editorial CTA. */
 body[data-theme=build] .universe-content>.build-type-hero{position:relative;isolation:isolate;grid-template-columns:minmax(0,1fr);align-content:center;gap:32px;min-height:100vh;min-height:100svh;padding-block:clamp(40px,8vh,96px);overflow:clip;box-sizing:border-box}
 .build-hero-layout{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,2.4fr) minmax(260px,1fr);align-items:center;gap:clamp(28px,3.5vw,64px);width:100%}
-.build-hero-video{position:absolute;inset:0;z-index:-1;width:100%;height:100%;object-fit:cover;opacity:.15;pointer-events:none}
+.build-hero-video{position:absolute;inset:0;z-index:-1;width:100%;height:100%;object-fit:cover;opacity:.25;pointer-events:none}
 .hero-scroll-cue{position:relative;z-index:1;justify-self:center;display:grid;place-items:center;width:48px;height:48px;color:var(--yellow);border-radius:24px}
 .hero-scroll-cue svg{display:block;width:38px;height:38px}
 .hero-scroll-cue:focus-visible{outline:2px solid currentColor;outline-offset:5px}
@@ -381,6 +381,6 @@ body[data-theme=build] .build-type-hero .build-hero-side p{font-size:14px;line-h
 @media(max-width:1000px){.build-hero-layout{grid-template-columns:minmax(0,1fr);gap:32px}.build-hero-side{max-width:580px;justify-self:start}.build-hero-rule{margin-bottom:20px}}
 @media(max-width:600px){body[data-theme=build] .universe-content>.build-type-hero{padding-block:36px}.build-hero-layout{gap:28px}.build-hero-side{max-width:100%}.build-hero-rule{width:44px;height:3px;margin-bottom:18px}body[data-theme=build] .build-type-hero .build-hero-side h2{font-size:20px;margin-bottom:12px}body[data-theme=build] .build-type-hero .build-hero-side p{font-size:13px;line-height:1.7}.hero-build-cta{margin-top:14px;font-size:13px}}
 @media(prefers-reduced-motion:reduce){.build-type-hero :is(.hero-line,.build-hero-rule,.build-hero-side-copy,.hero-build-cta){animation:none!important;transform:none!important;opacity:1;will-change:auto}.hero-cta-arrow{transition:none}.hero-build-cta:hover .hero-cta-arrow{transform:none}}
-@media(prefers-reduced-motion:reduce){.hero-scroll-stroke{animation:none}.build-hero-video{visibility:hidden}.build-type-hero:before{content:'';position:absolute;inset:0;z-index:-1;background:url('/assets/video/build-hero-gold.jpg') center/cover no-repeat;opacity:.15}}
+@media(prefers-reduced-motion:reduce){.hero-scroll-stroke{animation:none}.build-hero-video{visibility:hidden}.build-type-hero:before{content:'';position:absolute;inset:0;z-index:-1;background:url('/assets/video/build-hero-gold.jpg') center/cover no-repeat;opacity:.25}}
 
 
