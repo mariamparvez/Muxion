@@ -70,6 +70,12 @@ export function enhanceBuildScroll() {
   const update = () => {
     raf = 0;
     const rect = track.getBoundingClientRect();
+    // Ease the showcase into view at a different rate from the page; once pinned,
+    // the existing orbit, deck and zoom sequence retains its original coordinates.
+    const entry = Math.max(0, Math.min(1, rect.top / Math.max(1, innerHeight)));
+    track.style.setProperty('--showcase-entry-y', `${(entry * innerHeight * .22).toFixed(2)}px`);
+    track.style.setProperty('--showcase-entry-scale', (1 - entry * .08).toFixed(4));
+    track.style.setProperty('--showcase-halo-y', `${(-entry * innerHeight * .07).toFixed(2)}px`);
     const sticky = track.querySelector('.build-scroll-sticky');
     const travel = Math.max(1, track.offsetHeight - sticky.clientHeight);
     const progress = Math.max(0, Math.min(1, -rect.top / travel));
@@ -152,6 +158,7 @@ export function enhanceBuildScroll() {
   const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
   const staticMode = () => {
     track.classList.toggle('is-static', reduceMotion.matches);
+    track.classList.toggle('has-entry-parallax', !reduceMotion.matches);
     if (reduceMotion.matches) {
       if (countRaf) cancelAnimationFrame(countRaf);
       countRaf = 0;
@@ -176,6 +183,8 @@ export function enhanceBuildScroll() {
   reduceMotion.addEventListener?.('change', staticMode);
   staticMode();
   cleanup = () => {
+    track.classList.remove('has-entry-parallax');
+    ['--showcase-entry-y','--showcase-entry-scale','--showcase-halo-y'].forEach(name=>track.style.removeProperty(name));
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('resize', onScroll);
     reduceMotion.removeEventListener?.('change', staticMode);
@@ -183,3 +192,4 @@ export function enhanceBuildScroll() {
     if (countRaf) cancelAnimationFrame(countRaf);
   };
 }
+
