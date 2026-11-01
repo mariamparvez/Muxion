@@ -8,6 +8,19 @@ export function serviceGraphic(service){
  return frame(`<g class="scene-float"><rect x="76" y="98" width="344" height="227" rx="18" fill="#182637" stroke="#a29a6e"/><path d="M76 136h344" stroke="#697477"/><circle cx="98" cy="117" r="4" fill="#e5ce64"/><circle cx="114" cy="117" r="4" fill="#8c9a9b"/><circle cx="130" cy="117" r="4" fill="#8c9a9b"/><rect x="101" y="162" width="117" height="137" rx="10" fill="#e5ce64" fill-opacity=".8"/><path d="m120 253 25-30 22 16 29-45" stroke="#344339" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M242 177h142m-142 20h111m-111 37h139m-139 17h106" stroke="#92a4bb" stroke-width="6" stroke-linecap="round"/><rect x="241" y="274" width="80" height="23" rx="6" fill="#e5ce64"/></g><g class="scene-float-delayed"><rect x="342" y="273" width="119" height="91" rx="16" fill="#1c2d40" stroke="#e5ce64"/><path d="m378 299-18 20 18 20m45-40 18 20-18 20m-16-49-12 58" stroke="#e5ce64" stroke-width="3" stroke-linecap="round"/><path d="M108 47v37M90 65h37m-31-13 26 26m0-26L96 78" stroke="#e5ce64" stroke-width="3"/></g>`);
 }
 function heroCopy(service){return `<h1 class="build-hero-title" id="build-hero-title">${heroServices[service].heading}</h1>`;}
+let heroScrollPlayed=false,cleanupBuildHero=()=>{};
+// Mouse outline adapted from SVG Repo 522650 (CC0); the arrow is replaced by a dot-to-line stroke.
+function heroScrollCue(){return `<a class="hero-scroll-cue${heroScrollPlayed?' is-complete':''}" href="#muxion-build-work" aria-label="Scroll to our work"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 15C5 16.8565 5.73754 18.6371 7.05029 19.9498C8.36305 21.2626 10.1435 22 12 22C13.8565 22 15.637 21.2626 16.9498 19.9498C18.2625 18.6371 19 16.8565 19 15V9C19 7.14348 18.2625 5.36305 16.9498 4.05029C15.637 2.73754 13.8565 2 12 2C10.1435 2 8.36305 2.73754 7.05029 4.05029C5.73754 5.36305 5 7.14348 5 9V15Z" stroke="currentColor" stroke-width="1.3"/><rect class="hero-scroll-stroke" x="10.75" y="6" width="2.5" height="8" rx="1.25" fill="currentColor"/></svg></a>`;}
+function enhanceBuildHero(root){
+ const hero=root.querySelector('.build-type-hero'),video=hero?.querySelector('.build-hero-video'),cue=hero?.querySelector('.hero-scroll-cue');if(!hero||!video)return;
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)');let visible=true;
+ const sync=()=>{if(reduced.matches||!visible||document.hidden){video.pause();return;}if(!video.getAttribute('src'))video.src=video.dataset.src;video.play().catch(()=>{});};
+ const observer=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync();},{threshold:.01});observer.observe(hero);
+ const finished=event=>{if(event.animationName==='hero-scroll-dot-line'){heroScrollPlayed=true;cue.classList.add('is-complete');}};
+ const scroll=event=>{event.preventDefault();document.getElementById('muxion-build-work')?.scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'start'});};
+ cue?.addEventListener('animationend',finished);cue?.addEventListener('click',scroll);reduced.addEventListener('change',sync);document.addEventListener('visibilitychange',sync);sync();
+ cleanupBuildHero=()=>{observer.disconnect();video.pause();cue?.removeEventListener('animationend',finished);cue?.removeEventListener('click',scroll);reduced.removeEventListener('change',sync);document.removeEventListener('visibilitychange',sync);};
+}
 function heroSide(service,link,icon){const s=heroServices[service];return `<aside class="build-hero-side" aria-label="Build with MUXION"><div class="build-hero-rule" aria-hidden="true"></div><div class="build-hero-side-copy"><h2>${s.subheading}</h2><p>${s.description}</p></div>${link(s.href,`<span>${s.cta}</span><span class="hero-cta-arrow" aria-hidden="true">${icon('arrow')}</span>`,'hero-build-cta')}</aside>`;}
 let cleanupProfileParallax=()=>{};
 function enhanceProfileParallax(root){
@@ -22,16 +35,19 @@ function enhanceProfileParallax(root){
  cleanupProfileParallax=()=>{observer.disconnect();removeEventListener('scroll',schedule);removeEventListener('resize',schedule);reduced.removeEventListener('change',schedule);cancelAnimationFrame(frame);reset();};
 }
 export function enhanceUniverse(){
+ cleanupBuildHero();cleanupBuildHero=()=>{};
  cleanupProfileParallax();cleanupProfileParallax=()=>{};
  const root=document.querySelector('.universe');if(!root)return;
  root.dataset.service='build';document.body.dataset.theme='build';document.querySelectorAll('.brand-label').forEach(el=>el.textContent='BUILD');
+ enhanceBuildHero(root);
  enhanceProfileParallax(root);
 }
 export function universeHome({link,btn,icon,buildHeroGraphic,buildScrollShowcase,buildHomeSections,buildMariamSection,portraits,testimonialSlider,testimonials,workTestimonials,socialPortfolioTeaser}) {
   return `<div class="universe"><div class="universe-content">
     <section class="universe-hero build-type-hero" aria-labelledby="build-hero-title">
-      <div class="universe-copy">${heroCopy('build')}</div>
-      ${heroSide('build',link,icon)}
+      <video class="build-hero-video" data-src="/assets/video/build-hero-gold.mp4" poster="/assets/video/build-hero-gold.jpg" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1" disablepictureinpicture></video>
+      <div class="build-hero-layout"><div class="universe-copy">${heroCopy('build')}</div>${heroSide('build',link,icon)}</div>
+      ${heroScrollCue()}
     </section>
     ${buildScrollShowcase()}
     ${socialPortfolioTeaser()}
@@ -49,3 +65,4 @@ export function universeHome({link,btn,icon,buildHeroGraphic,buildScrollShowcase
     <section class="section universe-cta"><div class="universe-final"><div class="universe-final-copy"><div class="eyebrow">YOUR NEXT MOVE STARTS WITH A HELLO</div><h2>Let’s make something<br><span>worth putting into the world.</span></h2><p>Bring your idea. Let’s give it shape.</p><div class="hero-ctas">${link('/contact',`Let’s talk ${icon('arrow')}`,'btn yellow')}<a class="text-link" href="https://wa.me/917708100469" target="_blank" rel="noopener">Say hello on WhatsApp ${icon('external')}</a></div></div><div class="universe-final-art" aria-hidden="true"><svg class="idea-vector" viewBox="0 0 480 300" fill="none"><path class="idea-route" d="M38 226C90 270 117 72 225 98S344 272 448 192" stroke="#e5ce64" stroke-opacity=".25" stroke-width="2" stroke-dasharray="5 9"/><g class="idea-browser"><rect x="83" y="44" width="303" height="211" rx="12" fill="#25231b" stroke="#e5ce64" stroke-opacity=".5"/><path d="M83 78h303" stroke="#e5ce64" stroke-opacity=".24"/><circle cx="101" cy="61" r="3" fill="#e5ce64"/><circle cx="113" cy="61" r="3" fill="#797966"/><circle cx="125" cy="61" r="3" fill="#797966"/><rect x="105" y="100" width="102" height="131" rx="5" fill="#e5ce64" fill-opacity=".1"/><path class="idea-curve" d="M118 198c19-87 45-85 73-24" stroke="#e5ce64" stroke-width="3"/><circle cx="118" cy="198" r="4" fill="#e5ce64"/><circle cx="191" cy="174" r="4" fill="#e5ce64"/><path d="M229 111h132m-132 17h94" stroke="#e8e7df" stroke-width="5" stroke-linecap="round"/><path d="M229 160h132m-132 15h114m-114 15h122" stroke="#a39a7b" stroke-width="4" stroke-linecap="round"/><rect x="228" y="209" width="78" height="21" rx="4" fill="#e5ce64"/><path d="M243 219h46m-6-5 6 5-6 5" stroke="#26281c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g><g class="idea-pen"><path d="m329 39 27-15 67 116-27 16z" fill="#e5ce64"/><path d="m396 156 26-16 5 42z" fill="#eee9d7"/><path d="m427 182-3-13-8 5z" fill="#e5ce64"/><path d="m343 32 67 116" stroke="#22251c" stroke-opacity=".32" stroke-width="3"/></g><g class="idea-cursor"><path d="m50 191 4 48 12-14 18 1z" fill="#e5ce64"/><circle cx="58" cy="185" r="20" stroke="#e5ce64" stroke-opacity=".2"/></g><path d="M413 230h34m-8-8 8 8-8 8" stroke="#e5ce64" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div></section>
   </div></div>`;
 }
+
