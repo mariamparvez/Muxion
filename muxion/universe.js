@@ -12,16 +12,22 @@ let heroScrollPlayed=false,heroEntranceStarted=false,cleanupBuildHero=()=>{};
 // Mouse outline adapted from SVG Repo 522650 (CC0); the arrow is replaced by a dot-to-line stroke.
 function heroScrollCue(){return `<a class="hero-scroll-cue${heroScrollPlayed?' is-complete':''}" href="#muxion-build-work" aria-label="Scroll to our work"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 15C5 16.8565 5.73754 18.6371 7.05029 19.9498C8.36305 21.2626 10.1435 22 12 22C13.8565 22 15.637 21.2626 16.9498 19.9498C18.2625 18.6371 19 16.8565 19 15V9C19 7.14348 18.2625 5.36305 16.9498 4.05029C15.637 2.73754 13.8565 2 12 2C10.1435 2 8.36305 2.73754 7.05029 4.05029C5.73754 5.36305 5 7.14348 5 9V15Z" stroke="currentColor" stroke-width="1.3"/><rect class="hero-scroll-stroke" x="10.75" y="6" width="2.5" height="8" rx="1.25" fill="currentColor"/></svg></a>`;}
 function enhanceBuildHero(root){
- const hero=root.querySelector('.build-type-hero'),video=hero?.querySelector('.build-hero-video'),cue=hero?.querySelector('.hero-scroll-cue');if(!hero||!video)return;
+ const hero=root.querySelector('.build-type-hero'),background=hero?.querySelector('.build-hero-background'),cue=hero?.querySelector('.hero-scroll-cue');if(!hero||!background)return;
  heroEntranceStarted=true;
- const reduced=matchMedia('(prefers-reduced-motion: reduce)');let visible=true;
- const sync=()=>{if(reduced.matches||!visible||document.hidden){video.pause();return;}if(!video.getAttribute('src'))video.src=video.dataset.src;video.play().catch(()=>{});};
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)'),poster='/assets/video/build-hero-gold.jpg';
+ // Use an image on touch devices: iOS cannot overlay native video playback controls.
+ const imageMotion=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)||matchMedia('(hover: none) and (pointer: coarse)').matches;
+ let visible=true,video=null;
+ const playing=()=>hero.classList.add('is-video-playing'),stopped=()=>hero.classList.remove('is-video-playing');
+ if(!imageMotion){video=document.createElement('video');video.className='build-hero-video';video.muted=true;video.defaultMuted=true;video.playsInline=true;video.loop=true;video.controls=false;video.preload='none';video.disablePictureInPicture=true;video.setAttribute('aria-hidden','true');video.setAttribute('tabindex','-1');video.setAttribute('webkit-playsinline','');video.setAttribute('controlslist','nodownload nofullscreen noremoteplayback');video.addEventListener('playing',playing);video.addEventListener('pause',stopped);video.addEventListener('error',stopped);hero.querySelector('.build-hero-media').append(video);}
+ const sync=()=>{const paused=reduced.matches||!visible||document.hidden;if(imageMotion){const src=paused?poster:'/assets/video/build-hero-gold-mobile.webp';if(background.getAttribute('src')!==src)background.src=src;return;}if(paused){video.pause();stopped();return;}if(!video.getAttribute('src'))video.src='/assets/video/build-hero-gold.mp4';video.play().catch(stopped);};
+ const imageFailed=()=>{if(background.getAttribute('src')!==poster)background.src=poster;};background.addEventListener('error',imageFailed);
  const observer=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;sync();},{threshold:.01});observer.observe(hero);
  const finished=event=>{if(event.animationName==='hero-scroll-dot-line'){heroScrollPlayed=true;cue.classList.add('is-complete');}};
  const contentFinished=event=>{if(event.target.matches('.hero-build-cta')&&event.animationName==='build-copy-enter')hero.classList.add('is-revealed');};
  const scroll=event=>{event.preventDefault();document.getElementById('muxion-build-work')?.scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'start'});};
  hero.addEventListener('animationend',contentFinished);cue?.addEventListener('animationend',finished);cue?.addEventListener('click',scroll);reduced.addEventListener('change',sync);document.addEventListener('visibilitychange',sync);sync();
- cleanupBuildHero=()=>{observer.disconnect();video.pause();hero.removeEventListener('animationend',contentFinished);cue?.removeEventListener('animationend',finished);cue?.removeEventListener('click',scroll);reduced.removeEventListener('change',sync);document.removeEventListener('visibilitychange',sync);};
+ cleanupBuildHero=()=>{observer.disconnect();if(video){video.removeEventListener('playing',playing);video.removeEventListener('pause',stopped);video.removeEventListener('error',stopped);video.pause();video.removeAttribute('src');video.load();}background.removeEventListener('error',imageFailed);hero.removeEventListener('animationend',contentFinished);cue?.removeEventListener('animationend',finished);cue?.removeEventListener('click',scroll);reduced.removeEventListener('change',sync);document.removeEventListener('visibilitychange',sync);};
 }
 function heroDetails(service,link,icon){const s=heroServices[service];return `<div class="build-hero-details"><div class="build-hero-description"><p>${s.description}</p></div>${link(s.href,`<span>${s.cta}</span><span class="hero-cta-arrow" aria-hidden="true">${icon('arrow')}</span>`,'hero-build-cta')}</div>`;}
 let cleanupProfileParallax=()=>{};
@@ -47,7 +53,7 @@ export function enhanceUniverse(){
 export function universeHome({link,btn,icon,buildHeroGraphic,buildScrollShowcase,buildHomeSections,buildMariamSection,portraits,testimonialSlider,testimonials,workTestimonials,socialPortfolioTeaser}) {
   return `<div class="universe"><div class="universe-content">
     <section class="universe-hero build-type-hero${heroEntranceStarted?' is-revealed':''}" aria-labelledby="build-hero-title">
-      <video class="build-hero-video" data-src="/assets/video/build-hero-gold.mp4" poster="/assets/video/build-hero-gold.jpg" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1" disablepictureinpicture></video>
+      <div class="build-hero-media" aria-hidden="true"><img class="build-hero-background" src="/assets/video/build-hero-gold.jpg" alt="" width="1280" height="720" decoding="async"></div>
       <div class="build-hero-layout"><div class="universe-copy">${heroCopy('build')}</div>${heroDetails('build',link,icon)}</div>
       ${heroScrollCue()}
     </section>
