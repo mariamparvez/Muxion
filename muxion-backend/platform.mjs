@@ -1,6 +1,7 @@
 import {createHash} from 'node:crypto';
 import {seed} from '../muxion/data.js';
 import {PaymentError} from './payments.mjs';
+import {httpsURL} from './security.mjs';
 
 const ownerEmail='designwithmariam@gmail.com';
 const idPattern=/^[a-zA-Z0-9_-]{1,80}$/;
@@ -16,10 +17,10 @@ export function validateOffer(raw){
   o.price=Number(o.price);o.original=Number(o.original);
   if(JSON.stringify(o).length>200000)throw new PaymentError(400,'Course content is too large. Use hosted media links.');
   for(const [k,v]of Object.entries(o))if(typeof v==='string'&&v.length>12000)throw new PaymentError(400,'A text field is too long.');
-  for(const k of ['image','photo','meet','whatsapp','payment'])if(o[k]&&(!/^https:\/\//.test(o[k])&&!/^(assets\/)[a-zA-Z0-9_./-]+$/.test(o[k])))throw new PaymentError(400,'Use an HTTPS media link or a supplied image asset.');
+  for(const k of ['image','photo','meet','whatsapp','payment'])if(o[k]&&!httpsURL(o[k])&&!(typeof o[k]==='string'&&/^assets\/[a-zA-Z0-9_./-]+$/.test(o[k])&&!o[k].split('/').includes('..')))throw new PaymentError(400,'Use an HTTPS media link or a supplied image asset.');
   if(o.kind==='course'){
     if(!Array.isArray(o.lessons)||o.lessons.length>200||!Array.isArray(o.outcomes)||o.outcomes.some(v=>typeof v!=='string'||v.length>500))throw new PaymentError(400,'Invalid course curriculum.');
-    const ids=new Set();for(const l of o.lessons){if(!idPattern.test(l.id||'')||ids.has(l.id)||typeof l.title!=='string'||!l.title||l.title.length>180||typeof l.section!=='string'||l.section.length>180||!['video','resource','quiz','assignment'].includes(l.type)||!Number.isFinite(Number(l.minutes))||Number(l.minutes)<0||Number(l.minutes)>1440)throw new PaymentError(400,'Invalid or duplicate lesson.');ids.add(l.id);if(l.body!==undefined&&(typeof l.body!=='string'||l.body.length>12000))throw new PaymentError(400,'Invalid lesson text.');if(l.url&&!/^https:\/\//.test(l.url))throw new PaymentError(400,'Upload media to a host and paste its HTTPS URL. Browser-only uploads cannot be published.');for(const k of Object.keys(l))if(!['id','title','section','type','minutes','url','body','fileName'].includes(k))throw new PaymentError(400,'Unsupported lesson fields.');}
+    const ids=new Set();for(const l of o.lessons){if(!idPattern.test(l.id||'')||ids.has(l.id)||typeof l.title!=='string'||!l.title||l.title.length>180||typeof l.section!=='string'||l.section.length>180||!['video','resource','quiz','assignment'].includes(l.type)||!Number.isFinite(Number(l.minutes))||Number(l.minutes)<0||Number(l.minutes)>1440)throw new PaymentError(400,'Invalid or duplicate lesson.');ids.add(l.id);if(l.body!==undefined&&(typeof l.body!=='string'||l.body.length>12000))throw new PaymentError(400,'Invalid lesson text.');if(l.url&&!httpsURL(l.url))throw new PaymentError(400,'Upload media to a host and paste its HTTPS URL. Browser-only uploads cannot be published.');for(const k of Object.keys(l))if(!['id','title','section','type','minutes','url','body','fileName'].includes(k))throw new PaymentError(400,'Unsupported lesson fields.');}
     if(o.quiz&&(Object.keys(o.quiz).some(k=>!['question','options','answer'].includes(k))||typeof o.quiz.question!=='string'||o.quiz.question.length>1000||!Array.isArray(o.quiz.options)||o.quiz.options.length<2||o.quiz.options.length>8||o.quiz.options.some(v=>typeof v!=='string'||v.length>1000)||!Number.isInteger(o.quiz.answer)||o.quiz.answer<0||o.quiz.answer>=o.quiz.options.length))throw new PaymentError(400,'Invalid quiz.');
     if(o.status==='Published'&&(!o.lessons.length||!o.outcomes.length))throw new PaymentError(400,'Add lessons and learning outcomes before publishing.');
   }
@@ -88,3 +89,4 @@ export async function configuredPlatform(){
   if(!services)services=(async()=>{const {initializeApp,cert,getApps}=await import('firebase-admin/app');const {getAuth}=await import('firebase-admin/auth');const {getFirestore}=await import('firebase-admin/firestore');const credentials=JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);if(credentials.project_id!=='muxionuniverse')throw new Error('Wrong Firebase project.');const app=getApps().find(a=>a.name==='muxion-payments')||initializeApp({credential:cert(credentials),projectId:'muxionuniverse'},'muxion-payments');return new Platform({auth:getAuth(app),db:getFirestore(app)});})();
   return services;
 }
+

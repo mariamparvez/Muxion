@@ -7,3 +7,11 @@ node_modules
 **/.env.*
 **/orders.json
 public
+tmp
+output
+**/*.pem
+**/*.key
+**/*firebase-adminsdk*.json
+**/*service-account*.json
+**/rzp-key.csv
+

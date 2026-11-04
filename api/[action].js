@@ -3,18 +3,25 @@ import {configuredHostedPayments} from '../muxion-backend/hosted-payments.mjs';
 import {PaymentError} from '../muxion-backend/payments.mjs';
 import {configuredPlatform,publicOffer,seedOffers} from '../muxion-backend/platform.mjs';
 import {configurePaymentWebhook} from '../muxion-backend/payment-setup.mjs';
+import {secureHeaders,jsonBody,BurstLimiter,accountRateLimit} from '../muxion-backend/security.mjs';
 
 const cookieName='muxion_payment';
 export function createHandler(payments,platform=null) {
   const learning=platform?new Learning(platform):null;
+  const bursts=new BurstLimiter();
   return async function handler(req,res) {
-    res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');
+    secureHeaders(res);
     try {
       const action=req.query?.action||new URL(req.url,'https://muxion.invalid').pathname.split('/').pop();
+      if(typeof action!=='string'||!/^[a-z-]{1,40}$/.test(action))throw new PaymentError(400,'Invalid API route.');
+      if(!['GET','POST'].includes(req.method)){res.setHeader('Allow','GET, POST');throw new PaymentError(405,'Method not allowed.');}
+      const ip=String(req.headers['x-vercel-forwarded-for']||req.socket?.remoteAddress||'unknown').split(',')[0].trim();
+      bursts.check(ip);
       const allowed=new Set(['https://muxion.in','https://www.muxion.in','https://muxion-git-preview-mariamparvezs-projects.vercel.app','https://project-4jpr6.vercel.app',...(process.env.PAYMENT_ALLOWED_ORIGINS||'').split(',').filter(Boolean)]);
       if(process.env.VERCEL_URL)allowed.add('https://'+process.env.VERCEL_URL);
       if(process.env.VERCEL_PROJECT_PRODUCTION_URL)allowed.add('https://'+process.env.VERCEL_PROJECT_PRODUCTION_URL);
       if(req.method==='POST'&&!allowed.has(req.headers.origin))throw new PaymentError(403,'A same-origin checkout request is required.');
+      if(req.headers.origin&&!allowed.has(req.headers.origin))throw new PaymentError(403,'A same-origin request is required.');
       if(action==='catalogue'&&req.method==='GET'){const offers=platform?await platform.catalog():seedOffers();return res.status(200).json({offers:offers.filter(o=>o.status==='Published').map(publicOffer)});}
       if(action==='mentorship-offers'&&req.method==='GET')return res.status(200).json({offers:learning?await learning.offers():[]});
       if(action==='certificate-verify'&&req.method==='GET'){if(!learning)throw new PaymentError(503,'Verification is temporarily unavailable.');return res.status(200).json({certificate:await learning.certificate(req.query?.id||'')});}
@@ -27,6 +34,7 @@ export function createHandler(payments,platform=null) {
       if(!payments)throw new PaymentError(503,'Payment credentials are not configured on the server.');
       if(!platform)throw new PaymentError(503,'The account database is not configured yet. No payment will be started.');
       const actor=await platform.identity(req.headers.authorization);
+      if(platform.db)await accountRateLimit(platform.db,actor.uid,action,req.method);
       if(action==='account'&&req.method==='GET')return res.status(200).json({...await platform.account(actor),workspace:await learning.snapshot(actor)});
       if(action==='payment-history'&&req.method==='GET')return res.status(200).json(await platform.history(actor,req.query?.cursor||''));
       if(action==='admin-catalogue'&&req.method==='GET'){platform.admin(actor);return res.status(200).json({offers:await platform.catalog(true)});}
@@ -42,11 +50,8 @@ export function createHandler(payments,platform=null) {
       const saveSession=()=>res.setHeader('Set-Cookie',`${cookieName}=${payments.token(session)}; Path=/api; HttpOnly; Secure; SameSite=Strict; Max-Age=2592000`);
       if(action==='payment-receipt'&&req.method==='GET')return res.status(200).json({receipt:session.order?await payments.recover(session.order,session.sid,actor.uid):null});
       if(req.method!=='POST')throw new PaymentError(405,'Method not allowed.');
-      if(!req.headers['content-type']?.startsWith('application/json'))throw new PaymentError(415,'Send application/json.');
       const bodyLimit=action==='admin-offer'?220000:20000;
-      if(Number(req.headers['content-length']||0)>bodyLimit||JSON.stringify(req.body||{}).length>bodyLimit)throw new PaymentError(413,'Request is too large.');
-      let body=req.body;try{if(typeof body==='string')body=JSON.parse(body);}catch{throw new PaymentError(400,'Invalid JSON.');}
-      if(!body||Array.isArray(body)||typeof body!=='object')throw new PaymentError(400,'A JSON object is required.');
+      const body=jsonBody(req,bodyLimit);
       if(action==='profile-save')return res.status(200).json(await learning.saveProfile(actor,body));
       if(action==='learning-progress')return res.status(200).json(await learning.progress(actor,body));
       if(action==='discussion-post')return res.status(200).json({comment:await learning.post(actor,body)});
@@ -64,9 +69,10 @@ export function createHandler(payments,platform=null) {
         await platform.content(actor,'course:'+body.id);const course=(await platform.catalog()).find(o=>o.kind==='course'&&o.id===body.id);return res.status(200).json({correct:Number(body.answer)===course?.quiz?.answer});
       }
       throw new PaymentError(404,'API route not found.');
-    }catch(error){if(!(error instanceof PaymentError))console.error('account_request_failed',{name:error?.name,code:error?.code,detail:error instanceof TypeError?error.message:undefined});return res.status(error instanceof PaymentError?error.status:500).json({error:error instanceof PaymentError?error.message:'Checkout could not complete. Please contact hello@muxion.in.'});}
+    }catch(error){if(error.retryAfter)res.setHeader('Retry-After',String(error.retryAfter));if(!(error instanceof PaymentError))console.error('account_request_failed',{name:error?.name,code:error?.code});return res.status(error instanceof PaymentError?error.status:500).json({error:error instanceof PaymentError?error.message:'Checkout could not complete. Please contact hello@muxion.in.'});}
   };
 }
 let handler;
-export default async function paymentApi(req,res){try{if(!handler){const platform=await configuredPlatform();handler=createHandler(configuredHostedPayments(platform),platform);}return handler(req,res);}catch(error){console.error('account_service_init_failed',{name:error?.name,code:error?.code||error?.errorInfo?.code||'unknown',...(error?.code==='ERR_REQUIRE_ESM'?{moduleError:error.message}:{})});return res.status(503).json({error:'Account services are temporarily unavailable. No payment has been started.'});}}
+export default async function paymentApi(req,res){secureHeaders(res);try{if(!handler){const platform=await configuredPlatform();handler=createHandler(configuredHostedPayments(platform),platform);}return handler(req,res);}catch(error){console.error('account_service_init_failed',{name:error?.name,code:error?.code||error?.errorInfo?.code||'unknown'});return res.status(503).json({error:'Account services are temporarily unavailable. No payment has been started.'});}}
 export const config={maxDuration:30};
+

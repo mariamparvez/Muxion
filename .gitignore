@@ -9,3 +9,10 @@ work/
 *.log
 orders.json
 private/
+*.pem
+*.key
+*firebase-adminsdk*.json
+*service-account*.json
+rzp-key.csv
+tmp/
+

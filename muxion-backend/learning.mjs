@@ -1,11 +1,12 @@
 import {createHash,randomUUID} from 'node:crypto';
 import {PaymentError} from './payments.mjs';
 import {seed} from '../muxion/data.js';
+import {httpsURL} from './security.mjs';
 const ownerEmail='designwithmariam@gmail.com';
 const privileged=a=>['super','admin'].includes(a.role);
 const text=(v,max=500)=>typeof v==='string'&&v.trim().length<=max?v.trim():'';
 const validId=v=>typeof v==='string'&&/^[a-zA-Z0-9_-]{1,100}$/.test(v);
-const https=v=>{try{return new URL(v).protocol==='https:';}catch{return false;}};
+const https=httpsURL;
 const fail=(status,message)=>{throw new PaymentError(status,message);};
 export class Learning {
  constructor(platform){this.p=platform;this.db=platform.db;this.auth=platform.auth;}
@@ -60,3 +61,4 @@ export class Learning {
   await this.db.runTransaction(async tx=>{let accessRef,access;if(body.course){accessRef=this.db.collection('enrolments').doc(user.uid).collection('items').doc('course:'+body.course);access=await tx.get(accessRef);}tx.set(this.db.collection('roles').doc(user.uid),{role:body.role==='Admin'?'admin':'learner',suspended:body.status==='Suspended',updatedBy:actor.uid,updatedAt:this.p.now()});if(accessRef){const grants={...(access.data()?.grants||{}),manual:body.revokeManual!==true};tx.set(accessRef,{...(access.data()||{}),uid:user.uid,id:'course:'+body.course,offerId:body.course,kind:'course',grants,active:Object.values(grants).some(Boolean),updatedAt:this.p.now()});}tx.set(this.db.collection('audit').doc(),{actor:actor.uid,action:'user.access.changed',uid:user.uid,role:body.role,status:body.status,at:this.p.now()});});await this.auth.revokeRefreshTokens(user.uid);this.userCache=null;return {success:true,uid:user.uid};
  }
 }
+

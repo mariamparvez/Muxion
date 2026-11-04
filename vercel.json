@@ -15,6 +15,26 @@
         {
           "key": "Referrer-Policy",
           "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin-allow-popups"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=(self \"https://api.razorpay.com\" \"https://checkout.razorpay.com\")"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' https://www.gstatic.com https://apis.google.com https://*.razorpay.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data: blob:; media-src 'self' https: blob: data:; connect-src 'self' https://*.googleapis.com https://www.gstatic.com https://*.firebaseapp.com https://*.razorpay.com https://formsubmit.co; frame-src https://*.firebaseapp.com https://*.razorpay.com https://www.youtube-nocookie.com; form-action 'self' https://formsubmit.co; upgrade-insecure-requests"
         }
       ]
     }
@@ -38,3 +58,4 @@
     }
   ]
 }
+

@@ -24,8 +24,8 @@ export function buildScrollShowcase() {
           <div class="build-impact-backdrop" data-build-impact-backdrop></div>
           <div class="build-impact-inner" data-build-impact-content>
             <div class="build-impact-metrics">
-              <article><strong aria-label="150 plus"><span data-count data-from="100" data-to="150">100</span><span class="build-impact-plus" aria-hidden="true">+</span></strong><p>Websites designed</p></article>
-              <article><strong aria-label="180 plus"><span data-count data-from="130" data-to="180">130</span><span class="build-impact-plus" aria-hidden="true">+</span></strong><p>Clients served</p></article>
+              <article><strong aria-label="100 plus"><span data-count data-from="50" data-to="100">50</span><span class="build-impact-plus" aria-hidden="true">+</span></strong><p>Websites designed</p></article>
+              <article><strong aria-label="130 plus"><span data-count data-from="80" data-to="130">80</span><span class="build-impact-plus" aria-hidden="true">+</span></strong><p>Clients served</p></article>
               <article><strong aria-label="36 plus"><span data-count data-from="0" data-to="36">0</span><span class="build-impact-plus" aria-hidden="true">+</span></strong><p>Social accounts managed</p></article>
             </div>
             <p class="build-impact-terms">Standard terms apply.</p>
