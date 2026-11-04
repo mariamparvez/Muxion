@@ -37,9 +37,156 @@
           "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' https://www.gstatic.com https://apis.google.com https://*.razorpay.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data: blob:; media-src 'self' https: blob: data:; connect-src 'self' https://*.googleapis.com https://www.gstatic.com https://*.firebaseapp.com https://*.razorpay.com https://formsubmit.co; frame-src https://*.firebaseapp.com https://*.razorpay.com https://www.youtube-nocookie.com; form-action 'self' https://formsubmit.co; upgrade-insecure-requests"
         }
       ]
+    },
+    {
+      "source": "/admin/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/learner/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/api/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/checkout/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/login/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/signup",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/forgot-password",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/reset-password",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/page-map",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/mentorship/book",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/verify/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
   ],
   "rewrites": [
+    {
+      "source": "/workshop/design-lab",
+      "destination": "/workshop/design-lab/index.html"
+    },
+    {
+      "source": "/course/mastery",
+      "destination": "/course/mastery/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about/index.html"
+    },
+    {
+      "source": "/learn",
+      "destination": "/learn/index.html"
+    },
+    {
+      "source": "/academy",
+      "destination": "/academy/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact/index.html"
+    },
+    {
+      "source": "/courses",
+      "destination": "/courses/index.html"
+    },
+    {
+      "source": "/workshops",
+      "destination": "/workshops/index.html"
+    },
+    {
+      "source": "/mentorship",
+      "destination": "/mentorship/index.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy/index.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms/index.html"
+    },
+    {
+      "source": "/refunds",
+      "destination": "/refunds/index.html"
+    },
     {
       "source": "/blog",
       "destination": "/blog/index.html"
@@ -56,6 +203,17 @@
       "source": "/((?!api(?:/|$)|assets(?:/|$))[^.]*)",
       "destination": "/index.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/build",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/learning",
+      "destination": "/learn",
+      "permanent": true
+    }
   ]
 }
-
