@@ -34,6 +34,15 @@ body[data-theme=build] .universe-content>.universe-approach{position:relative;is
 .circular-dots button:before{content:'';display:block;width:6px;height:6px;margin:auto;border-radius:6px;background:var(--muted);opacity:.35;transition:width .2s,opacity .2s}
 .circular-dots button[aria-current=true]:before{background:var(--ring-accent);opacity:1;width:19px}
 .circular-status{font-size:12px;color:var(--muted);margin:8px 0 0;min-height:20px}
+.testimonial-section>.section-head{display:block;text-align:center}
+.testimonial-section>.section-head h2{max-width:none;width:100%;margin-inline:auto}
+body[data-theme=academy] .tutor-banner{padding-block:clamp(24px,3vw,40px)}
+body[data-theme=academy] .collab-cursor small{background:#0b1628;color:#d5e6ff;border:1px solid #48668f;box-shadow:0 3px 12px #0005}
+body[data-theme=academy] .collab-chip{background:#0b1628;border-color:#48668f;color:#d5e6ff}
+body[data-theme=academy] .collab-chart i{background:#35577f}
+body[data-theme=academy] .collab-chart i:nth-child(6){background:#527dab}
+body[data-theme=academy] .collab-graphic{color:var(--brand-accent)}
+body[data-theme=academy] .collab-orbit{box-shadow:0 0 0 24px #a4caff0a,0 0 0 48px #a4caff07}
 @media(max-width:800px){.circular-testimonials{--quote-width:min(440px,72vw)}.circular-quote{padding:24px;gap:18px}.circular-quote blockquote{font-size:14px}}
 @media(max-width:500px){.circular-testimonials{--quote-width:calc(100vw - 64px);--quote-height:420px}.circular-quote{padding:22px}.is-circular-ready .circular-stage{height:calc(var(--quote-height) + 40px)}.circular-controls{gap:8px}.circular-dots{gap:0}.circular-status{font-size:11px}.circular-quote blockquote{font-size:13px;line-height:1.8}.universe-approach:after{background:#111110a6}}
 @media(prefers-reduced-motion:reduce){.micro-slats-background canvas{display:none}.tech-text-canvas{display:none}.tech-text-ready .tech-text-fallback{opacity:1}.circular-quote{will-change:auto}.circular-dots button:before{transition:none}}
