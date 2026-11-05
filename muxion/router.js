@@ -1,3 +1,4 @@
+import {scrollPageTo} from './page-scroll.js';
 // Keep old shared hash URLs working while making every new URL a real path.
 export function routePath(pathname='/') {
   try { return decodeURIComponent(pathname).replace(/\/+$/, '') || '/'; }
@@ -11,9 +12,10 @@ export function navigate(path, {replace=false}={}) {
   if (typeof path!=='string' || !/^\/(?!\/)/.test(path)) return false;
   const target=new URL(path,location.origin);
   if(target.origin!==location.origin)return false;
+  const anchorOnly=target.pathname===location.pathname&&target.search===location.search&&Boolean(target.hash);
   history[replace?'replaceState':'pushState']({},'',target.pathname+target.search+target.hash);
-  window.dispatchEvent(new Event('muxion:navigate'));
-  if(target.hash){const id=decodeURIComponent(target.hash.slice(1));requestAnimationFrame(()=>document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'}));}
+  if(!anchorOnly)window.dispatchEvent(new Event('muxion:navigate'));
+  if(target.hash){const id=decodeURIComponent(target.hash.slice(1));requestAnimationFrame(()=>{const node=document.getElementById(id);if(node)scrollPageTo(node);});}
   return true;
 }
 export function installRouter(onRoute) {
@@ -32,3 +34,4 @@ export function installRouter(onRoute) {
   window.addEventListener('muxion:navigate',onRoute);
   window.addEventListener('hashchange',()=>{if(migrate())onRoute();});
 }
+
