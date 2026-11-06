@@ -70,6 +70,12 @@ export async function enhanceLandingMotion(route){
     const observer=new IntersectionObserver(async([entry])=>{if(!entry.isIntersecting)return;observer.disconnect();try{const {mountMicroSlats}=await import('./micro-slats.js');if(version!==epoch)return;const stop=mountMicroSlats(background);if(stop)cleanups.push(stop);}catch{ /* The dark CSS slats remain if WebGL is unavailable. */ }},{rootMargin:'200px'});
     observer.observe(section);cleanups.push(()=>{observer.disconnect();background.remove();});
    }
+   const cta=root.querySelector('.universe-cta');
+   if(cta){
+    const background=document.createElement('div');background.className='cta-trunk-background';background.setAttribute('aria-hidden','true');cta.prepend(background);
+    const observer=new IntersectionObserver(async([entry])=>{if(!entry.isIntersecting)return;observer.disconnect();try{const {mountTrunkBackground}=await import('./trunk-background.js');if(version!==epoch)return;const stop=await mountTrunkBackground(background);if(version!==epoch)stop?.();else if(stop)cleanups.push(stop);}catch{ /* The warm CSS background remains if the optional canvas cannot load. */ }},{rootMargin:'250px'});
+    observer.observe(cta);cleanups.push(()=>{observer.disconnect();background.remove();});
+   }
   }
   const refresh=()=>{if(version===epoch){lenis?.resize();ScrollTrigger.refresh();}};
   const observer=new ResizeObserver(()=>{cancelAnimationFrame(refreshFrame);refreshFrame=requestAnimationFrame(refresh);});let refreshFrame=0;observer.observe(root);cleanups.push(()=>{observer.disconnect();cancelAnimationFrame(refreshFrame);});

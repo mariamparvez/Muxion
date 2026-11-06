@@ -1,0 +1,7 @@
+p5.js 1.11.11, distributed separately under LGPL 2.1.
+License: P5-LICENSE.txt
+Unminified source for this exact release:
+https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.js
+Complete source distribution:
+https://registry.npmjs.org/p5/-/p5-1.11.11.tgz
+Source repository: https://github.com/processing/p5.js

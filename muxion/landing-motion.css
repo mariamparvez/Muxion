@@ -43,6 +43,20 @@ body[data-theme=academy] .collab-chart i{background:#35577f}
 body[data-theme=academy] .collab-chart i:nth-child(6){background:#527dab}
 body[data-theme=academy] .collab-graphic{color:var(--brand-accent)}
 body[data-theme=academy] .collab-orbit{box-shadow:0 0 0 24px #a4caff0a,0 0 0 48px #a4caff07}
+body[data-theme=academy] .academy-page{--academy-gutter:clamp(16px,2.5vw,40px);width:100%;max-width:none;margin:0;padding:0}
+.academy-page>:is(.hero,.section,.skills-strip){padding-inline:var(--academy-gutter)}
+.academy-page>.academy-mentor-section{padding-inline:0}
+.academy-page .academy-mentor-section .tutor-banner{width:100%;padding-inline:var(--academy-gutter)}
+body[data-theme=academy] .collab-cursor{bottom:34px}
+body[data-theme=build] .universe-cta{background:radial-gradient(ellipse at 80% 50%,#e5ce6410,transparent 60%),#171710}
+.universe .universe-cta .universe-final{grid-template-columns:minmax(0,1fr);z-index:2}
+.universe-cta .universe-final-copy{max-width:65%;position:relative;z-index:2}
+.cta-trunk-background{position:absolute;top:0;bottom:0;left:38%;right:-12%;opacity:.4;pointer-events:none;z-index:0}
+.cta-trunk-background canvas{position:absolute!important;inset:0;pointer-events:none}
+.universe-cta:after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,#171710dd 0%,#17171080 45%,transparent 80%)}
+@media(max-width:900px){.learn-tutor-portrait{padding-top:12px}.learn-tutor-portrait img{object-position:center top}}
+@media(max-width:800px){.universe-cta .universe-final-copy{max-width:100%}.cta-trunk-background{left:0;right:-25%;opacity:.23}.universe-cta:after{background:#17171066}}
+@media(max-width:560px){.learn-tutor-portrait{height:300px}.learn-tutor-portrait img{object-fit:contain;object-position:center top}.academy-page .academy-mentor-section .tutor-banner{padding-inline:16px}}
 @media(max-width:800px){.circular-testimonials{--quote-width:min(440px,72vw)}.circular-quote{padding:24px;gap:18px}.circular-quote blockquote{font-size:14px}}
 @media(max-width:500px){.circular-testimonials{--quote-width:calc(100vw - 64px);--quote-height:420px}.circular-quote{padding:22px}.is-circular-ready .circular-stage{height:calc(var(--quote-height) + 40px)}.circular-controls{gap:8px}.circular-dots{gap:0}.circular-status{font-size:11px}.circular-quote blockquote{font-size:13px;line-height:1.8}.universe-approach:after{background:#111110a6}}
 @media(prefers-reduced-motion:reduce){.micro-slats-background canvas{display:none}.tech-text-canvas{display:none}.tech-text-ready .tech-text-fallback{opacity:1}.circular-quote{will-change:auto}.circular-dots button:before{transition:none}}
