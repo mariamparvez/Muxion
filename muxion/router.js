@@ -19,7 +19,7 @@ export function navigate(path, {replace=false}={}) {
   return true;
 }
 export function installRouter(onRoute) {
-  const migrate=()=>{const hashPath=legacyDestination(location.hash);if(hashPath){history.replaceState({},'',hashPath);return true;}const path=routePath(location.pathname);const canonical=path==='/build'?'/':path==='/learning'?'/learn':null;if(canonical){history.replaceState({},'',canonical+location.search+location.hash);return true;}return false;};
+  const migrate=()=>{const hashPath=legacyDestination(location.hash);if(hashPath){history.replaceState({},'',hashPath);return true;}const path=routePath(location.pathname);const canonical=path==='/learning'?'/learn':null;if(canonical){history.replaceState({},'',canonical+location.search+location.hash);return true;}return false;};
   migrate();
   document.addEventListener('click',event=>{
     const a=event.target.closest('a[href]');

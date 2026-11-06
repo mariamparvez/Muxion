@@ -140,6 +140,10 @@
   ],
   "rewrites": [
     {
+      "source": "/build",
+      "destination": "/build/index.html"
+    },
+    {
       "source": "/workshop/design-lab",
       "destination": "/workshop/design-lab/index.html"
     },
@@ -205,11 +209,6 @@
     }
   ],
   "redirects": [
-    {
-      "source": "/build",
-      "destination": "/",
-      "permanent": true
-    },
     {
       "source": "/learning",
       "destination": "/learn",

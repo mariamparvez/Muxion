@@ -1,3 +1,13 @@
 .boot-loader{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;background:#111110;color:#f5f2e8;transition:opacity .35s,visibility .35s;pointer-events:none}.boot-loader.is-ready{opacity:0;visibility:hidden}.loader-composition{text-align:center;width:min(300px,80vw)}.loader-composition svg{width:240px;max-width:100%;display:block;margin:auto}.loader-composition strong{font-size:22px;letter-spacing:.22em;display:block;margin:12px 0}.loader-composition>span{font-size:9px;letter-spacing:.18em;color:#c8c1ad}.loader-composition p{font-size:11px;color:#c8c1ad;margin:24px 0}.loader-orbit{transform-origin:120px 100px;animation:loader-orbit 7s linear infinite}.loader-orbit.reverse{animation-direction:reverse;animation-duration:10s}.media-pending{background:#142234;opacity:.45}.media-ready{animation:media-reveal .45s ease-out}.media-unavailable{background:#142234}@keyframes loader-orbit{to{transform:rotate(360deg)}}@keyframes media-reveal{from{opacity:.45}to{opacity:1}}@media(prefers-reduced-motion:reduce){.loader-orbit,.media-ready{animation:none}.boot-loader{transition:none}}
 .boot-loader .loader-composition>svg{width:240px;height:200px;max-width:100%;flex:none}
+/* Start in Academy's palette before the application renders its first frame. */
+.boot-loader{--boot-bg:#0b111d;--boot-accent:#a4caff;--boot-muted:#b8c9de;--boot-panel:#17283e;background:var(--boot-bg);color:#eef4ff}
+body[data-theme=learning] .boot-loader{--boot-bg:#0b1813;--boot-accent:#91c4ab;--boot-muted:#b0cabb;--boot-panel:#18332a}
+body[data-theme=build] .boot-loader{--boot-bg:#111110;--boot-accent:#e5ce64;--boot-muted:#c8c1ad;--boot-panel:#29261c}
+.boot-loader .loader-composition>span,.boot-loader .loader-composition p{color:var(--boot-muted)}
+.boot-loader .loader-orbit ellipse{stroke:var(--boot-accent)}
+.boot-loader .loader-orbit circle{fill:var(--boot-accent)}
+.boot-loader svg>rect{fill:var(--boot-panel);stroke:var(--boot-accent)}
+.boot-loader svg>path{stroke:var(--boot-accent)}
+
 

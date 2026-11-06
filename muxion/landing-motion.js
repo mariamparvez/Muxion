@@ -2,7 +2,7 @@ import {mountTechText} from './tech-text.js';
 import {mountCircularTestimonials} from './circular-testimonials.js';
 import {setPageScrollEngine} from './page-scroll.js';
 
-const landingRoutes=new Set(['/','/academy','/learn']);
+const landingRoutes=new Set(['/','/academy','/learn','/build']);
 const entered=new Set();
 const revealed=new Set();
 let libraries=null,epoch=0,disposeScene=()=>{},lenis=null,tick=null,currentRoute='',preference=null;
@@ -32,11 +32,11 @@ export async function enhanceLandingMotion(route){
   carousels.forEach(root=>cleanups.push(mountCircularTestimonials(root,gsap,{reduced})));
   if(!enabled||reduced){disposeScene=()=>cleanups.forEach(fn=>fn());return;}
   const root=document.querySelector('main');if(!root)return;
-  const hero=route==='/'?root.querySelector('.build-type-hero'):root.querySelector('.hero');
+  const hero=route==='/build'?root.querySelector('.build-type-hero'):root.querySelector('.hero');
   const context=gsap.context(()=>{
    if(hero&&!entered.has(route)){
     entered.add(route);
-    if(route==='/'){
+    if(route==='/build'){
      gsap.from(hero.querySelector('.hero-dream'),{x:-35,opacity:0,duration:.85,ease:'power3.out'});
      gsap.from(hero.querySelector('.hero-build'),{x:35,opacity:0,duration:.85,delay:.12,ease:'power3.out'});
      gsap.from(hero.querySelector('.build-hero-details'),{y:18,opacity:0,duration:.8,delay:.3,ease:'power3.out'});
@@ -59,7 +59,7 @@ export async function enhanceLandingMotion(route){
    }
   },root);
   cleanups.push(()=>context.revert());
-  if(route==='/'){
+  if(route==='/build'){
    for(const line of root.querySelectorAll('.hero-line')){
     line.classList.add('tech-text');const text=line.textContent;line.replaceChildren(Object.assign(document.createElement('span'),{className:'tech-text-fallback',textContent:text}));
     const dispose=mountTechText(line,{intro:hero?.classList.contains('is-revealed')?'none':'metrics'});if(dispose)cleanups.push(dispose);

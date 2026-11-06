@@ -1,4 +1,6 @@
 (()=>{
+  const path=location.pathname.replace(/\/+$/,'')||'/';
+  document.body.dataset.theme=path==='/learn'||path==='/learning'?'learning':path==='/build'||path==='/about'||path==='/social-work'?'build':'academy';
   const loader=document.getElementById('boot-loader');
   let finished=false;
   function reveal(){if(finished)return;finished=true;loader?.classList.add('is-ready');setTimeout(()=>loader?.remove(),400);}
@@ -15,3 +17,4 @@
   // A failed startup must leave a recoverable screen, never an endless overlay.
   setTimeout(()=>{if(!finished){reveal();if(!document.querySelector('#app')?.children.length){const p=document.createElement('p');p.textContent='MUXION is taking longer to open. Please refresh to try again.';p.style.cssText='padding:48px;text-align:center;color:#eef4ff';document.querySelector('#app')?.append(p);}}},25000);
 })();
+
