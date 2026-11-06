@@ -210,6 +210,11 @@
   ],
   "redirects": [
     {
+      "source": "/academy",
+      "destination": "/",
+      "permanent": false
+    },
+    {
       "source": "/learning",
       "destination": "/learn",
       "permanent": true
