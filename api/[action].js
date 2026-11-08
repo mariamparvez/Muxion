@@ -1,4 +1,5 @@
 import {Learning} from '../muxion-backend/learning.mjs';
+import {gradeQuiz} from '../muxion-backend/quiz.mjs';
 import {configuredHostedPayments} from '../muxion-backend/hosted-payments.mjs';
 import {PaymentError} from '../muxion-backend/payments.mjs';
 import {configuredPlatform,publicOffer,seedOffers} from '../muxion-backend/platform.mjs';
@@ -50,7 +51,7 @@ export function createHandler(payments,platform=null) {
       const saveSession=()=>res.setHeader('Set-Cookie',`${cookieName}=${payments.token(session)}; Path=/api; HttpOnly; Secure; SameSite=Strict; Max-Age=2592000`);
       if(action==='payment-receipt'&&req.method==='GET')return res.status(200).json({receipt:session.order?await payments.recover(session.order,session.sid,actor.uid):null});
       if(req.method!=='POST')throw new PaymentError(405,'Method not allowed.');
-      const bodyLimit=action==='admin-offer'?220000:20000;
+      const bodyLimit=action==='admin-offer'?220000:action==='learning-progress'?40000:20000;
       const body=jsonBody(req,bodyLimit);
       if(action==='profile-save')return res.status(200).json(await learning.saveProfile(actor,body));
       if(action==='learning-progress')return res.status(200).json(await learning.progress(actor,body));
@@ -66,7 +67,7 @@ export function createHandler(payments,platform=null) {
       if(action==='create-order') {if(!actor.emailVerified)throw new PaymentError(403,'Verify your email address before purchasing, or sign in with Google.');const order=await payments.create(body,session.sid,req.headers['idempotency-key'],actor.uid);session.order=order.order_id;saveSession();return res.status(200).json(order);}
       if(action==='verify-payment') {const result=await payments.verify(body,session.sid,actor.uid);if(result.success){session.order=result.order_id;saveSession();}return res.status(result.success?200:result.pending?202:400).json(result);}
       if(action==='quiz-verify'){
-        await platform.content(actor,'course:'+body.id);const course=(await platform.catalog()).find(o=>o.kind==='course'&&o.id===body.id);return res.status(200).json({correct:Number(body.answer)===course?.quiz?.answer});
+        await platform.content(actor,'course:'+body.id);const course=(await platform.catalog(true)).find(o=>o.kind==='course'&&o.id===body.id);return res.status(200).json(gradeQuiz(course?.quiz,body));
       }
       throw new PaymentError(404,'API route not found.');
     }catch(error){if(error.retryAfter)res.setHeader('Retry-After',String(error.retryAfter));if(!(error instanceof PaymentError))console.error('account_request_failed',{name:error?.name,code:error?.code});return res.status(error instanceof PaymentError?error.status:500).json({error:error instanceof PaymentError?error.message:'Checkout could not complete. Please contact hello@muxion.in.'});}

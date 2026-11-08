@@ -1,7 +1,8 @@
-import {createHash} from 'node:crypto';
+import {createHash,randomUUID} from 'node:crypto';
 import {seed} from '../muxion/data.js';
 import {PaymentError} from './payments.mjs';
 import {httpsURL} from './security.mjs';
+import {validateQuiz,learnerQuiz} from './quiz.mjs';
 
 const ownerEmail='designwithmariam@gmail.com';
 const idPattern=/^[a-zA-Z0-9_-]{1,80}$/;
@@ -21,7 +22,8 @@ export function validateOffer(raw){
   if(o.kind==='course'){
     if(!Array.isArray(o.lessons)||o.lessons.length>200||!Array.isArray(o.outcomes)||o.outcomes.some(v=>typeof v!=='string'||v.length>500))throw new PaymentError(400,'Invalid course curriculum.');
     const ids=new Set();for(const l of o.lessons){if(!idPattern.test(l.id||'')||ids.has(l.id)||typeof l.title!=='string'||!l.title||l.title.length>180||typeof l.section!=='string'||l.section.length>180||!['video','resource','quiz','assignment'].includes(l.type)||!Number.isFinite(Number(l.minutes))||Number(l.minutes)<0||Number(l.minutes)>1440)throw new PaymentError(400,'Invalid or duplicate lesson.');ids.add(l.id);if(l.body!==undefined&&(typeof l.body!=='string'||l.body.length>12000))throw new PaymentError(400,'Invalid lesson text.');if(l.url&&!httpsURL(l.url))throw new PaymentError(400,'Upload media to a host and paste its HTTPS URL. Browser-only uploads cannot be published.');for(const k of Object.keys(l))if(!['id','title','section','type','minutes','url','body','fileName'].includes(k))throw new PaymentError(400,'Unsupported lesson fields.');}
-    if(o.quiz&&(Object.keys(o.quiz).some(k=>!['question','options','answer'].includes(k))||typeof o.quiz.question!=='string'||o.quiz.question.length>1000||!Array.isArray(o.quiz.options)||o.quiz.options.length<2||o.quiz.options.length>8||o.quiz.options.some(v=>typeof v!=='string'||v.length>1000)||!Number.isInteger(o.quiz.answer)||o.quiz.answer<0||o.quiz.answer>=o.quiz.options.length))throw new PaymentError(400,'Invalid quiz.');
+    o.quiz=validateQuiz(o.quiz);
+    if(o.status==='Published'&&o.lessons.some(l=>l.type==='quiz')&&!o.quiz.questions.length)throw new PaymentError(400,'Add at least one quiz question before publishing a quiz lesson.');
     if(o.status==='Published'&&(!o.lessons.length||!o.outcomes.length))throw new PaymentError(400,'Add lessons and learning outcomes before publishing.');
   }
   if(o.kind==='workshop'){o.duration=Number(o.duration);o.capacity=Number(o.capacity);if(!Number.isInteger(o.duration)||o.duration<1||o.duration>1440||!Number.isInteger(o.capacity)||o.capacity<1||o.capacity>10000||!Array.isArray(o.pointers)||o.pointers.some(v=>typeof v!=='string'||v.length>500))throw new PaymentError(400,'Invalid workshop duration, capacity or coverage.');}
@@ -43,7 +45,7 @@ export class Platform {
     if(!fresh&&this.cache&&this.cache.expires>Date.now())return structuredClone(this.cache.offers);
     const docs=await this.db.collection('offers').limit(200).get();const offers=new Map(seedOffers().map(o=>[o.kind+':'+o.id,o]));for(const doc of docs.docs)offers.set(doc.id,doc.data());const all=[...offers.values()];this.cache={offers:all,expires:Date.now()+15000};return structuredClone(all);
   }
-  async saveOffer(actor,raw){this.admin(actor);const offer=validateOffer(raw);const id=offer.kind+':'+offer.id;const ref=this.db.collection('offers').doc(id);const audit=this.db.collection('audit').doc();await this.db.runTransaction(async tx=>{const previous=await tx.get(ref);tx.set(ref,offer);tx.set(audit,{actor:actor.uid,action:'offer.saved',offerId:id,previousPrice:previous.data()?.price??null,price:offer.price,status:offer.status,at:this.now()});});this.cache=null;return offer;}
+  async saveOffer(actor,raw){this.admin(actor);const offer=validateOffer(raw);if(offer.kind==='course')offer.quiz.revision=randomUUID();const id=offer.kind+':'+offer.id;const ref=this.db.collection('offers').doc(id);const audit=this.db.collection('audit').doc();await this.db.runTransaction(async tx=>{const previous=await tx.get(ref);tx.set(ref,offer);tx.set(audit,{actor:actor.uid,action:'offer.saved',offerId:id,previousPrice:previous.data()?.price??null,price:offer.price,status:offer.status,at:this.now()});});this.cache=null;return offer;}
   async account(actor){
     const orders=await this.history(actor);const enrolments=await this.db.collection('enrolments').doc(actor.uid).collection('items').limit(200).get();
     const enrolled=enrolments.docs.map(d=>d.data()).filter(e=>e.active===true);const ids=new Set(enrolled.map(e=>e.id));const ownedOffers=(await this.catalog()).filter(o=>ids.has(o.kind+':'+o.id)).map(o=>o.kind==='workshop'?structuredClone(o):publicOffer(o));
@@ -80,7 +82,7 @@ export class Platform {
   async content(actor,id){
     if(!/^course:[a-zA-Z0-9_-]{1,80}$/.test(id))throw new PaymentError(400,'Invalid course.');
     if(!['super','admin'].includes(actor.role)){const access=await this.db.collection('enrolments').doc(actor.uid).collection('items').doc(id).get();if(access.data()?.active!==true)throw new PaymentError(403,'Purchase this course to open its lessons.');}
-    const offer=(await this.catalog()).find(o=>o.kind+':'+o.id===id);if(!offer)throw new PaymentError(404,'Course unavailable.');const content=structuredClone(offer);if(actor.role==='learner'&&content.quiz)delete content.quiz.answer;return content;
+    const offer=(await this.catalog(true)).find(o=>o.kind+':'+o.id===id);if(!offer)throw new PaymentError(404,'Course unavailable.');const content=structuredClone(offer);if(actor.role==='learner')content.quiz=learnerQuiz(content.quiz);return content;
   }
 }
 let services;

@@ -2,6 +2,7 @@ import {createHash,randomUUID} from 'node:crypto';
 import {PaymentError} from './payments.mjs';
 import {seed} from '../muxion/data.js';
 import {httpsURL} from './security.mjs';
+import {gradeQuiz} from './quiz.mjs';
 const ownerEmail='designwithmariam@gmail.com';
 const privileged=a=>['super','admin'].includes(a.role);
 const text=(v,max=500)=>typeof v==='string'&&v.trim().length<=max?v.trim():'';
@@ -24,19 +25,18 @@ export class Learning {
   const {courseId,lessonId,action}=body;if(!validId(courseId)||!validId(lessonId))fail(400,'Choose a valid course and lesson.');
   await this.p.content(actor,'course:'+courseId);const course=(await this.p.catalog(true)).find(c=>c.kind==='course'&&c.id===courseId);const lesson=course.lessons.find(l=>l.id===lessonId);if(!lesson)fail(404,'Lesson not found.');
   if(!['complete','note','assignment','quiz'].includes(action))fail(400,'Invalid learning action.');
-  const raw=course;
   if(action==='note'&&(typeof body.note!=='string'||body.note.length>12000))fail(400,'Notes must be under 12,000 characters.');
   if(action==='assignment'&&(lesson.type!=='assignment'||!https(body.url)||body.url.length>2000))fail(400,'Submit an HTTPS project link for this assignment.');
-  if(action==='quiz'&&(lesson.type!=='quiz'||!Number.isInteger(body.answer)||!raw.quiz||body.answer!==raw.quiz.answer))return {correct:false};
+  if(action==='quiz'&&lesson.type!=='quiz')fail(400,'Choose a quiz lesson.');
   const ref=this.db.collection('profiles').doc(actor.uid).collection('learning').doc(courseId),accessRef=this.db.collection('enrolments').doc(actor.uid).collection('items').doc('course:'+courseId);
   const certId='MUX-'+createHash('sha256').update(actor.uid+'|'+courseId).digest('hex').slice(0,24).toUpperCase(),certRef=this.db.collection('certificates').doc(certId);
-  return this.db.runTransaction(async tx=>{const [old,access,certificate]=await Promise.all([tx.get(ref),tx.get(accessRef),tx.get(certRef)]);if(!privileged(actor)&&access.data()?.active!==true)fail(403,'Active course access is required.');const data=old.data()||{completed:[],quizPassed:[],notes:{},submissions:{}};const done=new Set(data.completed),passed=new Set(data.quizPassed);
+  return this.db.runTransaction(async tx=>{const [old,access,certificate,currentOffer]=await Promise.all([tx.get(ref),tx.get(accessRef),tx.get(certRef),action==='quiz'?tx.get(this.db.collection('offers').doc('course:'+courseId)):null]);if(!privileged(actor)&&access.data()?.active!==true)fail(403,'Active course access is required.');let quizResult;const effectiveCourse=currentOffer?.data()||course;if(action==='quiz'){if(!effectiveCourse.lessons.some(l=>l.id===lessonId&&l.type==='quiz'))fail(409,'This quiz lesson has changed. Reopen the course to continue.');quizResult=gradeQuiz(effectiveCourse.quiz,body);if(!quizResult.correct)return quizResult;}const data=old.data()||{completed:[],quizPassed:[],notes:{},submissions:{}};const done=new Set(data.completed),passed=new Set(data.quizPassed);
    if(action==='note')data.notes={...data.notes,[lessonId]:body.note};if(action==='assignment')data.submissions={...data.submissions,[lessonId]:body.url};
    if(action==='quiz'){passed.add(lessonId);done.add(lessonId);}
    if(action==='complete'){if(lesson.type==='quiz'&&!passed.has(lessonId))fail(400,'Pass the quiz first.');if(lesson.type==='assignment'&&!data.submissions?.[lessonId])fail(400,'Submit the project first.');if(lesson.type==='video'&&!https(lesson.url))fail(400,'Your tutor needs to add this video before it can be completed.');if(lesson.type==='resource'&&!lesson.body?.trim()&&!https(lesson.url))fail(400,'Your tutor needs to add this resource first.');done.add(lessonId);}
    if(done.has(lessonId)&&!data.completed.includes(lessonId))data.completedAt={...(data.completedAt||{}),[lessonId]:this.p.now()};data.completed=[...done];data.quizPassed=[...passed];data.updatedAt=this.p.now();if(JSON.stringify(data).length>500000)fail(400,'Your notes exceed the course storage limit.');
-   let cert=certificate.data()||null;const complete=course.lessons.length>0&&course.lessons.every(l=>done.has(l.id));if(complete&&!cert){cert={id:certId,uid:actor.uid,courseId,course:course.title,name:actor.name,date:new Date(this.p.now()).toLocaleDateString('en-IN',{timeZone:'Asia/Kolkata'}),issuedAt:this.p.now(),status:'Valid',lessonIds:course.lessons.map(l=>l.id)};tx.set(certRef,cert);}
-   tx.set(ref,data);return {correct:action==='quiz'?true:undefined,progress:data,certificate:cert};
+   let cert=certificate.data()||null;const complete=effectiveCourse.lessons.length>0&&effectiveCourse.lessons.every(l=>done.has(l.id));if(complete&&!cert){cert={id:certId,uid:actor.uid,courseId,course:effectiveCourse.title,name:actor.name,date:new Date(this.p.now()).toLocaleDateString('en-IN',{timeZone:'Asia/Kolkata'}),issuedAt:this.p.now(),status:'Valid',lessonIds:effectiveCourse.lessons.map(l=>l.id)};tx.set(certRef,cert);}
+   tx.set(ref,data);return {...quizResult,progress:data,certificate:cert};
   });
  }
  async certificate(id){if(!/^MUX-[A-F0-9]{24}$/.test(id))return null;const doc=await this.db.collection('certificates').doc(id).get();const c=doc.data();return c?{id:c.id,name:c.name,course:c.course,date:c.date,status:c.status}:null;}
