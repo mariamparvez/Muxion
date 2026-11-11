@@ -1,4 +1,5 @@
 import {mountTechText} from './tech-text.js';
+import {landingRoute} from './build-visibility.js';
 import {mountCircularTestimonials} from './circular-testimonials.js';
 import {setPageScrollEngine} from './page-scroll.js';
 
@@ -15,7 +16,7 @@ function loadLibraries(){
 function destroyScroll(){if(tick)window.gsap?.ticker.remove(tick);tick=null;lenis?.destroy();lenis=null;setPageScrollEngine(null);delete document.documentElement.dataset.smoothScroll;}
 export function disposeLandingMotion(){++epoch;disposeScene();disposeScene=()=>{};}
 export async function enhanceLandingMotion(route){
- disposeLandingMotion();currentRoute=route;
+ route=landingRoute(route);disposeLandingMotion();currentRoute=route;
  const version=epoch,enabled=landingRoutes.has(route),reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  if(!preference){preference=matchMedia('(prefers-reduced-motion: reduce)');preference.addEventListener('change',()=>enhanceLandingMotion(currentRoute));}
  document.documentElement.classList.toggle('landing-motion-active',enabled&&!reduced);

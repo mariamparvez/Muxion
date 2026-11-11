@@ -1,5 +1,5 @@
 import {seed} from './data.js';
-import {isHiddenBuildPath} from './build-visibility.js';
+import {buildVisible,isHiddenBuildPath,landingRoute} from './build-visibility.js';
 import {blogPosts,blogIndexSEO,blogSEO} from './blog.js';
 import {portfolioSEO} from './social-portfolio.js';
 import {escapeHTML} from './security-ui.js';
@@ -21,10 +21,10 @@ const pages={
  '/terms':{title:'Terms of Service | MUXION',description:'Read the terms covering MUXION websites, design and development services, courses, workshops, mentorship and subject tuition.',theme:'build'},
  '/refunds':{title:'Refund & Cancellation Policy | MUXION',description:'Read MUXION refund and cancellation conditions for self-paced courses, live sessions and project services, plus how to contact our support team.',theme:'build'}
 };
-export function publicRoutes(offers=seed){return [...Object.keys(pages).filter(route=>route!=='/academy'&&!isHiddenBuildPath(route)),...blogPosts.map(p=>'/blog/'+p.slug).filter(route=>!isHiddenBuildPath(route)),...(offers.courses||[]).filter(o=>o.status==='Published').map(o=>'/course/'+o.id),...(offers.workshops||[]).filter(o=>o.status==='Published').map(o=>'/workshop/'+o.id)];}
+export function publicRoutes(offers=seed){return [...Object.keys(pages).filter(route=>(route!=='/academy'||buildVisible)&&!isHiddenBuildPath(route)),...blogPosts.map(p=>'/blog/'+p.slug).filter(route=>!isHiddenBuildPath(route)),...(offers.courses||[]).filter(o=>o.status==='Published').map(o=>'/course/'+o.id),...(offers.workshops||[]).filter(o=>o.status==='Published').map(o=>'/workshop/'+o.id)];}
 export function pageSEO(pathname,offers=seed){
  const route=pathname.replace(/\/+$/,'')||'/';
- let page=isHiddenBuildPath(route)?null:pages[route];
+ let page=isHiddenBuildPath(route)?null:pages[landingRoute(route)];
  const post=blogPosts.find(p=>route==='/blog/'+p.slug);
  if(post)page={...blogSEO(post),theme:post.service==='Learn'?'learn':post.service==='Academy'?'academy':'build',type:'article',date:post.date};
  const course=(offers.courses||[]).find(o=>o.status==='Published'&&route==='/course/'+o.id);
@@ -32,7 +32,7 @@ export function pageSEO(pathname,offers=seed){
  if(course||workshop){const o=course||workshop;page={title:o.title+' | MUXION Academy',description:String(o.description||o.topic||'Practical design learning with MUXION Academy.').slice(0,200),theme:'academy'};}
  if(isHiddenBuildPath(route))page=null;
  if(!page)return {title:'Your Account | MUXION',description:'Secure access to your MUXION account.',url:siteOrigin+route,indexable:false,theme:'academy',image:siteOrigin+shareImages.academy,type:'website'};
- return {...page,url:siteOrigin+(route==='/academy'?'/':route),indexable:true,image:siteOrigin+shareImages[page.theme],type:page.type||'website'};
+ return {...page,url:siteOrigin+(route==='/academy'&&!buildVisible?'/':route),indexable:true,image:siteOrigin+shareImages[page.theme],type:page.type||'website'};
 }
 export function metadataTags(seo){
  const tags={description:seo.description,robots:seo.indexable?'index,follow,max-image-preview:large':'noindex,nofollow','twitter:card':'summary_large_image','twitter:title':seo.title,'twitter:description':seo.description,'twitter:image':seo.image,'twitter:image:alt':'MUXION '+(seo.theme==='academy'?'Academy':seo.theme==='learn'?'Learn':'Build')};

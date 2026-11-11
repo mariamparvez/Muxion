@@ -53,7 +53,7 @@ for(const post of [null,...blogPosts]){
  await fs.mkdir(folder,{recursive:true});await fs.writeFile(path.join(folder,'index.html'),blogHTML);
 }
 const publicPaths=publicRoutes();
-for(const route of publicPaths){
+for(const route of new Set([...publicPaths,'/academy'])){
  const folder=path.join(output,...route.split('/').filter(Boolean));
  const file=route==='/'?path.join(output,'index.html'):path.join(folder,'index.html');
  let html;try{html=await fs.readFile(file,'utf8');}catch{html=template;}

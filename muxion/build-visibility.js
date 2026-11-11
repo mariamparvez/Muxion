@@ -7,6 +7,10 @@ let pendingRequest;
 
 export const buildPaths = ['/build', '/social-work', '/blog/website-design-full-stack-development-guide'];
 
+export function landingRoute(path,visible=buildVisible) {
+  return path==='/'?(visible?'/build':'/academy'):path;
+}
+
 export function isBuildPath(path) {
   return buildPaths.some(buildPath => path === buildPath || path.startsWith(buildPath + '/'));
 }

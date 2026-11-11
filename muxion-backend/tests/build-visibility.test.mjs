@@ -3,6 +3,16 @@ import assert from 'node:assert/strict';
 import {MemoryFirestore} from './memory-firestore.mjs';
 import {Platform} from '../platform.mjs';
 import {createHandler} from '../../api/[action].js';
+import {landingRoute} from '../../muxion/build-visibility.js';
+
+test('the root homepage follows Build visibility while explicit service URLs stay separate',()=>{
+  assert.equal(landingRoute('/',true),'/build');
+  assert.equal(landingRoute('/',false),'/academy');
+  for(const path of ['/academy','/learn','/admin']){
+    assert.equal(landingRoute(path,true),path);
+    assert.equal(landingRoute(path,false),path);
+  }
+});
 
 function fixture(){
   const db=new MemoryFirestore();
@@ -58,4 +68,3 @@ test('concurrent saves have increasing revisions and an atomic audit trail',asyn
   assert.deepEqual(await platform.siteVisibility(),{buildVisible:true,revision:2});
   assert.equal([...db.records].filter(([path])=>path.startsWith('audit/')).length,2);
 });
-
