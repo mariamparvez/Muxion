@@ -48,8 +48,6 @@ body[data-theme=academy] .academy-page{--academy-gutter:clamp(16px,2.5vw,40px);w
 .academy-page>.academy-mentor-section{padding-inline:0}
 .academy-page .academy-mentor-section .tutor-banner{width:100%;padding-inline:var(--academy-gutter)}
 body[data-theme=academy] .collab-cursor{bottom:34px}
-/* MUXION Build is temporarily hidden. Restore only at the owner's request. */
-.universe,.build-teaser,.universe-service.service-build{display:none!important}
 body[data-theme=build] .universe-cta{background:radial-gradient(ellipse at 80% 50%,#e5ce6410,transparent 60%),#171710}
 .universe .universe-cta .universe-final{grid-template-columns:minmax(0,1fr);z-index:2}
 .universe-cta .universe-final-copy{max-width:65%;position:relative;z-index:2}

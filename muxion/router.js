@@ -1,4 +1,5 @@
 import {scrollPageTo} from './page-scroll.js';
+import {isHiddenBuildPath} from './build-visibility.js';
 // Keep old shared hash URLs working while making every new URL a real path.
 export function routePath(pathname='/') {
   try { return decodeURIComponent(pathname).replace(/\/+$/, '') || '/'; }
@@ -12,8 +13,7 @@ export function navigate(path, {replace=false}={}) {
   if (typeof path!=='string' || !/^\/(?!\/)/.test(path)) return false;
   const target=new URL(path,location.origin);
   if(target.origin!==location.origin)return false;
-  // Build remains in source, but its public route is paused until re-enabled.
-  if(target.pathname==='/build') {target.pathname='/';target.hash='';}
+  if(isHiddenBuildPath(routePath(target.pathname))){target.pathname='/';target.search='';target.hash='';}
   const anchorOnly=target.pathname===location.pathname&&target.search===location.search&&Boolean(target.hash);
   history[replace?'replaceState':'pushState']({},'',target.pathname+target.search+target.hash);
   if(!anchorOnly)window.dispatchEvent(new Event('muxion:navigate'));
@@ -21,7 +21,14 @@ export function navigate(path, {replace=false}={}) {
   return true;
 }
 export function installRouter(onRoute) {
-  const migrate=()=>{const hashPath=legacyDestination(location.hash);if(hashPath)history.replaceState({},'',hashPath);const path=routePath(location.pathname);const canonical=path==='/build'?'/':path==='/learning'?'/learn':null;if(canonical)history.replaceState({},'',canonical+location.search+(path==='/build'?'':location.hash));return Boolean(hashPath||canonical);};
+  const migrate=()=>{
+    const hashPath=legacyDestination(location.hash);
+    if(hashPath)history.replaceState({},'',hashPath);
+    const path=routePath(location.pathname);
+    if(isHiddenBuildPath(path)){history.replaceState({},'','/');return true;}
+    if(path==='/learning'){history.replaceState({},'','/learn'+location.search+location.hash);return true;}
+    return Boolean(hashPath);
+  };
   migrate();
   document.addEventListener('click',event=>{
     const a=event.target.closest('a[href]');
