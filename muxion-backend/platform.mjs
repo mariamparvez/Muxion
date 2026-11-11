@@ -3,6 +3,7 @@ import {seed} from '../muxion/data.js';
 import {PaymentError} from './payments.mjs';
 import {httpsURL} from './security.mjs';
 import {validateQuiz,learnerQuiz} from './quiz.mjs';
+import {buildVisible} from '../muxion/build-visibility.js';
 
 const ownerEmail='designwithmariam@gmail.com';
 const idPattern=/^[a-zA-Z0-9_-]{1,80}$/;
@@ -41,6 +42,24 @@ export class Platform {
     return {uid:token.uid,email:token.email,name:String(token.name||token.email.split('@')[0]).slice(0,100),emailVerified:token.email_verified===true,role};
   }
   admin(actor){if(!actor||!['super','admin'].includes(actor.role))throw new PaymentError(403,'Administrator access is required.');}
+  async siteVisibility(){
+    const settings=(await this.db.collection('siteSettings').doc('visibility').get()).data();
+    return {buildVisible:typeof settings?.buildVisible==='boolean'?settings.buildVisible:buildVisible,revision:Number.isSafeInteger(settings?.revision)&&settings.revision>=0?settings.revision:0};
+  }
+  async saveSiteVisibility(actor,body){
+    this.admin(actor);
+    if(typeof body?.buildVisible!=='boolean'||Object.keys(body).some(key=>key!=='buildVisible'))throw new PaymentError(400,'Choose whether MUXION Build is visible.');
+    const ref=this.db.collection('siteSettings').doc('visibility'),audit=this.db.collection('audit').doc();
+    return this.db.runTransaction(async tx=>{
+      const previous=(await tx.get(ref)).data();
+      const revision=(Number.isSafeInteger(previous?.revision)&&previous.revision>=0?previous.revision:0)+1;
+      const settings={buildVisible:body.buildVisible,revision};
+      const at=this.now();
+      tx.set(ref,{...settings,updatedBy:actor.uid,updatedAt:at});
+      tx.set(audit,{actor:actor.uid,action:'site.visibility.saved',...settings,at});
+      return settings;
+    });
+  }
   async catalog(fresh=false){
     if(!fresh&&this.cache&&this.cache.expires>Date.now())return structuredClone(this.cache.offers);
     const docs=await this.db.collection('offers').limit(200).get();const offers=new Map(seedOffers().map(o=>[o.kind+':'+o.id,o]));for(const doc of docs.docs)offers.set(doc.id,doc.data());const all=[...offers.values()];this.cache={offers:all,expires:Date.now()+15000};return structuredClone(all);
@@ -92,3 +111,4 @@ export async function configuredPlatform(){
   return services;
 }
 
+

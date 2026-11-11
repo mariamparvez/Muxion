@@ -23,6 +23,14 @@ export function createHandler(payments,platform=null) {
       if(process.env.VERCEL_PROJECT_PRODUCTION_URL)allowed.add('https://'+process.env.VERCEL_PROJECT_PRODUCTION_URL);
       if(req.method==='POST'&&!allowed.has(req.headers.origin))throw new PaymentError(403,'A same-origin checkout request is required.');
       if(req.headers.origin&&!allowed.has(req.headers.origin))throw new PaymentError(403,'A same-origin request is required.');
+      if(action==='site-visibility'){
+        if(!platform)throw new PaymentError(503,'Site settings are temporarily unavailable.');
+        if(req.method==='GET')return res.status(200).json(await platform.siteVisibility());
+        const actor=await platform.identity(req.headers.authorization);
+        platform.admin(actor);
+        await accountRateLimit(platform.db,actor.uid,action,req.method);
+        return res.status(200).json(await platform.saveSiteVisibility(actor,jsonBody(req,1000)));
+      }
       if(action==='catalogue'&&req.method==='GET'){const offers=platform?await platform.catalog():seedOffers();return res.status(200).json({offers:offers.filter(o=>o.status==='Published').map(publicOffer)});}
       if(action==='mentorship-offers'&&req.method==='GET')return res.status(200).json({offers:learning?await learning.offers():[]});
       if(action==='certificate-verify'&&req.method==='GET'){if(!learning)throw new PaymentError(503,'Verification is temporarily unavailable.');return res.status(200).json({certificate:await learning.certificate(req.query?.id||'')});}
@@ -77,3 +85,4 @@ let handler;
 export default async function paymentApi(req,res){secureHeaders(res);try{if(!handler){const platform=await configuredPlatform();handler=createHandler(configuredHostedPayments(platform),platform);}return handler(req,res);}catch(error){console.error('account_service_init_failed',{name:error?.name,code:error?.code||error?.errorInfo?.code||'unknown'});return res.status(503).json({error:'Account services are temporarily unavailable. No payment has been started.'});}}
 export const config={maxDuration:30};
 
+
