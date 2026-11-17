@@ -4,8 +4,6 @@
   function syncLoaderTheme(){
     const theme=path==='/'?(document.documentElement.dataset.buildVisible==='false'?'academy':'build'):/^\/(learn|learning)(\/|$)/.test(path)?'learning':/^\/(build|about|social-work)(\/|$)/.test(path)?'build':'academy';
     document.body.dataset.theme=theme;
-    const product=loader?.querySelector('[data-loader-product]');
-    if(product)product.textContent=theme==='build'?'BUILD':theme==='learning'?'LEARN':'ACADEMY';
   }
   syncLoaderTheme();
   window.addEventListener('muxion:build-visibility',syncLoaderTheme);
