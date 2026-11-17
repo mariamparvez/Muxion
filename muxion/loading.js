@@ -1,9 +1,16 @@
 (()=>{
-  const path=location.pathname.replace(/\/+$/,'')||'/';
-  document.body.dataset.theme=path==='/learn'||path==='/learning'?'learning':path==='/build'||path==='/about'||path==='/social-work'?'build':'academy';
+  const path=(location.hash.startsWith('#/')?location.hash.slice(1).split(/[?#]/)[0]:location.pathname).replace(/\/+$/,'')||'/';
   const loader=document.getElementById('boot-loader');
+  function syncLoaderTheme(){
+    const theme=path==='/'?(document.documentElement.dataset.buildVisible==='false'?'academy':'build'):/^\/(learn|learning)(\/|$)/.test(path)?'learning':/^\/(build|about|social-work)(\/|$)/.test(path)?'build':'academy';
+    document.body.dataset.theme=theme;
+    const product=loader?.querySelector('[data-loader-product]');
+    if(product)product.textContent=theme==='build'?'BUILD':theme==='learning'?'LEARN':'ACADEMY';
+  }
+  syncLoaderTheme();
+  window.addEventListener('muxion:build-visibility',syncLoaderTheme);
   let finished=false;
-  function reveal(){if(finished)return;finished=true;loader?.classList.add('is-ready');setTimeout(()=>loader?.remove(),400);}
+  function reveal(){if(finished)return;finished=true;window.removeEventListener('muxion:build-visibility',syncLoaderTheme);loader?.classList.add('is-ready');setTimeout(()=>loader?.remove(),400);}
   function images(){document.querySelectorAll('#app img:not([data-loading-ready])').forEach(img=>{
     img.dataset.loadingReady='true';img.decoding='async';
     if(img.getBoundingClientRect().top>innerHeight*1.5&&!img.hasAttribute('loading'))img.loading='lazy';
