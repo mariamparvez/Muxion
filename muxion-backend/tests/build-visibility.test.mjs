@@ -5,8 +5,8 @@ import {Platform} from '../platform.mjs';
 import {createHandler} from '../../api/[action].js';
 import {landingRoute} from '../../muxion/build-visibility.js';
 
-test('the root homepage follows Build visibility while explicit service URLs stay separate',()=>{
-  assert.equal(landingRoute('/',true),'/build');
+test('the root homepage always opens Academy while explicit service URLs stay separate',()=>{
+  assert.equal(landingRoute('/',true),'/academy');
   assert.equal(landingRoute('/',false),'/academy');
   for(const path of ['/academy','/learn','/admin']){
     assert.equal(landingRoute(path,true),path);
