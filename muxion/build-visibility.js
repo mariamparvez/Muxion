@@ -8,7 +8,7 @@ let pendingRequest;
 export const buildPaths = ['/build', '/social-work', '/blog/website-design-full-stack-development-guide'];
 
 export function landingRoute(path,visible=buildVisible) {
-  return path==='/'?(visible?'/build':'/academy'):path;
+  return path==='/'?'/academy':path;
 }
 
 export function isBuildPath(path) {
@@ -58,4 +58,4 @@ export async function refreshBuildVisibility() {
   })();
   return pendingRequest;
 }
-
+
