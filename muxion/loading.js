@@ -2,7 +2,7 @@
   const path=(location.hash.startsWith('#/')?location.hash.slice(1).split(/[?#]/)[0]:location.pathname).replace(/\/+$/,'')||'/';
   const loader=document.getElementById('boot-loader');
   function syncLoaderTheme(){
-    const theme=path==='/'?(document.documentElement.dataset.buildVisible==='false'?'academy':'build'):/^\/(learn|learning)(\/|$)/.test(path)?'learning':/^\/(build|about|social-work)(\/|$)/.test(path)?'build':'academy';
+    const theme=path==='/'?'academy':/^\/(learn|learning)(\/|$)/.test(path)?'learning':/^\/(build|about|social-work)(\/|$)/.test(path)?'build':'academy';
     document.body.dataset.theme=theme;
   }
   syncLoaderTheme();
